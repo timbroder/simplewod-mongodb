@@ -3,11 +3,8 @@ from django.contrib.auth.models import User
 from tagging.models import Tag, TaggedItem
 from tagging.fields import TagField
 import datetime
-
-#mongo
-#from pymongo import Connection
-#connection = Connection()
-#db = connection.test_database
+from sluggable.models import SluggableModel
+from django.template.defaultfilters import slugify
 
 class Taggable(models.Model):
     tags = models.CharField(max_length=255, blank=True, null=False)
@@ -32,7 +29,7 @@ class Taggable(models.Model):
     class Meta:
         abstract = True
 
-class Workout(Taggable):
+class Workout(SluggableModel):
     title = models.CharField(max_length=128, blank=True, null=True)
     workout = models.TextField()
     user = models.ForeignKey(User) 
@@ -44,31 +41,28 @@ class Workout(Taggable):
         
     def __unicode__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return "/workouts/%s" % self.slug
+
         
 class Result(Taggable):
     workout = models.ForeignKey(Workout)
     date = models.DateField()
+    dateslug = models.CharField(max_length=16, blank=True, null=True)
     result = models.TextField()
     notes = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User)
     
     def __unicode__(self):
-        return "%s - %s" % (self.workout, self.date)
-
-
-########
-#mongoness
-#def save_workout(user_id, title, workout, tags):
-#    return db.workouts.insert({"title": title,
-#                               "workout": workout,
-#                               "tags": tags,
-#                               "created_by": user_id})
-#    
-#def all_workouts(user_id):
-#    return db.workouts.find()
-#
-#def add_result(user_id, workout_id, date, result):
-#    db.workouts.update({"_id": workout_id},
-#                       {"$push": {"results": {"result": resule,
-#                                              "date": date,
-#                                              "user": user_id}}})
+        return "%s - %s - %s" % (self.workout, self.user, self.date)
+    
+    def save(self, *args, **kwargs):
+        self.dateslug = slugify(self.date)
+        return super(Result, self).save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return "%s/%s/%s/" % (self.workout.get_absolute_url(), self.user.username, self.dateslug)
+    
+    def get_add_url(self):
+        return "%s/add" % self.workout.get_absolute_url()

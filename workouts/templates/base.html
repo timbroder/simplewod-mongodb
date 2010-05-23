@@ -5,6 +5,12 @@
 </head>
 
 <body>
+{% if request.user.is_authenticated %}
+	logged in
+{% else %}
+	not logged in
+{% endif %}
+<hr/>
     <div id="content">
         {% block content %}{% endblock %}
     </div>

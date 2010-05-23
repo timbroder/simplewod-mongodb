@@ -1,6 +1,7 @@
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
+from django.contrib.admin.widgets import AdminTimeWidget,AdminDateWidget 
 
 class WodForm(forms.Form):
     name = forms.CharField(required=False)
