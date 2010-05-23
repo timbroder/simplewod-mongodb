@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load tagging_tags %}
+<table>
+	<tr>
+		<td>
+			{% if request.user.is_authenticated %}Your {% endif %} recent workouts<br/>
+			{% for r in results %}
+				<a href="{{ r.get_absolute_url }}">{{ r }}</a><br/>
+			{% endfor %}
+		</td>
+		<td>Tags<br/>
+			{% tag_cloud_for_model workouts.Result as tags %}
+			{% for tag in tags %}
+				{{tag}} ({{tag.font_size}})
+			{% endfor %}
+		</td>
+	</tr>
+</table>
+{% endblock %}
