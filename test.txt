@@ -1,3 +1,0 @@
-trendcats = get_related(self, TrendCat, 1)
-
-art trend
