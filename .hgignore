@@ -2,4 +2,5 @@ syntax: glob
 
 .project
 .pydevproject
-settings.py
+./settings.py
+*pyc
