@@ -80,7 +80,7 @@ INSTALLED_APPS = (
     'tagging',
     'django_evolution',
     'django_extensions',
-    #'registration',
+    'registration',
     'sluggable',
 )
 
