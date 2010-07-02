@@ -5,8 +5,8 @@ from django.contrib.admin.widgets import AdminTimeWidget,AdminDateWidget
 
 class WodForm(forms.Form):
     name = forms.CharField(required=False)
-    date = forms.DateField(widget=SelectDateWidget(), initial=datetime.date.today())
+    date = forms.CharField()#forms.DateField(widget=SelectDateWidget(), initial=datetime.date.today())
     workout = forms.CharField(widget=forms.Textarea)
     results = forms.CharField(widget=forms.Textarea)
-    tags = forms.CharField()
+    tags = forms.CharField(required=False)
     

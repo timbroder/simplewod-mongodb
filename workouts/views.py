@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response as r2r
 from forms import *
 from models import *
-
+import time
 
 def home(request):
     results = Result.objects.all()
@@ -25,7 +25,11 @@ def add(request):
             w.save()
             r = Result()
             r.user = user
-            r.date = form.cleaned_data['date']
+            tempdate = form.cleaned_data['date']
+
+            tempdate = time.strptime(tempdate,"%d/%m/%Y")
+            r.date = time.strftime("%Y-%m-%d",tempdate)
+
             r.workout = w
             r.result = form.cleaned_data['results']
             r.save()

@@ -1,14 +1,21 @@
 <html>
 <head>
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}My amazing site{% endblock %}</title>
+	<title>{% block title %}simpleWOD{% endblock %}</title>
+    <!--  <link rel="stylesheet" href="style.css" /> -->
+    <link rel="stylesheet" href="/static/css/redmond/jquery-ui.css" />
+    {% block extracss %}{% endblock %}
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+    {% block extrajs %}{% endblock %}
 </head>
 
 <body>
 {% if request.user.is_authenticated %}
-	logged in
+	<div class="ui-widget">[ 
+		<a href="/add">Add Workout</a> | 
+		<a href="accounts/logout">Logout</a> ]</div>
 {% else %}
-	not logged in
+	<div class="ui-widget">[ <a href="accounts/login">Login</a> ]</div>
 {% endif %}
 <hr/>
     <div id="content">
