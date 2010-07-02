@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response as r2r
 from forms import *
 from models import *
-import time
+import time, datetime
 
 def home(request):
     results = Result.objects.all()
@@ -27,7 +27,7 @@ def add(request):
             r.user = user
             tempdate = form.cleaned_data['date']
 
-            tempdate = time.strptime(tempdate,"%d/%m/%Y")
+            tempdate = time.strptime(tempdate,"%m/%d/%Y")
             r.date = time.strftime("%Y-%m-%d",tempdate)
 
             r.workout = w
@@ -42,6 +42,8 @@ def add(request):
             posted = True
 
     else:
-        form = WodForm()
+        form = WodForm(initial={'date': datetime.datetime.now().strftime("%m/%d/%Y")})
+        #form.date = datetime.datetime.now().strftime("%d/%m/%Y")
+        
         
     return r2r('add.html', locals())
