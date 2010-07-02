@@ -52,10 +52,10 @@ $.widget("ui.form",{
 			if($(element).is(":submit"))
 			{
 			$(element).addClass("ui-priority-primary ui-corner-all ui-state-disabled hover");
-			 $(element).bind("click",function(event)
+			/* $(element).bind("click",function(event)
 			   {
 				   event.preventDefault();
-			   });
+			   });*/
 			}
 			else if($(element).is(":reset"))
 			$(element).addClass("ui-priority-secondary ui-corner-all hover");
