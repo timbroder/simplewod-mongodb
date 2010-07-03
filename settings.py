@@ -40,12 +40,13 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = 'C:/Users/broderboy/workspace/loggerhg/static/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = ''
+#TAGGING_AUTOCOMPLETE_JS_BASE_URL = '/static/js/jquery.autocomplete.min.js'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -82,6 +83,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'registration',
     'sluggable',
+    'tagging_autocomplete',
 )
 
 
