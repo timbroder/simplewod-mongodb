@@ -5,11 +5,13 @@
 {% load tagging_tags %}
 <table>
 	<tr>
-		<td>
-			{% if request.user.is_authenticated %}Your {% endif %} recent workouts<br/>
-			{% for r in results %}
-				<a href="{{ r.get_absolute_url }}">{{ r }}</a><br/>
-			{% endfor %}
+		<td width="50%">
+			Recent workouts<br/>
+			<ul>
+				{% for r in results %}
+					<li><a href="{{ r.get_absolute_url }}">{{ r }}</a></li>
+				{% endfor %}
+			</ul>
 		</td>
 		<td>Tags<br/>
 			{% tag_cloud_for_model workouts.Result as tags %}

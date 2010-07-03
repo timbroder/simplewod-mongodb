@@ -13,6 +13,9 @@ urlpatterns = patterns('',
     (r'^accounts/', include('registration.backends.default.urls')),
     (r'^add/$', wod.add),
     (r'^$', wod.home),
+    
+    (r'^tagging_autocomplete/', include('tagging_autocomplete.urls')),
+    
     (r'^admin/', include(admin.site.urls)),
     
     #/workouts/(slug)/(username)/(dateslug)

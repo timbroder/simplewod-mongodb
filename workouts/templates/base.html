@@ -11,14 +11,15 @@
 
 <body>
 {% if request.user.is_authenticated %}
-	<div class="ui-widget">[ 
+	<div class="ui-widget-header">
+		&nbsp;<a href="/">Home</a> | 
 		<a href="/add">Add Workout</a> | 
-		<a href="accounts/logout">Logout</a> ]</div>
+		<a href="accounts/logout">Logout</a>
+	</div>
 {% else %}
-	<div class="ui-widget">[ <a href="accounts/login">Login</a> ]</div>
+	<div class="ui-widget-header">&nbsp;<a href="accounts/login">Login</a></div>
 {% endif %}
-<hr/>
-    <div id="content">
+    <div id="content" class="ui-widget-content">
         {% block content %}{% endblock %}
     </div>
 </body>
