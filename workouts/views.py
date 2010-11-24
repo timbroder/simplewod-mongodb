@@ -48,11 +48,12 @@ def add(request):
         
     return r2r('add.html', locals())
 
-def single(request, wodslug, username, dateslug):
-    results = Result.objects.filter(workout__slug = wodslug, user__username = username, dateslug = dateslug)
+def wod_single(request, wodslug, username, dateslug):
+    results = Result.objects.filter(workout__slug = wodslug, user__username = username, dateslug = dateslug).order_by('-date')
     return r2r('singleresult.html', locals())
 
-def tag(request, tag):
-    results = TaggedItem.objects.filter(tag__name=tag)
+def result_tag(request, tagslug):
+    print tagslug
+    results = TaggedItem.objects.get_by_model(Result, tagslug).order_by('-date')
     return r2r('tagresult.html', locals())
     

@@ -16,7 +16,7 @@
 		<td>Tags<br/>
 			{% tag_cloud_for_model workouts.Result as tags %}
 			{% for tag in tags %}
-				{{tag}} ({{tag.font_size}})
+				<a href="/results/tag/{{tag}}/">{{ tag }}</a> ({{tag.font_size}})
 			{% endfor %}
 		</td>
 	</tr>
