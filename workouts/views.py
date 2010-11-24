@@ -50,5 +50,9 @@ def add(request):
 
 def single(request, wodslug, username, dateslug):
     results = Result.objects.filter(workout__slug = wodslug, user__username = username, dateslug = dateslug)
-    print results
     return r2r('singleresult.html', locals())
+
+def tag(request, tag):
+    results = TaggedItem.objects.filter(tag__name=tag)
+    return r2r('tagresult.html', locals())
+    

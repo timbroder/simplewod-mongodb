@@ -467,7 +467,7 @@ class Tag(models.Model):
         verbose_name_plural = _('tags')
 
     def __unicode__(self):
-        return self.name.replace('_', ' ')
+        return self.name
 
 class TaggedItem(models.Model):
     """
