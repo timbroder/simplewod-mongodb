@@ -43,7 +43,7 @@ class Workout(SluggableModel):
         return self.title
     
     def get_absolute_url(self):
-        return "/workouts/%s" % self.slug
+        return "/wods/%s" % self.slug
 
         
 class Result(Taggable):

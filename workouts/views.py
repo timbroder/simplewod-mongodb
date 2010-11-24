@@ -47,3 +47,6 @@ def add(request):
         
         
     return r2r('add.html', locals())
+
+def single(request, wodslug, username, dateslug):
+    return r2r('add.html', locals())
