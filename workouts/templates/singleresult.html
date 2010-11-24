@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for wod in results %}
+	{% if forloop.first %}
+		<h2>{{ wod.workout.title }}</h2>
+		{{ wod.workout.workout|linebreaks }}
+		<h2>Results</h2>
+	{% endif %}
+	
+	<div class="result">
+		{{ wod.result|linebreaks }}
+		
+		{% if wod.notes %}
+			Notes<br />
+			{{ wod.notes|linebreaks }}		
+		{% endif %}
+	</div>
+		
+		
+{% endfor %}
+
+{% endblock %}

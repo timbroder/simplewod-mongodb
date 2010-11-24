@@ -49,4 +49,6 @@ def add(request):
     return r2r('add.html', locals())
 
 def single(request, wodslug, username, dateslug):
-    return r2r('add.html', locals())
+    results = Result.objects.filter(workout__slug = wodslug, user__username = username, dateslug = dateslug)
+    print results
+    return r2r('singleresult.html', locals())
