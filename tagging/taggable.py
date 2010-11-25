@@ -1,4 +1,6 @@
 from django.db import models
+from models import *
+
 class Taggable(models.Model):
     tags = models.CharField(max_length=255, blank=True, null=False)
 

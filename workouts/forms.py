@@ -6,8 +6,9 @@ from tagging_autocomplete.widgets import TagAutocomplete
 
 class WodForm(forms.Form):
     name = forms.CharField(required=False)
-    date = forms.CharField()#forms.DateField(widget=SelectDateWidget(), initial=datetime.date.today())
     workout = forms.CharField(widget=forms.Textarea)
-    results = forms.CharField(widget=forms.Textarea)
+    has_result = forms.BooleanField(initial=True, widget=forms.HiddenInput)
+    date = forms.CharField(required=False)#forms.DateField(widget=SelectDateWidget(), initial=datetime.date.today())    
+    results = forms.CharField(widget=forms.Textarea, required=False)
     tags = TagField(widget=TagAutocomplete())
     
