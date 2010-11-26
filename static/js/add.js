@@ -44,9 +44,17 @@ TagSync.prototype = {
 		self.from.blur(function() {
 		    self.update(this.value );
 		});
+		self.from.click(function() {
+		    self.update(this.value );
+		});
+		
+		$('.ac_results').live('click', function() {
+			console.log('hi');
+		    //self.update(this.value );
+		});
 	},
 	update: function(msg){
-		this.to.html(this.msg + msg);
+		this.to.html(this.msg + msg.replace('-', ' '));
 	}
 };
 
