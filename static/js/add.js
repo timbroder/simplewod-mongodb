@@ -16,22 +16,43 @@ ResultToggle.prototype = {
 		var rtxt = $('#result_text');
 		
 		if(hasResult.val() == 'True'){
-			result.hide();
+			result.slideUp();
 			rtxt.html('Want to add a result also?');
 			hasResult.val('False');
 		}
 		else{
-			result.show();
+			result.slideDown();
 			rtxt.html('Add Workout Only?');
 			hasResult.val('True');
 		}
 	}
 };
 
+var TagSync = function(from, to) {
+	this.to = $(to);
+	this.from = $(from);
+	this.msg = 'Tags included from Workout: ';
+	this.setup();
+};
+
+TagSync.prototype = {
+	setup: function(){
+		var self = this;
+		console.log(self.from);
+		self.from.keyup(function() {
+		    self.to.html( self.msg + this.value );
+		});
+		self.from.blur(function() {
+		    self.to.html( self.msg + this.value );
+		});
+
+	}
+};
 
 
 $(document).ready(function() {
-	new ResultToggle('#toggle_result')
+	new ResultToggle('#toggle_result');
+	new TagSync('#id_wod_tags', '#tags_from_wod');
 });
 
 

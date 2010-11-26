@@ -21,12 +21,24 @@
 			{{ form.workout }}
 			{{ form.workout.errors }}
 		</div>
+		<div id="form_wod_tags">
+			<p>Workout Tags</p>
+			{{ form.wod_tags }}
+			{{ form.wod_tags.errors }}
+		</div>
 		<div>
 			{{ form.has_result }}
-			!{{ form.has_result.value }}!
-			<p><span id="result_text">Add Workout Only?</span> <a href="#" id="toggle_result">Click here.</a></p>
+			{# { form.has_result.data } #}
+			<p><span id="result_text">
+			{% ifequal form.has_result.data "True" %}
+				Add Workout Only?
+			{% else %}
+				Want to add a result also?
+			{% endifequal %}
+			 </span><a href="#" id="toggle_result">Click here.</a></p>
 		</div>
-		<div id="form_result">			
+
+		<div id="form_result"{% ifequal form.has_result.data "False" %} style="display: none;"{% endifequal %}>			
 			<p>Date Completed</p>
 			{{ form.date }}
 			{{ form.date.errors }}
@@ -34,8 +46,9 @@
 			{{ form.results }}
 			{{ form.results.errors }}
 		</div>
-		<div id="form_tags">
-			<p>Tags</p>
+		<div id="form_tags"{% ifequal form.has_result.data "False" %} style="display: none;"{% endifequal %}>
+			<p>Result Tags</p>
+			<p id="tags_from_wod"></p>
 			{{ form.tags }}
 			{{ form.tags.errors }}
 		</div>

@@ -6,13 +6,16 @@ from tagging_autocomplete.widgets import TagAutocomplete
 
 result_required = "If you are adding a result, this field is required"
 
-class WodForm(forms.Form):
+class ResultForm(forms.Form):
+    date = forms.CharField(required=False)#forms.DateField(widget=SelectDateWidget(), initial=datetime.date.today())    
+    results = forms.CharField(widget=forms.Textarea, required=False)
+    tags = TagField(widget=TagAutocomplete(), required=False) 
+
+class WodForm(ResultForm):
     name = forms.CharField(required=False)
     workout = forms.CharField(widget=forms.Textarea, required=True)
     has_result = forms.BooleanField(initial=True, widget=forms.HiddenInput)
-    date = forms.CharField(required=False)#forms.DateField(widget=SelectDateWidget(), initial=datetime.date.today())    
-    results = forms.CharField(widget=forms.Textarea, required=False)
-    tags = TagField(widget=TagAutocomplete(), required=False)
+    wod_tags = TagField(widget=TagAutocomplete(), required=True)
     
     def clean_results(self):
         print self.cleaned_data
@@ -27,7 +30,4 @@ class WodForm(forms.Form):
         return result
         
 
-class ResultForm(forms.Form):
-    date = forms.CharField(required=False)#forms.DateField(widget=SelectDateWidget(), initial=datetime.date.today())    
-    results = forms.CharField(widget=forms.Textarea, required=False)
-    tags = TagField(widget=TagAutocomplete(), required=False)    
+   
