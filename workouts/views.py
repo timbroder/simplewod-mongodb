@@ -11,8 +11,23 @@ def home(request):
     results = results.order_by('-date')[:10]
     
     return r2r('index.html', locals())
+
+def fix_tags(tags):
+    tags = tags.replace(' ', '-')
+    tags = tags.split(',')
+    tt = []
+    
+    for t in tags:
+        if t[0] == '-':
+            t = t[1:]
+        print t
+        tt.append(t)
+    tt = ','.join(tt)
+    print tt
+    return tt    
+
 @login_required
-def add(request):
+def add_wod(request):
     user = request.user
     if request.method == 'POST':
         form = WodForm(request.POST)
@@ -37,7 +52,7 @@ def add(request):
             #for tag in form.cleaned_data['tags'].split(','):
                 #r.add_tag(tag)
             print form.cleaned_data['tags']
-            r.set_tags(form.cleaned_data['tags'].replace(' ', '_'))
+            r.set_tags(fix_tags(form.cleaned_data['tags']))
             #w.set_tags(form.cleaned_data['tags'].replace(' ', '_'))
             posted = True
 
@@ -48,6 +63,9 @@ def add(request):
         
     return r2r('add.html', locals())
 
+def result_add(request, wodslug):
+    return r2r('add_result.html', locals())
+    
 def wod_single(request, wodslug, username, dateslug):
     results = Result.objects.filter(workout__slug = wodslug, user__username = username, dateslug = dateslug).order_by('-date')
     return r2r('singleresult.html', locals())

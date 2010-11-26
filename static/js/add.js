@@ -7,13 +7,24 @@ ResultToggle.prototype = {
 	setup: function(){
 		var self = this;
 		this.trigger.bind('click', function(){
-			console.log('click');
 			self.click();
 		});
 	},
 	click : function(){
 		var hasResult = $('#id_has_result');
-		console.log(hasResult.val());
+		var result = $('#form_result');
+		var rtxt = $('#result_text');
+		
+		if(hasResult.val() == 'True'){
+			result.hide();
+			rtxt.html('Want to add a result also?');
+			hasResult.val('False');
+		}
+		else{
+			result.show();
+			rtxt.html('Add Workout Only?');
+			hasResult.val('True');
+		}
 	}
 };
 

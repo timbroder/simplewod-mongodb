@@ -14,7 +14,8 @@ urlpatterns = patterns('',
     ##(r'^wods/(?P<tagslug>.+)/$', wod.wod_tag),
     (r'^wods/(?P<wodslug>.+)/(?P<username>.+)/(?P<dateslug>.+)/$', wod.wod_single),
     (r'^results/tag/(?P<tagslug>.+)/$', wod.result_tag),
-    (r'^add/$', wod.add),
+    (r'^results/add/(?P<wodslug>.+)/$', wod.result_add),
+    (r'^wods/add/$', wod.add_wod),
     (r'^$', wod.home),
     
     (r'^tagging_autocomplete/', include('tagging_autocomplete.urls')),
@@ -25,6 +26,7 @@ urlpatterns = patterns('',
     #workouts/(slug)/add
     #/workouts/(slug)
     #/tag/(tag)
+    
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT }),
 )

@@ -7,9 +7,7 @@ import datetime
 from sluggable.models import SluggableModel
 from django.template.defaultfilters import slugify
 
-
-
-class Workout(SluggableModel):
+class Workout(SluggableModel, Taggable):
     title = models.CharField(max_length=128, blank=True, null=True)
     workout = models.TextField()
     user = models.ForeignKey(User) 

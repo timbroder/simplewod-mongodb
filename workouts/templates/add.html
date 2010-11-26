@@ -21,9 +21,12 @@
 			{{ form.workout }}
 			{{ form.workout.errors }}
 		</div>
-		{{ form.has_result }}
-		<div id="form_result">
-			<p>Workout Only? <a href="#" id="toggle_result">Click here.</a></p>
+		<div>
+			{{ form.has_result }}
+			!{{ form.has_result.value }}!
+			<p><span id="result_text">Add Workout Only?</span> <a href="#" id="toggle_result">Click here.</a></p>
+		</div>
+		<div id="form_result">			
 			<p>Date Completed</p>
 			{{ form.date }}
 			{{ form.date.errors }}
