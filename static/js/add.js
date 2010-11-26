@@ -38,20 +38,17 @@ var TagSync = function(from, to) {
 TagSync.prototype = {
 	setup: function(){
 		var self = this;
-		console.log(self.from);
 		self.from.keyup(function() {
 			self.update(this.value );
 		});
 		self.from.blur(function() {
 		    self.update(this.value );
 		});
-
 	},
 	update: function(msg){
 		this.to.html(this.msg + msg);
 	}
 };
-
 
 $(document).ready(function() {
 	new ResultToggle('#toggle_result');
