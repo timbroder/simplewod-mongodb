@@ -40,12 +40,15 @@ TagSync.prototype = {
 		var self = this;
 		console.log(self.from);
 		self.from.keyup(function() {
-		    self.to.html( self.msg + this.value );
+			self.update(this.value );
 		});
 		self.from.blur(function() {
-		    self.to.html( self.msg + this.value );
+		    self.update(this.value );
 		});
 
+	},
+	update: function(msg){
+		this.to.html(this.msg + msg);
 	}
 };
 
