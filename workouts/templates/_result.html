@@ -1,0 +1,8 @@
+<div class="result">
+	{{ wod.result|linebreaks }}
+	
+	{% if wod.notes %}
+		Notes<br />
+		{{ wod.notes|linebreaks }}		
+	{% endif %}
+</div>

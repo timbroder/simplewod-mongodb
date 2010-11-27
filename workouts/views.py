@@ -8,7 +8,7 @@ def home(request):
     results = Result.objects.all()
     #if request.user.is_authenticated():
     #    results = results.filter(user=user)
-    results = results.order_by('-date')[:10]
+    results = results.order_by('-date')
     
     return r2r('index.html', locals())
 
@@ -55,7 +55,7 @@ def add_wod(request):
             r.set_tags(fix_tags(form.cleaned_data['tags']))
             #w.set_tags(form.cleaned_data['tags'].replace(' ', '_'))
             posted = True
-
+            
     else:
         form = WodForm(initial={'date': datetime.datetime.now().strftime("%m/%d/%Y")})
         #form.date = datetime.datetime.now().strftime("%d/%m/%Y")
@@ -71,7 +71,7 @@ def wod_single(request, wodslug, username, dateslug):
     return r2r('singleresult.html', locals())
 
 def result_tag(request, tagslug):
-    print tagslug
     results = TaggedItem.objects.get_by_model(Result, tagslug).order_by('-date')
-    return r2r('tagresult.html', locals())
+    header = "Tag: %s" % Tag.objects.get(name=tagslug)
+    return r2r('singleresult.html', locals())
     
