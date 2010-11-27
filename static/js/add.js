@@ -48,10 +48,14 @@ TagSync.prototype = {
 		    self.update(this.value );
 		});
 		
-		$('.ac_results').live('click', function() {
+		/*$('.ac_results').live('click', function() {
 			console.log('hi');
 		    //self.update(this.value );
+		});*/
+		$('body').bind('autocompleteClick', function(e) {
+			self.update(self.from.val() );
 		});
+
 	},
 	update: function(msg){
 		this.to.html(this.msg + msg.replace('-', ' '));

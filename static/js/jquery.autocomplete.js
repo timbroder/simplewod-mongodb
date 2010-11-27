@@ -600,9 +600,10 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			    $(target(event)).addClass(CLASSES.ACTIVE);            
 	        }
 		}).click(function(event) {
+			$('body').trigger('autocompleteClick');
 			$(target(event)).addClass(CLASSES.ACTIVE);
 			select();
-			// TODO provide option to avoid setting focus again after selection? useful for cleanup-on-focus
+			// TODO provide option to avoid setting focus agaiconn after selection? useful for cleanup-on-focus
 			input.focus();
 			return false;
 		}).mousedown(function() {

@@ -7,11 +7,12 @@
 {% block extrajs %}
 	<script type="text/javascript" src="/static/js/forms.js"></script>
 	<script type="text/javascript" src="/static/js/add.js"></script>
-	<script type="text/javascript" src="/static/js/jquery.autocomplete.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.autocomplete.js"></script>
 {% endblock %}
 
 {% block content %}
 {% if not posted %}
+<div class="ac_results"><ul style="max-height: 180px; overflow: auto;"><li class="ac_even"><strong>ta</strong>g1-<strong>ta</strong>g2</li><li class="ac_odd"><strong>ta</strong>g3</li><li class="ac_even ac_over"><strong>ta</strong>g4</li></ul></div>
 	<form action="." method="POST" id="addform">
 		<div id="form_wod">
 			<p>WOD Name</p>
