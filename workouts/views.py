@@ -3,14 +3,25 @@ from django.shortcuts import render_to_response as r2r
 from forms import *
 from models import *
 import time, datetime
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
-def home(request):
-    results = Result.objects.all()
-    #if request.user.is_authenticated():
-    #    results = results.filter(user=user)
-    results = results.order_by('-date')
+def get_paginator(request, qs, num=10):
+    #post_list = qs
+
+    paginator = Paginator(qs, num)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    try:
+        results = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        results    = paginator.page(paginator.num_pages)
     
-    return r2r('index.html', locals())
+    return results
+
+
 
 def fix_tags(tags):
     tags = tags.replace(' ', '-')
@@ -66,12 +77,23 @@ def add_wod(request):
 def result_add(request, wodslug):
     return r2r('add_result.html', locals())
     
+def home(request):
+    results = get_paginator(request, Result.objects.all().order_by('-date'))
+    return r2r('index.html', locals())
+
 def wod_single(request, wodslug, username, dateslug):
     results = Result.objects.filter(workout__slug = wodslug, user__username = username, dateslug = dateslug).order_by('-date')
+    print results
     return r2r('singleresult.html', locals())
 
 def result_tag(request, tagslug):
     results = TaggedItem.objects.get_by_model(Result, tagslug).order_by('-date')
     header = "Tag: %s" % Tag.objects.get(name=tagslug)
     return r2r('singleresult.html', locals())
+
+def wod_tag(request, tagslug):
+    results = TaggedItem.objects.get_by_model(Workout, tagslug).order_by('-created_at')
+    print Workout.objects.all().order_by('-created_at')
+    header = "Tag: %s" % Tag.objects.get(name=tagslug)
+    return r2r('tagwod.html', locals())
     

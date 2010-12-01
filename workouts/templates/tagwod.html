@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for wod in results %}
+	<p>{{ wod.title }}</p>
+	{{ wod.workout|linebreaks }}
+		
+{% endfor %}
+
+{% endblock %}

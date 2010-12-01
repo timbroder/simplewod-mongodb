@@ -10,7 +10,9 @@ from django.template.defaultfilters import slugify
 class Workout(SluggableModel, Taggable):
     title = models.CharField(max_length=128, blank=True, null=True)
     workout = models.TextField()
-    user = models.ForeignKey(User) 
+    user = models.ForeignKey(User)
+    created_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
+    updated_at = models.DateTimeField(auto_now=True, default=datetime.datetime.now())
 
     def save(self, *args, **kwargs):
         if self.title == None or self.title == "":
@@ -31,6 +33,8 @@ class Result(Taggable):
     result = models.TextField()
     notes = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User)
+    created_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
+    updated_at = models.DateTimeField(auto_now=True,  default=datetime.datetime.now())
     
     def __unicode__(self):
         return "%s - %s - %s" % (self.workout, self.user, self.date)

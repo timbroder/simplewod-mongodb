@@ -8,13 +8,13 @@
 		<td width="50%">
 			Recent workouts<br/>
 			<ul>
-				{% for r in results %}
+				{% for r in results.object_list %}
 					<li><a href="{{ r.get_absolute_url }}">{{ r }}</a></li>
 				{% endfor %}
 			</ul>
 		</td>
 		<td>Tags<br/>
-			{% tag_cloud_for_model workouts.Result as tags %}
+			{% tag_cloud_for_model workouts.Workout as tags %}
 			{% for tag in tags %}
 				<a href="/wods/tag/{{tag.name}}/">{{ tag }}</a> ({{tag.font_size}})
 			{% endfor %}
