@@ -10,6 +10,10 @@ class ResultForm(forms.Form):
     date = forms.CharField(required=False)#forms.DateField(widget=SelectDateWidget(), initial=datetime.date.today())    
     results = forms.CharField(widget=forms.Textarea, required=False)
     tags = TagField(widget=TagAutocomplete(), required=False) 
+    
+class ResultFormAjax(ResultForm):
+    wod_id = forms.CharField(required = True)
+    submitted = forms.BooleanField(initial=False, widget=forms.HiddenInput)
 
 class WodForm(ResultForm):
     name = forms.CharField(required=False)

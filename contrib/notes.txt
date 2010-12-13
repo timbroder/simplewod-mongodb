@@ -1,8 +1,20 @@
 	WOD and result page
 convert newlines to <br>
+fix ajax call to add form with real id
+change hover live on datepicker
+disable submit on submit for add result
+add cancel to add result
 
 make tag cloud on user page filterable on users Results
 result manager to filter on settings of wods
 user account settings
 	results are private
 	post to facebook (facebook account integration)
+	
+rss
+	/wods/rss
+	/results/rss
+	/<username>/rss
+	/<username/rss/<key>
+	
+check that wod tags are actually syncing... or something

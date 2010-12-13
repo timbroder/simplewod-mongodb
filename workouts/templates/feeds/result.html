@@ -1,0 +1,8 @@
+<b>{{ obj.workout.title }}</b>
+{{ obj.workout.workout|linebreaks }}
+<b>Results:</b>
+{{ obj.result|linebreaks }}
+{% if obj.notes %}
+<b>Notes:</b>
+{{ obj.notes|linebreaks }}
+{% endif %}

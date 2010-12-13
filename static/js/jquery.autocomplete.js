@@ -369,8 +369,7 @@ $.Autocompleter = function(input, options) {
 					q: lastWord(term),
 					limit: options.max
 				}, extraParams),
-				success: function(data) {
-					var parsed = options.parse && options.parse(data) || parse(data);
+aja					var parsed = options.parse && options.parse(data) || parse(data);
 					cache.add(term, parsed);
 					success(term, parsed);
 				}

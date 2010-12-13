@@ -1,0 +1,32 @@
+
+
+{% if not posted %}
+	<form action="#" method="POST" id="ajaxaddform">
+
+			{{ form.has_result }}
+			{{ form.has_result.data }}
+
+		<div id="form_result"{% ifequal form.has_result.data "False" %} style="display: none;"{% endifequal %}>			
+			<p>Date Completed</p>
+			{{ form.date }}
+			{{ form.date.errors }}
+			<p>Results</p>
+			{{ form.results }}
+			{{ form.results.errors }}
+		</div>
+		<div id="form_tags"{% ifequal form.has_result.data "False" %} style="display: none;"{% endifequal %}>
+			<p>Result Tags</p>
+			<p id="tags_from_wod">Tags included from Workout: {% for tag in tags %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+			<p id="tags_from_wod"></p>
+			{{ form.tags }}
+			{{ form.tags.errors }}
+		</div>
+		<input type="submit" name="sumit" value="submit" id="submit">
+	
+	
+	</form>
+	
+
+{% else %}
+Workout added
+{% endif %}

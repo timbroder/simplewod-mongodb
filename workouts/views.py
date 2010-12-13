@@ -111,4 +111,19 @@ def wod_tag(request, tagslug):
     print Workout.objects.all().order_by('-created_at')
     header = "Tag: %s" % Tag.objects.get(name=tagslug)
     return r2r('tagwod.html', locals())
+
+def result_add_ajax_form(request):
+    print 'in ajax add form'
+    wod_id = request.GET.get('wod_id')
+    if request.is_ajax() and wod_id:
+        
+        tags = Workout.objects.get(id=wod_id).get_tags()
+        
+        if request.method == 'POST':
+            print 'post'
+            form = ResultFormAjax(request.POST)
+        else:
+            form = ResultFormAjax()
+        print form
+        return r2r('resultform.html', locals())
     

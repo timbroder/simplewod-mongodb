@@ -5,6 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from workouts import views as wod
+from workouts.feeds import *
 import settings 
 
 urlpatterns = patterns('',
@@ -13,12 +14,18 @@ urlpatterns = patterns('',
     (r'^accounts/', include('registration.backends.default.urls')),
    
     ##(r'^wods/(?P<tagslug>.+)/$', wod.wod_tag),
-    (r'^(?P<username>.+)/wods/(?P<wodslug>.+)/$', wod.result_single),
+    
+    (r'^ajax/addresultform/$', wod.result_add_ajax_form),
+    (r'^wods/add/$', wod.add_wod),
+    (r'^wods/feed/$', WodFeed()),
     (r'^wods/(?P<wodslug>.+)/$', wod.wod_single),
+    (r'^results/feed/$', ResultFeed()),
+    (r'^(?P<username>.+)/feed/(?P<key>.+)/$', ProtectedUserFeed()),
+    (r'^(?P<username>.+)/feed/$', UserFeed()),
     (r'^results/tag/(?P<tagslug>.+)/$', wod.result_tag),
     (r'^wods/tag/(?P<tagslug>.+)/$', wod.wod_tag),
     (r'^results/add/(?P<wodslug>.+)/$', wod.result_add),
-    (r'^wods/add/$', wod.add_wod),
+    (r'^(?P<username>.+)/wods/(?P<wodslug>.+)/$', wod.result_single),
     
     
     (r'^tagging_autocomplete/', include('tagging_autocomplete.urls')),
