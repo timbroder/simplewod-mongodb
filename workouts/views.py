@@ -78,11 +78,26 @@ def result_add(request, wodslug):
     return r2r('add_result.html', locals())
     
 def home(request):
-    results = get_paginator(request, Result.objects.all().order_by('-date'))
+    print "home"
+    results = get_paginator(request, Workout.objects.all().order_by('-created_at'))
+    tag_cloud_template = 'tags_home.html'
     return r2r('index.html', locals())
 
-def wod_single(request, wodslug, username, dateslug):
-    results = Result.objects.filter(workout__slug = wodslug, user__username = username, dateslug = dateslug).order_by('-date')
+def home_user(request, username):
+    results = get_paginator(request, Result.objects.filter(user__username=username).order_by('-date'))
+    tag_cloud_template = 'tags_home_user.html'
+    header = "Your Recent Workouts"
+    return r2r('index.html', locals())
+
+def wod_single(request, wodslug):
+    print "wods single"
+    wod = Workout.objects.get(slug = wodslug)
+    results = Result.objects.filter(workout = wod).order_by('-date')
+    print results
+    return r2r('singlewod.html', locals())
+
+def result_single(request, wodslug, username):
+    results = Result.objects.filter(workout__slug = wodslug, user__username = username)
     print results
     return r2r('singleresult.html', locals())
 

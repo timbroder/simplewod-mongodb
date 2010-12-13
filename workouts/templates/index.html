@@ -2,11 +2,12 @@
 
 {% block content %}
 
-{% load tagging_tags %}
+
 <table>
 	<tr>
 		<td width="50%">
-			Recent workouts<br/>
+			<h2>{% if header %}{{ header }}{% else %}Recent Workouts{% endif %}</h2>
+			
 			<ul>
 				{% for r in results.object_list %}
 					<li><a href="{{ r.get_absolute_url }}">{{ r }}</a></li>
@@ -14,10 +15,7 @@
 			</ul>
 		</td>
 		<td>Tags<br/>
-			{% tag_cloud_for_model workouts.Workout as tags %}
-			{% for tag in tags %}
-				<a href="/wods/tag/{{tag.name}}/">{{ tag }}</a> ({{tag.font_size}})
-			{% endfor %}
+			{% include tag_cloud_template %}
 		</td>
 	</tr>
 </table>

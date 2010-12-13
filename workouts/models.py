@@ -44,7 +44,8 @@ class Result(Taggable):
         return super(Result, self).save(*args, **kwargs)
     
     def get_absolute_url(self):
-        return "%s/%s/%s/" % (self.workout.get_absolute_url(), self.user.username, self.dateslug)
+        #return "%s/%s/%s/" % (self.workout.get_absolute_url(), self.user.username, self.dateslug)
+        return "/%s%s" % (self.user.username, self.workout.get_absolute_url())
     
     def get_add_url(self):
         return "%s/add" % self.workout.get_absolute_url()

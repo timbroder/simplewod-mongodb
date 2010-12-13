@@ -1,0 +1,6 @@
+{% load tagging_tags %}
+
+{% tag_cloud_for_model workouts.Workout as tags %}
+{% for tag in tags %}
+	<a href="/wods/tag/{{tag.name}}/">{{ tag.name }}</a> ({{tag.font_size}})
+{% endfor %}

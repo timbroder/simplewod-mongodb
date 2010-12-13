@@ -1,0 +1,8 @@
+	WOD and result page
+convert newlines to <br>
+
+make tag cloud on user page filterable on users Results
+result manager to filter on settings of wods
+user account settings
+	results are private
+	post to facebook (facebook account integration)

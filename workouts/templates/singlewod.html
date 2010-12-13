@@ -5,11 +5,11 @@
 	<h2>{{ header }}</h2>
 {% endif %}
 
+{% include '_wod.html' %}
+
 {% for wod in results %}
 	{% if forloop.first %}
-		{% with wod.workout as wod %}
-			{% include '_wod.html' %}
-		{% endwith %}
+		
 		<h3>Results</h3>
 	{% endif %}
 	

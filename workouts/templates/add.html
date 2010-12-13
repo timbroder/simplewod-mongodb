@@ -28,9 +28,9 @@
 		</div>
 		<div>
 			{{ form.has_result }}
-			{# { form.has_result.data } #}
+			{{ form.has_result.data }}
 			<p><span id="result_text">
-			{% ifequal form.has_result.data "True" %}
+			{% ifequal form.has_result.data True %}
 				Add Workout Only?
 			{% else %}
 				Want to add a result also?
