@@ -8,6 +8,7 @@ from sluggable.models import SluggableModel
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from managers import *
 
 class Workout(SluggableModel, Taggable):
     title = models.CharField(max_length=128, blank=True, null=True)
@@ -15,6 +16,8 @@ class Workout(SluggableModel, Taggable):
     user = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
     updated_at = models.DateTimeField(auto_now=True, default=datetime.datetime.now())
+    
+    objects = WodManager()
 
     def save(self, *args, **kwargs):
         if self.title == None or self.title == "":
@@ -37,6 +40,8 @@ class Result(Taggable):
     user = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
     updated_at = models.DateTimeField(auto_now=True,  default=datetime.datetime.now())
+    
+    objects = WodManager()
     
     def __unicode__(self):
         return "%s - %s - %s" % (self.workout, self.user, self.date)
