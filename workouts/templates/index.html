@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="holder">
+	<div class="leftcol">
+		<h2>{% if header %}{{ header }}{% else %}Recent Workouts{% endif %}</h2>
+		
+		<ul>
+			{% for r in results.object_list %}
+				<li><a href="{{ r.get_absolute_url }}">{{ r }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="rightcol">
+		<h2>Tags</h2>
+			{% include tag_cloud_template %}
+	</div>
+</div>
+{% endblock %}
