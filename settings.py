@@ -86,6 +86,8 @@ INSTALLED_APPS = (
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
+AUTH_PROFILE_MODULE = 'workouts.UserProfile'
+
 
 TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
     "django.core.context_processors.debug",

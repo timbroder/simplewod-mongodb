@@ -6,6 +6,8 @@ from tagging.fields import TagField
 import datetime
 from sluggable.models import SluggableModel
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 class Workout(SluggableModel, Taggable):
     title = models.CharField(max_length=128, blank=True, null=True)
@@ -49,5 +51,21 @@ class Result(Taggable):
     
     def get_add_url(self):
         return "%s/add" % self.workout.get_absolute_url()
+    
+
+
+class UserProfile(models.Model):  
+    user = models.ForeignKey(User)
+    private_wods = models.BooleanField(default=False)
+    #other fields here
+
+    def __str__(self):  
+          return "%s's profile" % self.user  
+
+def create_user_profile(sender, instance, created, **kwargs):  
+    if created:  
+       profile, created = UserProfile.objects.get_or_create(user=instance)  
+
+post_save.connect(create_user_profile, sender=User) 
     
 from patch import *

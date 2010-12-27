@@ -23,3 +23,4 @@ check that wod tags are actually syncing... or something
 when workout added go to workout after 5 seconds
 add login redirects
 add manager for "private wods"
+pagination?

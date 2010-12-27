@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>{% block title %}{% endblock %} - simpleWOD</title>
+	<title>{% block title %}Home{% endblock %} - simpleWOD</title>
     <link rel="stylesheet" href="/static/css/base.css" />
     <link rel="stylesheet" href="/static/css/redmond/jquery-ui.css"></link>
     {% block extracss %}{% endblock %}
@@ -25,6 +25,7 @@
 					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/wods/add'">Add Workout</button>
 					<button class="fg-button ui-state-default ui-priority-primary ui-corner-right" onclick="window.location='/accounts/logout'">Logout</button>
 				{% else %}	
+					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/accounts/register/'">Register</button>
 					<button class="fg-button ui-state-default ui-priority-primary ui-corner-right" onclick="window.location='/accounts/login'">Login</button>
 				{% endif %}
 			</div>
