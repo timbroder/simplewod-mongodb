@@ -153,18 +153,16 @@ $(document).ready(function() {
     new AddResultForm('.add_result', '#result_form');
     new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit');
     
-    var d = new Date();
-	$("#id_date").live('click', function(){
+	$("#id_date").live('focus', function(){
         $(this).datepicker();
     });
-	
 	
 });
 
 
-$(function(){
+//$(function(){
 	//$("#addform").form();
 	//date picker
 	//var d = new Date();
 	//$("#id_date").datepicker();
-});
+//});
