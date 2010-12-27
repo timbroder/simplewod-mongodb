@@ -1,5 +1,16 @@
-{% extends "base.html" %}
+{% extends "registration/registration_base.html" %}
+
+{% block title%}Logged Out{% endblock %}
 
 {% block content %}
-bye!
+<h3>bye!</h3>
+
+<script type="text/javascript">
+	setTimeout(function() {
+		window.location.replace("/");
+
+	}, 5000);
+</script>
+
+
 {% endblock %}

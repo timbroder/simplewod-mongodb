@@ -50,6 +50,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '4y-#1o7i!n*e21n1zw!h6g17c23xrkec39!vak#s)*d+m7g+70'
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -74,11 +75,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
+    'registration',
     'workouts',
     'tagging',
     'django_evolution',
     'django_extensions',
-    'registration',
     'sluggable',
     'tagging_autocomplete',
     #'debug_toolbar',

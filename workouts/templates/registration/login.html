@@ -1,11 +1,12 @@
-{% extends "base.html" %}
+{% extends "registration/registration_base.html" %}
+
+{% block title %}Login{% endblock%}
 
 {% block extrajs %}
 	<script type="text/javascript" src="/static/js/forms.js"></script>
 {% endblock %}
 
 {% block content %}
-<br></br>
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -21,9 +22,10 @@
     <td>{{ form.password }}</td>
 </tr>
 </table>
+<p><a href="{% url auth_password_reset %}">Forgot</a> your password? <a href="{% url registration_register %}">Need an account</a>?</p>
 
 <input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
+<input type="text" name="next" value="{{ next }}" />
 </form>
 
 {% endblock %}

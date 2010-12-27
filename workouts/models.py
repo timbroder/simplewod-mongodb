@@ -49,3 +49,5 @@ class Result(Taggable):
     
     def get_add_url(self):
         return "%s/add" % self.workout.get_absolute_url()
+    
+from patch import *
