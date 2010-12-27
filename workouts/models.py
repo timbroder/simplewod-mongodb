@@ -17,7 +17,8 @@ class Workout(SluggableModel, Taggable):
     created_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
     updated_at = models.DateTimeField(auto_now=True, default=datetime.datetime.now())
     
-    objects = WodManager()
+    objects = models.Manager()
+    private_objects = WodManager()
 
     def save(self, *args, **kwargs):
         if self.title == None or self.title == "":
@@ -29,6 +30,15 @@ class Workout(SluggableModel, Taggable):
     
     def get_absolute_url(self):
         return "/wods/%s" % self.slug
+    
+    def num_results(self, user):
+        if user.is_authenticated() and user.get_profile().private_wods:
+            count = Result.objects.filter(workout=self)
+        else:
+            count = Result.private_objects.filter(workout=self)
+        
+        return count.count()
+
 
         
 class Result(Taggable):
@@ -41,7 +51,8 @@ class Result(Taggable):
     created_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
     updated_at = models.DateTimeField(auto_now=True,  default=datetime.datetime.now())
     
-    objects = WodManager()
+    objects = models.Manager()
+    private_objects = WodManager()
     
     def __unicode__(self):
         return "%s - %s - %s" % (self.workout, self.user, self.date)

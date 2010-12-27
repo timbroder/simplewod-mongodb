@@ -1,20 +1,26 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block title%}{{ title }}{% endblock %}
 
+{% block content %}
+{% load extra_args %}
 <div id="holder">
-	<div class="leftcol">
-		<h2>{% if header %}{{ header }}{% else %}Recent Workouts{% endif %}</h2>
-		
-		<ul>
-			{% for r in results.object_list %}
-				<li><a href="{{ r.get_absolute_url }}">{{ r }}</a></li>
-			{% endfor %}
-		</ul>
-	</div>
-	<div class="rightcol">
-		<h2>Tags</h2>
-			{% include tag_cloud_template %}
-	</div>
+	{% if show %}
+		<div class="leftcol">
+			<h2>{% if header %}{{ header }}{% else %}Recent Workouts{% endif %}</h2>
+			
+			<ul>
+				{% for r in results.object_list %}
+					<li><a href="{{ r.get_absolute_url }}">{% ifequal title "Home" %}{{ r }}{% else %}{{ r.workout }}{% endifequal %}</a>{% ifequal title "Home" %} ({{ r|args:user|call:"num_results" }}){% endifequal %}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="rightcol">
+			<h2>Tags</h2>
+				{% include tag_cloud_template %}
+		</div>
+	{% else %}
+		<p>This user's results are private.</p>
+	{% endif %}
 </div>
 {% endblock %}

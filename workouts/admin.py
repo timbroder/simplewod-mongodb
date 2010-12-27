@@ -1,6 +1,13 @@
 from django.contrib import admin
 from models import *
 
-admin.site.register(Workout)
+class WorkoutAdmin(admin.ModelAdmin):
+    search_fields = ('title', 'workout', 'created_at',)
+    #index = 'sayin_post'
+    #list_filter = ('title', 'created_at',)
+    list_display = ('title', 'created_at', 'user')
+    ordering = ('-created_at',)
+
+admin.site.register(Workout, WorkoutAdmin)
 admin.site.register(Result)
 admin.site.register(UserProfile)

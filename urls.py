@@ -18,13 +18,15 @@ urlpatterns = patterns('',
     (r'^ajax/addresultform/$', wod.result_add_ajax_form),
     (r'^wods/add/$', wod.add_wod),
     (r'^wods/feed/$', WodFeed()),
+    (r'^wods/tag/(?P<tagslug>.+)/$', wod.wod_tag),
     (r'^wods/(?P<wodslug>.+)/$', wod.wod_single),
     (r'^results/feed/$', ResultFeed()),
     (r'^(?P<username>.+)/feed/(?P<key>.+)/$', ProtectedUserFeed()),
     (r'^(?P<username>.+)/feed/$', UserFeed()),
     (r'^results/tag/(?P<tagslug>.+)/$', wod.result_tag),
-    (r'^wods/tag/(?P<tagslug>.+)/$', wod.wod_tag),
+    
     (r'^results/add/(?P<wodslug>.+)/$', wod.result_add),
+    (r'^(?P<username>.+)/tag/(?P<tagslug>.+)/$', wod.result_tag_user),
     (r'^(?P<username>.+)/wods/(?P<wodslug>.+)/$', wod.result_single),
     
     

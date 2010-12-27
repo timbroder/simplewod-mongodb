@@ -4,17 +4,13 @@
 {% if header %}
 	<h2>{{ header }}</h2>
 {% endif %}
-
-{% for wod in results %}
-	{% if forloop.first %}
-		{% with wod.workout as wod %}
-			{% include '_wod.html' %}
-		{% endwith %}
-		<h3>Results</h3>
-	{% endif %}
-	
-	{% include '_result.html' %}		
-		
-{% endfor %}
-
+{% include '_wod.html' %}
+{% if show %}
+<h3>Results</h3>
+	{% for wod in results %}
+		{% include '_result.html' %}		
+	{% endfor %}
+{% else %}
+	<p>This user's results are private.</p>
+{% endif %}
 {% endblock %}
