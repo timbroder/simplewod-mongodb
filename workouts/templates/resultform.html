@@ -1,7 +1,7 @@
 
 
 {% if not posted %}
-	<form action="#" method="POST" id="ajaxaddform">
+	<form action="#" method="POST" id="ajaxaddform">{% csrf_token %}
 
 			{{ form.has_result }}
 			{{ form.has_result.data }}
@@ -28,5 +28,5 @@
 	
 
 {% else %}
-Workout added
+<p>Workout added</p>
 {% endif %}

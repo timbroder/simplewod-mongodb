@@ -87,6 +87,7 @@ def home_user(request, username):
     results = get_paginator(request, Result.objects.filter(user__username=username).order_by('-date'))
     tag_cloud_template = 'tags_home_user.html'
     header = "Your Recent Workouts"
+    print username
     return r2r('index.html', locals())
 
 def wod_single(request, wodslug):

@@ -1,0 +1,79 @@
+body{ 
+	font: 13px/1.231 arial,helvetica,clean,sans-serif;
+	color: #5F5F5F;
+}
+
+a {
+	font: arial,helvetica,clean,sans-serif;
+	color: #5F5F5F;
+	text-decoration: underline;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+#main {
+	margin:auto;
+	text-align:left;
+	width:57.69em;
+	*width:56.3em;
+	min-width:800px;
+	border: 1px;
+}
+
+#content {
+	margin-left: .2em;
+	padding-left: .4em;
+	border: 1px;
+}
+
+.post {
+	margin-left:  6em;
+	border-bottom: 1px solid #E0E0E0;
+}
+
+#nav {
+	margin-left: .2em;
+	padding-left: .4em;
+	border: 1px;
+	width: 100%;
+}
+
+	.fg-button { outline: 0; margin:0 4px 0 0; padding: .4em 1em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; zoom: 1; }
+	.fg-button-search { outline: 0; margin:0 4px 0 0; padding: .33em 1em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; zoom: 1; }
+	.fg-button .ui-icon { position: absolute; top: 50%; margin-top: -8px; left: 50%; margin-left: -8px; }
+	.fg-button-search .ui-icon { position: absolute; top: 50%; margin-top: -8px; left: 50%; margin-left: -8px; }
+	
+	a.fg-button { float:left; }
+	a.fg-button-search { float:left; }
+	
+	button.fg-button { width:auto; overflow:visible; }
+	button.fg-button-search { width:auto; overflow:visible; }
+	
+	.fg-button-icon-left { padding-left: 2.1em; }
+	.fg-button-icon-right { padding-right: 2.1em; }
+	.fg-button-icon-left .ui-icon { right: auto; left: .2em; margin-left: 0; }
+	.fg-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; }
+	
+	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }
+	.fg-buttonset { float:left; }
+	.fg-buttonset .fg-button { float: left; }
+	.fg-buttonset .fg-button-search { float: left; }
+	.fg-buttonset-single .fg-button, 
+	.fg-buttonset-multi .fg-button { margin-right: -1px;}
+	.fg-buttonset-single .fg-button-search, 
+	.fg-buttonset-multi .fg-button-search { margin-right: -1px;}
+	
+.leftcol {
+	float: left;
+	width: 50%;
+	border: 1px;	
+}
+
+.rightcol {
+	float: right;
+	width: 50%;
+	border: 1px;	
+}
+

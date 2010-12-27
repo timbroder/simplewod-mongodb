@@ -12,7 +12,7 @@
 
 {% block content %}
 {% if not posted %}
-	<form action="." method="POST" id="addform">
+	<form action="." method="POST" id="addform">{% csrf_token %}
 		<div id="form_wod">
 			<p>WOD Name</p>
 			{{ form.name}}
@@ -33,7 +33,7 @@
 			{% ifequal form.has_result.data True %}
 				Add Workout Only?
 			{% else %}
-				Want to add a result also?
+				Want to add a result also? 
 			{% endifequal %}
 			 </span><a href="#" id="toggle_result">Click here.</a></p>
 		</div>

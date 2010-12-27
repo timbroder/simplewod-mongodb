@@ -17,12 +17,12 @@ ResultToggle.prototype = {
 		
 		if(hasResult.val() == 'True'){
 			result.slideUp();
-			rtxt.html('Want to add a result also?');
+			rtxt.html('Want to add a result also? ');
 			hasResult.val('False');
 		}
 		else{
 			result.slideDown();
-			rtxt.html('Add Workout Only?');
+			rtxt.html('Add Workout Only? ');
 			hasResult.val('True');
 		}
 	}
