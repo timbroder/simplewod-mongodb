@@ -77,20 +77,32 @@ AddResultForm.prototype = {
     },
     click: function() {
         var self = this;
-        console.log('self.click');
         var id = self.trigger.attr('id');
-        $.ajax({
-            method: 'post',
-            url: '/ajax/addresultform/',
-            success: function(data) {
-                self.callback(data);
-            },
-            data: { 'wod_id': id },
-            
-        });
+        
+        if (!this.hook.hasClass('shown') && !this.hook.hasClass('once')) {
+	        $.ajax({
+	            method: 'post',
+	            url: '/ajax/addresultform/',
+	            success: function(data) {
+	                self.callback(data);
+	            },
+	            data: { 'wod_id': id },	            
+	        });
+			this.hook.addClass('once');    		
+    		this.hook.addClass('shown');
+    	}
+    	else if (this.hook.hasClass('once') && this.hook.hasClass('shown')) {
+			this.hook.hide();
+			this.hook.removeClass('shown');
+		}
+		else {
+			this.hook.show();
+			this.hook.addClass('shown');
+		}
+    	
     },
-    callback: function(data){
-        this.hook.html(data);
+    callback: function(data){    	
+    	this.hook.html(data);        
     }
 }
 
@@ -145,6 +157,8 @@ $(document).ready(function() {
 	$("#id_date").live('click', function(){
         $(this).datepicker();
     });
+	
+	
 });
 
 
