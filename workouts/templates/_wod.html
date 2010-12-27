@@ -1,4 +1,6 @@
 <h3>{{ wod.title }}</h3>
 {{ wod.workout|linebreaks }}
-<p>Add Result <a href="#" class="add_result" id="{{ wod.id }}">+++</a></p>
-<div id="result_form"></div>
+{% if request.user.is_authenticated %}
+	<p>Add Result <a href="#" class="add_result" id="{{ wod.id }}">+++</a></p>
+	<div id="result_form"></div>
+{% endif %}

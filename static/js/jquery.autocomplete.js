@@ -369,7 +369,8 @@ $.Autocompleter = function(input, options) {
 					q: lastWord(term),
 					limit: options.max
 				}, extraParams),
-aja					var parsed = options.parse && options.parse(data) || parse(data);
+				success: function(data) {
+					var parsed = options.parse && options.parse(data) || parse(data);
 					cache.add(term, parsed);
 					success(term, parsed);
 				}
@@ -602,7 +603,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			$('body').trigger('autocompleteClick');
 			$(target(event)).addClass(CLASSES.ACTIVE);
 			select();
-			// TODO provide option to avoid setting focus agaiconn after selection? useful for cleanup-on-focus
+			// TODO provide option to avoid setting focus again after selection? useful for cleanup-on-focus
 			input.focus();
 			return false;
 		}).mousedown(function() {
