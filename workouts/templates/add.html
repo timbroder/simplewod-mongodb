@@ -63,6 +63,11 @@
 	
 
 {% else %}
-Workout added
+	Workout added. Click <a href="{{ w.get_absolute_url }}">here</a> to return to the workout if your browser does not redirect you.
+<script type="text/javascript">
+	setTimeout(function() {
+		window.location.replace("{{ w.get_absolute_url }}");
+	}, 2000);
+</script>
 {% endif %}
 {% endblock %}

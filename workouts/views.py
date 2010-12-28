@@ -88,8 +88,14 @@ def add_wod(request):
                 #for tag in form.cleaned_data['tags'].split(','):
                     #r.add_tag(tag)
                 print form.cleaned_data['tags']
-                r.set_tags(fix_tags(form.cleaned_data['wod_tags']))
-                r.set_tags(fix_tags(form.cleaned_data['tags']))
+                print "1!!!!!!!"
+                rtags = "%s, %s" % (fix_tags(form.cleaned_data['wod_tags']), fix_tags(form.cleaned_data['tags']))
+                print rtags
+                r.set_tags(rtags)
+                #print form.cleaned_data['wod_tags']
+                #print fix_tags(form.cleaned_data['wod_tags'])
+                print "2!!!!!!!"
+                #r.set_tags(fix_tags(form.cleaned_data['tags']))
             
             
             #w.set_tags(form.cleaned_data['tags'].replace(' ', '_'))
