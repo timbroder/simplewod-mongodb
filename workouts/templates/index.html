@@ -15,6 +15,9 @@
 					{% ifequal title "Home" %}({{ r|args:user|call:"num_results" }}){% endifequal %}</li>
 				{% endfor %}
 			</ul>
+			
+			{% include '_paged.html' %}
+			
 		</div>
 		<div class="rightcol">
 			<h2>{% ifequal title "Home" %}Workout{% else %}Result{% endifequal %} Tags</h2>

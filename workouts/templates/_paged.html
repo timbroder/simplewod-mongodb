@@ -1,0 +1,17 @@
+<div class="pagination">
+    <span class="step-links">
+        {% if results.has_previous %}
+        	<button class="ui-state-default ui-corner-all" onclick="window.location='?page=1'"><span class="ui-icon ui-icon-arrowthickstop-1-w"></button>
+        	<button class="ui-state-default ui-corner-all" onclick="window.location='?page={{ results.previous_page_number }}'"><span class="ui-icon ui-icon-arrowthick-1-w"></button>
+        {% endif %}
+
+        <span class="current">
+            Page {{ results.number }} of {{ results.paginator.num_pages }}.
+        </span>
+
+        {% if results.has_next %}
+        	<button class="ui-state-default ui-corner-all" onclick="window.location='?page={{ results.next_page_number }}'"><span class="ui-icon ui-icon-arrowthick-1-e"></button>
+        	<button class="ui-state-default ui-corner-all" onclick="window.location='?page={{ results.paginator.num_pages }}'"><span class="ui-icon ui-icon-arrowthickstop-1-e"></button>
+        {% endif %}
+    </span>
+</div>

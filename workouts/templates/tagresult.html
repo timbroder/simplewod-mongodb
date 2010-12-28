@@ -4,14 +4,14 @@
 
 {% block content %}
 
-{% if results %}
-	{% for wod in results %}
+{% if results.object_list %}
+	{% for wod in results.object_list %}
 		{% if forloop.first %}
 			<h2>{{ wod.workout.title }}</h2>
 			{{ wod.workout.workout|linebreaks }}
 			<h2>Results</h2>
 		{% endif %}
-		<hr></hr>
+
 		<div class="result">
 			{{ wod.result|linebreaks }}
 			
@@ -21,6 +21,7 @@
 			{% endif %}
 		</div>
 		
+	{% include '_paged.html' %}
 			
 	{% endfor %}
 {% else %}
@@ -30,5 +31,7 @@
 		<p>No results listed for this tag</p>
 	{% endif %}
 {% endif %}
+
+
 
 {% endblock %}

@@ -6,11 +6,13 @@
 {% load extra_args %}
 
 
-{% for wod in results %}
+{% for wod in results.object_list %}
 	<h3><a href="{{ wod.get_absolute_url }}">{{ wod.title }}</a></h3>
 	{{ wod.workout|linebreaks }}
 	<p>Results: {{ wod|args:user|call:"num_results" }}</p>
 		
 {% endfor %}
+
+{% include '_paged.html' %}
 
 {% endblock %}

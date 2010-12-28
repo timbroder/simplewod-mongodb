@@ -29,11 +29,6 @@ pagination?
 
 
 
-
-	/results/rss
-	/<username>/rss
-	/<username/rss/<key>
-	
 check that wod tags are actually syncing... or something
 pagination
 move results count to WOD as updated static

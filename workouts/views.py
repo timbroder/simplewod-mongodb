@@ -15,7 +15,7 @@ from django.core.mail import send_mail, BadHeaderError
 
 debug = getattr(settings, 'DEBUG', None)
 
-def get_paginator(request, qs, num=10):
+def get_paginator(request, qs, num=20):
     if debug:
         print '- get paginator'
     #post_list = qs
@@ -122,7 +122,7 @@ def home(request):
     #    results = get_paginator(request, r1 | r2)
     #else:
     #    results = get_paginator(request, r1)
-    results = get_paginator(request, r1)
+    results = get_paginator(request, r1, 20)
     tag_cloud_template = 'tags_home.html'
     title = 'Home'
     show = True
@@ -139,7 +139,7 @@ def home_user(request, username):
     else:
         show = True
     
-    results = get_paginator(request, Result.objects.filter(user=user).order_by('-date'))
+    results = get_paginator(request, Result.objects.filter(user=user).order_by('-date'), 20)
     tag_cloud_template = 'tags_home_user.html'
     header = "%s's Recent Workouts" % username
     title = username
@@ -189,6 +189,8 @@ def result_tag_user(request, username, tagslug):
         results = results.filter(user=user)
         show = True
     
+    results = get_paginator(request, results, 10)
+    
     if request.user.is_authenticated() and request.user.username == username:
         message = 'You have not logged any results with this tag'
     
@@ -209,7 +211,7 @@ def wod_tag(request, tagslug):
     if debug:
         print '- wod tag'
         
-    results = TaggedItem.objects.get_by_model(Workout, tagslug).order_by('-created_at')
+    results = get_paginator(request, TaggedItem.objects.get_by_model(Workout, tagslug).order_by('-created_at'), 10)
     print Workout.objects.all().order_by('-created_at')
     header = "Tagged Workouts: %s" % Tag.objects.get(name=tagslug)
     user = request.user
