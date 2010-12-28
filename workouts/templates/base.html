@@ -2,8 +2,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
+{% load macros %}
+{% macro title %}
+    {% block title %}{% endblock %}
+{% endmacro %}
+
+
 <head>
-	<title>{% block title %}Home{% endblock %} - simpleWOD</title>
+	<title>{% usemacro title %} - simpleWOD</title>
     <link rel="stylesheet" href="/static/css/base.css" />
     <link rel="stylesheet" href="/static/css/redmond/jquery-ui.css"></link>
     {% block extracss %}{% endblock %}
@@ -25,6 +31,9 @@
 				{% if request.user.is_authenticated %}	
 					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/{{ request.user.username }}/'">{{ request.user.username }}</button>
 					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/wods/add'">Add Workout</button>
+				{% endif %}
+					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/contact/'">Contact</button>
+				{% if request.user.is_authenticated %}	
 					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/settings/'">Settings</button>
 					<button class="fg-button ui-state-default ui-priority-primary ui-corner-right" onclick="window.location='/accounts/logout'">Logout</button>
 				{% else %}	
@@ -34,7 +43,7 @@
 			</div>
 		</div>
 	    <div id="content">
-	    	<br></br>
+	    	{% ifnotequal title "Home" %}<div id="header"><h2>{% usemacro title %}</h2></div>{% endifnotequal %}
 	        {% block content %}{% endblock %}
 	    </div>
 	</div>

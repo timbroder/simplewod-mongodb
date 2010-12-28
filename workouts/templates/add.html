@@ -10,6 +10,8 @@
 	<script type="text/javascript" src="/static/js/jquery.autocomplete.js"></script>
 {% endblock %}
 
+{% block title %}Add a Workout{% endblock %}
+
 {% block content %}
 {% if not posted %}
 	<form action="." method="post" id="addform">{% csrf_token %}

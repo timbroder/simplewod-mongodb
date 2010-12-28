@@ -26,10 +26,10 @@ add manager for "private wods"
 pagination?
 
 
-add cancel to add result
-make tag cloud on user page filterable on users Results
-	post to facebook (facebook account integration)
+
+
 contact form
+tagresult tagwod titles
 rss
 	/wods/rss
 	/results/rss
@@ -37,4 +37,6 @@ rss
 	/<username/rss/<key>
 	
 check that wod tags are actually syncing... or something
-pagination?
+pagination
+make tag cloud on user page filterable on users Results
+	post to facebook (facebook account integration)

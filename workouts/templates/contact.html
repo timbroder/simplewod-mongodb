@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+	<form action="." method="post" id="contact_form">{% csrf_token %}
+		<div id="form_wod">
+			<p>Name</p>
+			{{ form.name}}
+			{{ form.name.errors }}
+			<p>Email</p>
+			{{ form.email }}
+			{{ form.email.errors }}
+			<p>Subject</p>
+			{{ form.topic }}
+			{{ form.topic.errors }}
+			<p>Message</p>
+			{{ form.message }}
+			{{ form.message.errors }}
+		</div>
+		<input type="submit" name="sumit" value="submit">
+	</form>
+{% endblock %}

@@ -7,6 +7,11 @@ import time, datetime
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 import settings
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template import RequestContext, Context
+from django.core.mail import send_mail, BadHeaderError
 
 debug = getattr(settings, 'DEBUG', None)
 
@@ -277,4 +282,29 @@ def settings(request):
         form = SettingsForm(initial={'email': user.email, 'private_wods': user.get_profile().private_wods})
     
     return r2r('settings.html', locals(), context_instance=RequestContext(request))
-    
+
+def contactview(request):
+    if debug:
+        print 'contactview'
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            if debug:
+                'valid form'
+            subject = "simpleWOD contact: %s" % form.cleaned_data['topic']
+            message = "From: %s\n\n%s" % (form.cleaned_data['name'], form.cleaned_data['message'])
+            from_email = form.cleaned_data['email']
+            try:
+                send_mail(subject, message, from_email, ['timothy.broder@gmail.com'])
+            except BadHeaderError:
+                    return HttpResponse('Invalid header found.')
+            return HttpResponseRedirect('/contact/thankyou/')
+    else:        
+        form = ContactForm()
+        #form = ContactForm(initial={'topic': 'simpleWOD contact form submission' })
+
+
+    return r2r('contact.html', {'form': form}, context_instance=RequestContext(request))
+
+def thankyou(request):
+        return render_to_response('thankyou.html')

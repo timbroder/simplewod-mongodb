@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from managers import *
 
+
 class Workout(SluggableModel, Taggable):
     title = models.CharField(max_length=128, blank=True, null=True)
     workout = models.TextField()
@@ -83,5 +84,10 @@ def create_user_profile(sender, instance, created, **kwargs):
        profile, created = UserProfile.objects.get_or_create(user=instance)  
 
 post_save.connect(create_user_profile, sender=User) 
+
+
+
+
+
     
 from patch import *

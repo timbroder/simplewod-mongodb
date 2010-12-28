@@ -14,7 +14,10 @@ urlpatterns = patterns('',
     (r'^accounts/', include('registration.backends.default.urls')),
    
     ##(r'^wods/(?P<tagslug>.+)/$', wod.wod_tag),
-     (r'^settings/$', wod.settings),
+    (r'^settings/$', wod.settings),
+    (r'^contact/thankyou/', wod.thankyou),
+    (r'^contact/', wod.contactview),
+
     (r'^ajax/addresultform/$', wod.result_add_ajax_form),
     (r'^wods/add/$', wod.add_wod),
     (r'^wods/feed/$', WodFeed()),

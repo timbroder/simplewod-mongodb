@@ -10,11 +10,13 @@
 <script type="text/javascript" src="/static/js/jquery.autocomplete.js"></script>
 {% endblock %}
 
+{% if header %}
+	{% block title%}{{ header }}{% endblock %}
+{% endif %}
+
 {% block content %}
 
-{% if header %}
-	<h2>{{ header }}</h2>
-{% endif %}
+
 {% include '_wod.html' %}
 {% if show %}
 <h3>Results</h3>
