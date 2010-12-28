@@ -9,6 +9,8 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from managers import *
+import md5
+from django.contrib.sites.models import Site
 
 
 class Workout(SluggableModel, Taggable):
@@ -85,10 +87,25 @@ class Result(Taggable):
 class UserProfile(models.Model):  
     user = models.ForeignKey(User)
     private_wods = models.BooleanField(default=False)
+    private_key = models.CharField(max_length=64, default="", blank=True, null=True)
     #other fields here
-
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.private_key = md5.new(str(datetime.datetime.now())).hexdigest()
+        return super(UserProfile, self).save(*args, **kwargs)
+    
     def __str__(self):  
           return "%s's profile" % self.user  
+      
+    def get_rss_url(self):
+        domain = Site.objects.get_current().domain
+
+        if self.private_wods:
+            return 'http://%s/%s/feed/%s/' % (Site.objects.get_current().domain, self.user.username, self.private_key)
+        else:
+            return 'http://%s/%s/feed/' % (Site.objects.get_current().domain, self.user.username)
+
 
 def create_user_profile(sender, instance, created, **kwargs):  
     if created:  

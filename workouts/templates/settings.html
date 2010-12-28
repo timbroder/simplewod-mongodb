@@ -31,4 +31,5 @@
 
 </form>
 <p>To reset your password, <a href="{% url auth_password_change %}">Click here</a></p>
+{% if user.get_profile.private_wods %}Private {% endif %}RSS url: <a href="{{ user.get_profile.get_rss_url }}">{{ user.get_profile.get_rss_url }}</a>
 {% endblock %}

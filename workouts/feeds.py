@@ -44,7 +44,7 @@ class UserFeed(Feed):
 
     def items(self, obj):
         print obj
-        return Result.objects.filter(user=obj).order_by('-date')[:20]
+        return Result.private_objects.filter(user=obj).order_by('-date')[:20]
     
     def item_title(self, item):
         return item
@@ -69,7 +69,7 @@ class ProtectedUserFeed(Feed):
         print username
         print key
         #put check for key  results in here
-        return get_object_or_404(User, username=username)
+        return get_object_or_404(User, username=username, userprofile__private_key=key)
 
     def items(self, obj):
         print obj
