@@ -101,8 +101,12 @@ AddResultForm.prototype = {
 		}
     	
     },
-    callback: function(data){    	
-    	this.hook.html(data);        
+    callback: function(data){    
+    	var self = this;
+    	this.hook.html(data);
+    	this.hook.find('#cancel').bind('click', function(){
+            self.click();
+        });
     }
 }
 

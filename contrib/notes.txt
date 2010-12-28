@@ -24,3 +24,17 @@ when workout added go to workout after 5 seconds
 add login redirects
 add manager for "private wods"
 pagination?
+
+
+add cancel to add result
+make tag cloud on user page filterable on users Results
+	post to facebook (facebook account integration)
+contact form
+rss
+	/wods/rss
+	/results/rss
+	/<username>/rss
+	/<username/rss/<key>
+	
+check that wod tags are actually syncing... or something
+pagination?
