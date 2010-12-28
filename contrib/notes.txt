@@ -29,14 +29,13 @@ pagination?
 
 
 
-tagresult tagwod titles
-rss
-	/wods/rss
+
 	/results/rss
 	/<username>/rss
 	/<username/rss/<key>
 	
 check that wod tags are actually syncing... or something
 pagination
+move results count to WOD as updated static
 make tag cloud on user page filterable on users Results
 	post to facebook (facebook account integration)

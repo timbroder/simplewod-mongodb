@@ -60,6 +60,7 @@ def add_wod(request):
         
     user = request.user
     if request.method == 'POST':
+        print request.POST
         form = WodForm(request.POST)
         
         if form.is_valid():
@@ -70,29 +71,35 @@ def add_wod(request):
             w.save()
             w.set_tags(fix_tags(form.cleaned_data['wod_tags']))
             print w.id
-            r = Result()
-            r.user = user
-            tempdate = form.cleaned_data['date']
-
-            tempdate = time.strptime(tempdate,"%m/%d/%Y")
-            r.date = time.strftime("%Y-%m-%d",tempdate)
-
-            r.workout = w
-            r.result = form.cleaned_data['results']
-            r.save()
             
-            #for tag in form.cleaned_data['tags'].split(','):
-                #r.add_tag(tag)
-            print form.cleaned_data['tags']
-            r.set_tags(fix_tags(form.cleaned_data['wod_tags']))
-            r.set_tags(fix_tags(form.cleaned_data['tags']))
+            if form.cleaned_data.get('has_result', False):
+                print 'storing result    '
+                r = Result()
+                r.user = user
+                tempdate = form.cleaned_data['date']
+    
+                tempdate = time.strptime(tempdate,"%m/%d/%Y")
+                r.date = time.strftime("%Y-%m-%d",tempdate)
+    
+                r.workout = w
+                r.result = form.cleaned_data['results']
+                r.save()
+                
+                #for tag in form.cleaned_data['tags'].split(','):
+                    #r.add_tag(tag)
+                print form.cleaned_data['tags']
+                r.set_tags(fix_tags(form.cleaned_data['wod_tags']))
+                r.set_tags(fix_tags(form.cleaned_data['tags']))
             
             
             #w.set_tags(form.cleaned_data['tags'].replace(' ', '_'))
+            print 'posting'
             posted = True
+        else:
+            print 'not valid?'
             
     else:
-        form = WodForm(initial={'date': datetime.datetime.now().strftime("%m/%d/%Y")})
+        form = WodForm(initial={'date': datetime.datetime.now().strftime("%m/%d/%Y"), 'has_result': True})
         #form.date = datetime.datetime.now().strftime("%d/%m/%Y")
         
         
@@ -108,7 +115,7 @@ def home(request):
     if debug:
         print "home"
     user = request.user
-    r1 = Workout.objects.all().order_by('-created_at')
+    r1 = Workout.objects.all().order_by('-touched_at')
     #r1 = Workout.private_objects.all().order_by('-created_at')
     #if user.is_authenticated() and user.get_profile().private_wods:
     #    r2 = Workout.objects.filter(user=user).order_by('-created_at')

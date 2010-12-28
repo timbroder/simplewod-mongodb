@@ -15,8 +15,9 @@ class Workout(SluggableModel, Taggable):
     title = models.CharField(max_length=128, blank=True, null=True)
     workout = models.TextField()
     user = models.ForeignKey(User)
-    created_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now())
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, default=datetime.datetime.now())
+    touched_at = models.DateTimeField(auto_now=True, default=datetime.datetime.now())
     
     objects = models.Manager()
     private_objects = WodManager()
@@ -24,6 +25,11 @@ class Workout(SluggableModel, Taggable):
     def save(self, *args, **kwargs):
         if self.title == None or self.title == "":
             self.title = datetime.date.today().strftime("%A, %B %d, %Y")
+        if not self.id:
+            self.created_at = datetime.datetime.now()
+            self.touched_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.now()
+        
         super(Workout,self).save(*args, **kwargs)
         
     def __unicode__(self):
@@ -60,6 +66,11 @@ class Result(Taggable):
     
     def save(self, *args, **kwargs):
         self.dateslug = slugify(self.date)
+        if not self.id:
+            self.workout.touched_at = datetime.datetime.now()
+            self.workout.save()
+            self.created_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.now()
         return super(Result, self).save(*args, **kwargs)
     
     def get_absolute_url(self):

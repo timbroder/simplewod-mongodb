@@ -47,15 +47,17 @@
 			<p>Results</p>
 			{{ form.results }}
 			{{ form.results.errors }}
-		</div>
-		<div id="form_tags"{% ifequal form.has_result.data "False" %} style="display: none;"{% endifequal %}>
+				
 			<p>Result Tags</p>
 			<p id="tags_from_wod"></p>
 			{{ form.tags }}
 			{{ form.tags.errors }}
+			
 		</div>
+		{{ form.has_results }}
+		{{ form.has_results.errors }}
 		<input type="submit" name="sumit" value="submit">
-	
+	{{ form.errors }}
 	
 	</form>
 	

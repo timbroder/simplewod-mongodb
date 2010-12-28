@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.http import HttpResponsePermanentRedirect
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -20,10 +21,12 @@ urlpatterns = patterns('',
 
     (r'^ajax/addresultform/$', wod.result_add_ajax_form),
     (r'^wods/add/$', wod.add_wod),
+    (r'^wods/rss/$', lambda request: HttpResponsePermanentRedirect('/wods/feed/')),
     (r'^wods/feed/$', WodFeed()),
     (r'^wods/tag/(?P<tagslug>.+)/$', wod.wod_tag),
     (r'^wods/(?P<wodslug>.+)/add/$', wod.result_add_form),
     (r'^wods/(?P<wodslug>.+)/$', wod.wod_single),
+    (r'^results/rss/$', lambda request: HttpResponsePermanentRedirect('/results/feed/')),
     (r'^results/feed/$', ResultFeed()),
     (r'^(?P<username>.+)/feed/(?P<key>.+)/$', ProtectedUserFeed()),
     (r'^(?P<username>.+)/feed/$', UserFeed()),
