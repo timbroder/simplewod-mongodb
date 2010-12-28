@@ -35,6 +35,7 @@
 					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/{{ request.user.username }}/'">{{ request.user.username }}</button>
 					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/wods/add'">Add Workout</button>
 				{% endif %}
+					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/feeds/'">RSS</button>
 					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/contact/'">Contact</button>
 				{% if request.user.is_authenticated %}	
 					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/settings/'">Settings</button>

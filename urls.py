@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     (r'^facebook/', include('facebookconnect.urls')),
 
     ##(r'^wods/(?P<tagslug>.+)/$', wod.wod_tag),
+    (r'^feeds/$', wod.feeds),
     (r'^settings/$', wod.settings),
     (r'^contact/thankyou/', wod.thankyou),
     (r'^contact/', wod.contactview),

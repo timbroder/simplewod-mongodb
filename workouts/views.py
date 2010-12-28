@@ -13,6 +13,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext, Context
 from django.core.mail import send_mail, BadHeaderError
 from django.views.decorators.cache import cache_page
+from django.contrib.sites.models import Site
 
 debug = getattr(settings, 'DEBUG', None)
 
@@ -335,3 +336,10 @@ def contactview(request):
 
 def thankyou(request):
         return render_to_response('thankyou.html')
+    
+def feeds(request):
+    user = request.user
+    domain = 'http://%s/' % Site.objects.get_current().domain
+
+    return r2r('feeds.html', locals())
+    

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Feeds{% endblock %}
+
+{% block content %}
+<ul>
+	<li>All Workouts: <a href="{{ domain }}wods/feed/">{{ domain }}wods/feed/</a></li>
+	<li>All public results: <a href="{{ domain }}wods/feed/">{{ domain }}results/feed/</a></li>
+	<li>Your {% if user.get_profile.private_wods %}private {% endif %}results: <a href="{{ user.get_profile.get_rss_url }}">{{ user.get_profile.get_rss_url }}</a></li>
+</ul>
+
+{% endblock %}

@@ -10,9 +10,8 @@
 <script type="text/javascript" src="/static/js/jquery.autocomplete.js"></script>
 {% endblock %}
 
-{% if header %}
-	{% block title%}{{ header }}{% endblock %}
-{% endif %}
+
+{% block title%}{% if header %}{{ header }}{% else %}WOD: {{ wod }}{% endif %}{% endblock %}
 
 {% block content %}
 

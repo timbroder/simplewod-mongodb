@@ -104,9 +104,9 @@ class UserProfile(models.Model):
         domain = Site.objects.get_current().domain
 
         if self.private_wods:
-            return 'http://%s/%s/feed/%s/' % (Site.objects.get_current().domain, self.user.username, self.private_key)
+            return 'http://%s/%s/feed/%s/' % (domain, self.user.username, self.private_key)
         else:
-            return 'http://%s/%s/feed/' % (Site.objects.get_current().domain, self.user.username)
+            return 'http://%s/%s/feed/' % (domain, self.user.username)
 
 
 def create_user_profile(sender, instance, created, **kwargs):  
