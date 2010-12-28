@@ -12,7 +12,7 @@
 
 {% block content %}
 {% if not posted %}
-	<form action="." method="POST" id="addform">{% csrf_token %}
+	<form action="." method="post" id="addform">{% csrf_token %}
 		<div id="form_wod">
 			<p>WOD Name</p>
 			{{ form.name}}

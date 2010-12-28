@@ -106,9 +106,10 @@ AddResultForm.prototype = {
     }
 }
 
-var ResultFormSubmit = function(form, button) {
-    this.form = $(form)
+var ResultFormSubmit = function(form, button, hook) {
+    this.form = $(form);
     this.button = $(button);
+    this.button = $(hook);
     this.setup();
 }
 
@@ -129,10 +130,12 @@ ResultFormSubmit.prototype = {
     click: function() {
         var self = this;
         console.log('self.clicked');
-        console.log(self.form.find('#id_date').val());
-        console.log(this.form.find('#id_results').val());
-        console.log(self.form.find('#id_tags').val());
-       /* $.ajax({
+        console.log($(this.form));
+        var dt = $('#id_date').val();
+        var results = $('#id_results').val();
+        var tags = $('#id_tags').val();
+        var wod_id = $('#wodid').val();
+       $.ajax({
             method: 'post',
             url: '/ajax/addresultform/',
             success: function(data) {
@@ -140,10 +143,10 @@ ResultFormSubmit.prototype = {
             },
             data: { 'wod_id': id },
             
-        });*/
+        });
     },
     callback: function() {
-    
+    	console.log('callback');
     }
 }
 
@@ -151,7 +154,7 @@ $(document).ready(function() {
 	new ResultToggle('#toggle_result');
 	new TagSync('#id_wod_tags', '#tags_from_wod');
     new AddResultForm('.add_result', '#result_form');
-    new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit');
+    //new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
     
 	$("#id_date").live('focus', function(){
         $(this).datepicker();

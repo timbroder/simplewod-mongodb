@@ -6,10 +6,13 @@ from models import *
 import time, datetime
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
+import settings
 
-
+debug = getattr(settings, 'DEBUG', None)
 
 def get_paginator(request, qs, num=10):
+    if debug:
+        print '- get paginator'
     #post_list = qs
 
     paginator = Paginator(qs, num)
@@ -28,6 +31,10 @@ def get_paginator(request, qs, num=10):
 
 
 def fix_tags(tags):
+    if debug:
+        print '- fix tags'
+        
+    print tags
     tags = tags.replace(' ', '-')
     tags = tags.split(',')
     tt = []
@@ -37,10 +44,15 @@ def fix_tags(tags):
                 t = t[1:]
             tt.append(t)
     tt = ','.join(tt)
+    print "t3"
+    print tt
     return tt    
 
 @login_required
 def add_wod(request):
+    if debug:
+        print '- add wod'
+        
     user = request.user
     if request.method == 'POST':
         form = WodForm(request.POST)
@@ -51,6 +63,7 @@ def add_wod(request):
             w.user = user
             w.workout = form.cleaned_data['workout']
             w.save()
+            w.set_tags(fix_tags(form.cleaned_data['wod_tags']))
             print w.id
             r = Result()
             r.user = user
@@ -66,7 +79,10 @@ def add_wod(request):
             #for tag in form.cleaned_data['tags'].split(','):
                 #r.add_tag(tag)
             print form.cleaned_data['tags']
+            r.set_tags(fix_tags(form.cleaned_data['wod_tags']))
             r.set_tags(fix_tags(form.cleaned_data['tags']))
+            
+            
             #w.set_tags(form.cleaned_data['tags'].replace(' ', '_'))
             posted = True
             
@@ -78,10 +94,14 @@ def add_wod(request):
     return r2r('add.html', locals(), context_instance=RequestContext(request))
 
 def result_add(request, wodslug):
+    if debug:
+        print '- result add'
+        
     return r2r('add_result.html', locals())
     
 def home(request):
-    print "home"
+    if debug:
+        print "home"
     user = request.user
     r1 = Workout.objects.all().order_by('-created_at')
     #r1 = Workout.private_objects.all().order_by('-created_at')
@@ -97,6 +117,9 @@ def home(request):
     return r2r('index.html', locals())
 
 def home_user(request, username):
+    if debug:
+        print '- home user'
+        
     user = get_object_or_404(User, username=username)
     if user.get_profile().private_wods:
         if request.user == user:
@@ -111,7 +134,8 @@ def home_user(request, username):
     return r2r('index.html', locals())
 
 def wod_single(request, wodslug):
-    print "wods single"
+    if debug:
+        print '- wods single'
     user = request.user
     wod = Workout.objects.get(slug = wodslug)
     
@@ -126,6 +150,9 @@ def wod_single(request, wodslug):
     return r2r('singlewod.html', locals())
 
 def result_single(request, wodslug, username):
+    if debug:
+        print '- result single'
+        
     user = get_object_or_404(User, username=username)
     wod = get_object_or_404(Workout, slug=wodslug)
     #results = Result.private_objects.filter(workout__slug=wodslug, user=user)
@@ -141,6 +168,9 @@ def result_single(request, wodslug, username):
     return r2r('singleresult.html', locals())
 
 def result_tag_user(request, username, tagslug):
+    if debug:
+        print '- result tag user'
+        
     user = get_object_or_404(User, username=username)
     results = TaggedItem.objects.get_by_model(Result, tagslug).order_by('-date')
     if (request.user.is_authenticated() and request.user.get_profile().private_wods) or not user.get_profile().private_wods:
@@ -151,15 +181,21 @@ def result_tag_user(request, username, tagslug):
     print results
     header = "Tag: %s" % Tag.objects.get(name=tagslug)
     user = request.user
-    return r2r('singleresult.html', locals())
+    return r2r('tagresult.html', locals())
 
 def result_tag(request, tagslug):
+    if debug:
+        print '- result tag'
+        
     results = TaggedItem.objects.get_by_model(Result, tagslug).order_by('-date')
     header = "Tag: %s" % Tag.objects.get(name=tagslug)
     user = request.user
     return r2r('singleresult.html', locals())
 
 def wod_tag(request, tagslug):
+    if debug:
+        print '- wod tag'
+        
     results = TaggedItem.objects.get_by_model(Workout, tagslug).order_by('-created_at')
     print Workout.objects.all().order_by('-created_at')
     header = "Tag: %s" % Tag.objects.get(name=tagslug)
@@ -167,10 +203,12 @@ def wod_tag(request, tagslug):
     return r2r('tagwod.html', locals())
 
 def result_add_ajax_form(request):
-    print 'in ajax add form'
+    if debug:
+        print '- ajax add form'
+        
     wod_id = request.GET.get('wod_id')
     if request.is_ajax() and wod_id:
-        
+        action = 'add/'
         tags = Workout.objects.get(id=wod_id).get_tags()
         
         if request.method == 'POST':
@@ -179,5 +217,64 @@ def result_add_ajax_form(request):
         else:
             form = ResultFormAjax()
         print form
-        return r2r('resultform.html', locals())
+        return r2r('resultform.html', locals(), context_instance=RequestContext(request))
+    
+def result_add_form(request, wodslug):
+    if debug:
+        print '- in result add form'
+        
+    wod_id = request.GET.get('wod_id')
+    print request.POST
+    wod = get_object_or_404(Workout, slug=wodslug)
+    tags = Workout.objects.get(id=wod.id).get_tags()
+    action = ''
+    user = request.user
+    if request.method == 'POST':
+        print 'post'
+        form = ResultFormAdd(request.POST)
+        if form.is_valid():
+            print "VALID"
+            r = Result()
+            r.user = user
+            tempdate = form.cleaned_data['date']
+
+            tempdate = time.strptime(tempdate,"%m/%d/%Y")
+            r.date = time.strftime("%Y-%m-%d",tempdate)
+
+            r.workout = wod
+            r.result = form.cleaned_data['results']
+            r.save()
+            
+            #for tag in form.cleaned_data['tags'].split(','):
+                #r.add_tag(tag)
+            print form.cleaned_data['tags']
+            tt = []
+            for tag in wod.get_tags():
+                tt.append(tag.name)
+            r.set_tags(", ".join(tt))
+            r.set_tags(fix_tags(form.cleaned_data['tags']))
+            submitted = True
+        else:
+            print 'crap'
+    else:
+       form = ResultFormAdd()
+
+    return r2r('addresult.html', locals(), context_instance=RequestContext(request))
+
+@login_required
+def settings(request):
+    user = request.user
+    if request.method == 'POST':
+        form = SettingsForm(request.POST)
+        if form.is_valid():
+            user.email = form.cleaned_data['email']
+            user.get_profile().private_wods = form.cleaned_data['private_wods']
+            
+            user.save()
+            user.get_profile().save()
+            posted = True
+    else:
+        form = SettingsForm(initial={'email': user.email, 'private_wods': user.get_profile().private_wods})
+    
+    return r2r('settings.html', locals(), context_instance=RequestContext(request))
     

@@ -11,6 +11,10 @@ class ResultForm(forms.Form):
     results = forms.CharField(widget=forms.Textarea, required=False)
     tags = TagField(widget=TagAutocomplete(), required=False) 
     
+class ResultFormAdd(ResultForm):
+    date = forms.CharField()
+    results = forms.CharField(widget=forms.Textarea)
+    
 class ResultFormAjax(ResultForm):
     wod_id = forms.CharField(required = True)
     submitted = forms.BooleanField(initial=False, widget=forms.HiddenInput)
@@ -33,5 +37,8 @@ class WodForm(ResultForm):
       
         return result
         
-
-   
+class SettingsForm(forms.Form):
+    email = forms.EmailField()
+    private_wods = forms.BooleanField(required=False)
+    
+    

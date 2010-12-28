@@ -11,7 +11,8 @@
 			
 			<ul>
 				{% for r in results.object_list %}
-					<li><a href="{{ r.get_absolute_url }}">{% ifequal title "Home" %}{{ r }}{% else %}{{ r.workout }}{% endifequal %}</a>{% ifequal title "Home" %} ({{ r|args:user|call:"num_results" }}){% endifequal %}</li>
+					<li><a href="{{ r.get_absolute_url }}">{% ifequal title "Home" %}{{ r }}{% else %}{{ r.workout }}{% endifequal %}</a>
+					{% ifequal title "Home" %}({{ r|args:user|call:"num_results" }}){% endifequal %}</li>
 				{% endfor %}
 			</ul>
 		</div>

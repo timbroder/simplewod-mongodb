@@ -1,7 +1,8 @@
 
 
 {% if not posted %}
-	<form action="#" method="POST" id="ajaxaddform">{% csrf_token %}
+	<form action="{{ action }}" method="post" id="ajaxaddform">{% csrf_token %}
+		<div style="display: none;"><input type="hidden" value="{{ wod_id }}" name="wod_id" id="wod_id"></div>
 
 			{{ form.has_result }}
 			{{ form.has_result.data }}

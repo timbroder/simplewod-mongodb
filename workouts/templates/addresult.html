@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title%}Add Result{% endblock %}
+
+{% block extracss %}
+	<link rel="stylesheet" href="/static/css/jquery.autocomplete.css" />
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript" src="/static/js/forms.js"></script>
+	<script type="text/javascript" src="/static/js/add.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.autocomplete.js"></script>
+{% endblock %}
+
+{% block content %}
+{% load extra_args %}
+
+
+{% ifequal submitted True %}
+	{% include 'resultform.html' %}
+{% else %}
+	Result added. Click <a href="{{ wod.get_absolute_url }}">here</a> to return to the workout if your browser does not redirect you.
+<script type="text/javascript">
+	setTimeout(function() {
+		window.location.replace("{{ wod.get_absolute_url }}");
+	}, 2000);
+</script>
+{% endifequal %}
+
+{% endblock %}

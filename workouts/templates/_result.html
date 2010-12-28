@@ -1,5 +1,5 @@
 <div class="result">
-	<b>{{ wod.date }}</b>
+	<b>{{ wod.date }}</b> - <a href="/{{ wod.user.username }}/">{{ wod.user.username }}</a>
 	{{ wod.result|linebreaks }}
 	
 	{% if wod.notes %}
