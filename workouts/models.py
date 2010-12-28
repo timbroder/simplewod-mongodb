@@ -11,6 +11,7 @@ from django.db.models.signals import post_save
 from managers import *
 import md5
 from django.contrib.sites.models import Site
+from django.core.cache import cache
 
 
 class Workout(SluggableModel, Taggable):
@@ -31,7 +32,8 @@ class Workout(SluggableModel, Taggable):
             self.created_at = datetime.datetime.now()
             self.touched_at = datetime.datetime.now()
         self.updated_at = datetime.datetime.now()
-        
+        cache.clear()
+
         super(Workout,self).save(*args, **kwargs)
         
     def __unicode__(self):

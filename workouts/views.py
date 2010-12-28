@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext, Context
 from django.core.mail import send_mail, BadHeaderError
+from django.views.decorators.cache import cache_page
 
 debug = getattr(settings, 'DEBUG', None)
 
@@ -116,7 +117,9 @@ def result_add(request, wodslug):
         print '- result add'
         
     return r2r('add_result.html', locals())
-    
+
+
+#@cache_page(60 * 60 * 2)
 def home(request):
     if debug:
         print "home"
@@ -134,6 +137,7 @@ def home(request):
     show = True
     return r2r('index.html', locals())
 
+#@cache_page(60 * 60 * 2)
 def home_user(request, username):
     if debug:
         print '- home user'
@@ -151,6 +155,7 @@ def home_user(request, username):
     title = username
     return r2r('index.html', locals())
 
+#@cache_page(60 * 60 * 2)
 def wod_single(request, wodslug):
     if debug:
         print '- wods single'
@@ -167,6 +172,7 @@ def wod_single(request, wodslug):
     print results
     return r2r('singlewod.html', locals())
 
+#@cache_page(60 * 60 * 2)
 def result_single(request, wodslug, username):
     if debug:
         print '- result single'
@@ -185,6 +191,7 @@ def result_single(request, wodslug, username):
         print results
     return r2r('singleresult.html', locals())
 
+#@cache_page(60 * 60 * 2)
 def result_tag_user(request, username, tagslug):
     if debug:
         print '- result tag user'
@@ -204,6 +211,7 @@ def result_tag_user(request, username, tagslug):
     user = request.user
     return r2r('tagresult.html', locals())
 
+#@cache_page(60 * 60 * 2)
 def result_tag(request, tagslug):
     if debug:
         print '- result tag'
@@ -213,6 +221,7 @@ def result_tag(request, tagslug):
     user = request.user
     return r2r('singleresult.html', locals())
 
+#@cache_page(60 * 60 * 2)
 def wod_tag(request, tagslug):
     if debug:
         print '- wod tag'
@@ -223,6 +232,7 @@ def wod_tag(request, tagslug):
     user = request.user
     return r2r('tagwod.html', locals())
 
+#@cache_page(60 * 60 * 2)
 def result_add_ajax_form(request):
     if debug:
         print '- ajax add form'
@@ -299,6 +309,7 @@ def settings(request):
     
     return r2r('settings.html', locals(), context_instance=RequestContext(request))
 
+#@cache_page(60 * 60 * 2)
 def contactview(request):
     if debug:
         print 'contactview'

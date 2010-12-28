@@ -2,7 +2,11 @@
 
 {% block title %}Register for an account{% endblock %}
 
+{% load facebook_tags %}
+
 {% block content %}
+
+{% show_connect_button %}
 <table>
     <form method='post' action=''>{% csrf_token %}
         {{ form }}

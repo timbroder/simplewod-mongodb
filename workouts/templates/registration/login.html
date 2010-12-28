@@ -2,11 +2,16 @@
 
 {% block title %}Login{% endblock%}
 
+{% load facebook_tags %}
+
 {% block extrajs %}
 	<script type="text/javascript" src="/static/js/forms.js"></script>
 {% endblock %}
 
 {% block content %}
+
+{% show_connect_button %}
+
 
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>

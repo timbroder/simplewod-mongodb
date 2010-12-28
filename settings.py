@@ -64,11 +64,20 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'facebook.djangofb.FacebookMiddleware',
+    'facebookconnect.middleware.FacebookConnectMiddleware',
+    #'socialregistration.middleware.FacebookMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'facebookconnect.models.FacebookBackend',
+    #'socialregistration.auth.FacebookAuth',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 ROOT_URLCONF = 'urls'
-
+CACHE_BACKEND = 'db://cache'
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,7 +91,9 @@ INSTALLED_APPS = (
     'django_extensions',
     'sluggable',
     'tagging_autocomplete',
-    #'debug_toolbar',
+    'facebookconnect',
+    'debug_toolbar',
+    #'socialregistration'
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -93,7 +104,25 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
+#    "django.core.context_processors.request",
 )
+
+DUMMY_FACEBOOK_INFO = {
+    'uid':0,
+    'name':'(Private)',
+    'first_name':'(Private)',
+    'pic_square_with_logo':'http://www.facebook.com/pics/t_silhouette.gif',
+    'affiliations':None,
+    'status':None,
+    'proxied_email':None,
+}
+
+
+
+
+FACEBOOK_API_KEY = '00000000000000000000000000000000'
+FACEBOOK_SECRET_KEY = '00000000000000000000000000000000'
+FACEBOOK_INTERNAL = True
 
 #try:
 from local_settings import *

@@ -6,7 +6,7 @@
 {% macro title %}
     {% block title %}{% endblock %}
 {% endmacro %}
-
+{% load facebook_tags %}
 
 <head>
 	<title>{% usemacro title %} - simpleWOD</title>
@@ -17,6 +17,9 @@
     <script type="text/javascript" src="/static/js/jquery.js"></script>
     <script type="text/javascript" src="/static/js/jquery-ui.js"></script>
     {% block extrajs %}{% endblock %}
+    {% facebook_js %}
+    
+    {% initialize_facebook_connect %}
 	
 </head>
 <body>
@@ -41,10 +44,12 @@
 					<button class="fg-button ui-state-default ui-priority-primary ui-corner-right" onclick="window.location='/accounts/login'">Login</button>
 				{% endif %}
 			</div>
+			
 		</div>
 	    <div id="content">
 	    	{% ifnotequal title "Home" %}<div id="header"><h2>{% usemacro title %}</h2></div>{% endifnotequal %}
 	        {% block content %}{% endblock %}
+	        
 	    </div>
 	</div>
 </body>

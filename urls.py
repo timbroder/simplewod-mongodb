@@ -9,11 +9,20 @@ from workouts import views as wod
 from workouts.feeds import *
 import settings 
 
+#from socialregistration.urls import *
+
+
+
+#urlpatterns = urlpatterns + patterns('',
 urlpatterns = patterns('',
     #(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     #(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
+    
+    (r'^accounts/profile/$', lambda request: HttpResponsePermanentRedirect('/settings/')),
     (r'^accounts/', include('registration.backends.default.urls')),
-   
+    
+    (r'^facebook/', include('facebookconnect.urls')),
+
     ##(r'^wods/(?P<tagslug>.+)/$', wod.wod_tag),
     (r'^settings/$', wod.settings),
     (r'^contact/thankyou/', wod.thankyou),
