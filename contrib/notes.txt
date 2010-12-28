@@ -28,7 +28,7 @@ pagination?
 
 
 
-contact form
+
 tagresult tagwod titles
 rss
 	/wods/rss

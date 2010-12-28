@@ -17,7 +17,7 @@
 			</ul>
 		</div>
 		<div class="rightcol">
-			<h2>Tags</h2>
+			<h2>{% ifequal title "Home" %}Workout{% else %}Result{% endifequal %} Tags</h2>
 				{% include tag_cloud_template %}
 		</div>
 	{% else %}

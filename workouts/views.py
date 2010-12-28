@@ -181,10 +181,11 @@ def result_tag_user(request, username, tagslug):
     if (request.user.is_authenticated() and request.user.get_profile().private_wods) or not user.get_profile().private_wods:
         results = results.filter(user=user)
         show = True
-    print "3"
-    print user.get_profile().private_wods
-    print results
-    header = "Tag: %s" % Tag.objects.get(name=tagslug)
+    
+    if request.user.is_authenticated() and request.user.username == username:
+        message = 'You have not logged any results with this tag'
+    
+    header = "Tagged Results: %s" % Tag.objects.get(name=tagslug)
     user = request.user
     return r2r('tagresult.html', locals())
 
@@ -193,7 +194,7 @@ def result_tag(request, tagslug):
         print '- result tag'
         
     results = TaggedItem.objects.get_by_model(Result, tagslug).order_by('-date')
-    header = "Tag: %s" % Tag.objects.get(name=tagslug)
+    header = "Tagged Results: %s" % Tag.objects.get(name=tagslug)
     user = request.user
     return r2r('singleresult.html', locals())
 
@@ -203,7 +204,7 @@ def wod_tag(request, tagslug):
         
     results = TaggedItem.objects.get_by_model(Workout, tagslug).order_by('-created_at')
     print Workout.objects.all().order_by('-created_at')
-    header = "Tag: %s" % Tag.objects.get(name=tagslug)
+    header = "Tagged Workouts: %s" % Tag.objects.get(name=tagslug)
     user = request.user
     return r2r('tagwod.html', locals())
 

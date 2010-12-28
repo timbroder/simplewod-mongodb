@@ -1,24 +1,34 @@
 {% extends 'base.html' %}
 
+{% block title %}{{ header }}{% endblock %}
+
 {% block content %}
 
-{% for wod in results %}
-	{% if forloop.first %}
-		<h2>{{ wod.workout.title }}</h2>
-		{{ wod.workout.workout|linebreaks }}
-		<h2>Results</h2>
-	{% endif %}
-	<hr></hr>
-	<div class="result">
-		{{ wod.result|linebreaks }}
-		
-		{% if wod.notes %}
-			Notes<br />
-			{{ wod.notes|linebreaks }}		
+{% if results %}
+	{% for wod in results %}
+		{% if forloop.first %}
+			<h2>{{ wod.workout.title }}</h2>
+			{{ wod.workout.workout|linebreaks }}
+			<h2>Results</h2>
 		{% endif %}
-	</div>
-	
+		<hr></hr>
+		<div class="result">
+			{{ wod.result|linebreaks }}
+			
+			{% if wod.notes %}
+				Notes<br />
+				{{ wod.notes|linebreaks }}		
+			{% endif %}
+		</div>
 		
-{% endfor %}
+			
+	{% endfor %}
+{% else %}
+	{% if message %}
+		{{ message }}
+	{% else %}
+		<p>No results listed for this tag</p>
+	{% endif %}
+{% endif %}
 
 {% endblock %}
