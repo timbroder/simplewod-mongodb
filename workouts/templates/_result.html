@@ -1,9 +1,16 @@
 <div class="result">
-	<b>{{ wod.date }}</b> - <a href="/{{ wod.user.username }}/">{{ wod.user.username }}</a>
-	{{ wod.result|linebreaks }}
-	
-	{% if wod.notes %}
-		<p>Notes</p>
-		{{ wod.notes|linebreaks }}		
-	{% endif %}
+	<div class="result_date">
+		<b>{{ wod.date }}</b>
+	</div>
+	<div class="result_body">
+		{{ wod.result|linebreaks }}
+		
+		{% if wod.notes %}
+			<p>Notes</p>
+			{{ wod.notes|linebreaks }}		
+		{% endif %}
+	</div>
+	<div class="result_who">
+		Logged by: <a href="/{{ wod.user.username }}/">{{ wod.user.username }}</a>
+	</div>
 </div>

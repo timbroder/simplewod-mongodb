@@ -29,8 +29,8 @@ pagination?
 
 
 
-check that wod tags are actually syncing... or something
-pagination
+make logo link to /
+keep working on boxes
 move results count to WOD as updated static
 make tag cloud on user page filterable on users Results
 	post to facebook (facebook account integration)

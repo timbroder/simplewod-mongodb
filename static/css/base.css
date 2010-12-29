@@ -91,21 +91,25 @@ a:hover {
 #logowod {
 	font-size: 60px;	
 	color: #880000;
+	text-decoration: none;
 }
 
 #logosimple {
 	font-size: 25px;
+	text-decoration: none;
 }
 
 #logobeta {
 	font-size: 15px;
-	font-family: impact;	
+	font-family: impact;
+	text-decoration: none;	
 }
 
 #logopic {
 	width: 265px;
 	text-align: left;
 	float: right;
+	text-decoration: none;
 }
 
 /*#footer {
@@ -114,3 +118,32 @@ a:hover {
 	height: 150px;
 	clear:both;
 } */
+
+.result {
+	border-left: 1px solid;
+	border-right: 1px solid;
+	width: 400px;
+	margin-bottom: 15px;
+	//border-color: #880000;	
+}
+
+.result .result_date {
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	padding: 3px;
+	background-color: #880000;
+	border-color: #880000;
+	color: white;
+}
+
+.result .result_body {
+	padding: 3px;
+}
+
+.result .result_who {
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	//border-color: #880000;
+	padding: 3px;
+}
+
