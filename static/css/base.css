@@ -3,6 +3,11 @@ body{
 	color: #5F5F5F;
 }
 
+html, body {
+	height: 100%;
+}
+
+
 a {
 	font: arial,helvetica,clean,sans-serif;
 	color: #5F5F5F;
@@ -21,12 +26,15 @@ a:hover {
 	*width:56.3em;
 	min-width:800px;
 	border: 1px;
+	min-height: 100%;	
 }
 
 #content {
 	margin-left: .2em;
 	padding-left: .4em;
 	border: 1px;
+	overflow:auto;
+	padding-bottom: 150px;
 }
 
 .post {
@@ -99,3 +107,10 @@ a:hover {
 	text-align: left;
 	float: right;
 }
+
+/*#footer {
+	position: relative;
+	margin-top: -150px; 
+	height: 150px;
+	clear:both;
+} */
