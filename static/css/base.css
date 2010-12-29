@@ -11,7 +11,7 @@ a {
 
 a:hover {
 	text-decoration: none;
-	color: #880000;
+	color: #880000;	
 }
 
 #main {
@@ -92,4 +92,10 @@ a:hover {
 #logobeta {
 	font-size: 15px;
 	font-family: impact;	
+}
+
+#logopic {
+	width: 265px;
+	text-align: left;
+	float: right;
 }
