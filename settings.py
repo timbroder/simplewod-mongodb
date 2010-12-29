@@ -105,6 +105,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
 #    "django.core.context_processors.request",
+    "workouts.context_processors.user",
 )
 
 DUMMY_FACEBOOK_INFO = {
