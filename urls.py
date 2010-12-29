@@ -10,7 +10,7 @@ from workouts.feeds import *
 import settings 
 
 #from socialregistration.urls import *
-
+debug = getattr(settings, 'DEBUG', None)
 
 
 #urlpatterns = urlpatterns + patterns('',
@@ -64,6 +64,11 @@ urlpatterns = patterns('',
     #/workouts/(slug)
     #/tag/(tag)
     
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.MEDIA_ROOT }),
+
 )
+
+if debug:
+    urlpatterns = urlpatterns + patterns('',
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': settings.MEDIA_ROOT }),
+    )
