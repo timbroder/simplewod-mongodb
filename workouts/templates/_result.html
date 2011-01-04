@@ -5,6 +5,14 @@
 	<div class="result_body">
 		{{ wod.result|linebreaks }}
 		
+		{% if wod.time %}
+			<p>Time: {{ wod.time }}</p>		
+		{% endif %}
+		
+		{% if wod.weight %}
+			<p>Weight: {{ wod.weight }}</p>		
+		{% endif %}
+		
 		{% if wod.notes %}
 			<p>Notes</p>
 			{{ wod.notes|linebreaks }}		

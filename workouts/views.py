@@ -85,6 +85,9 @@ def add_wod(request):
     
                 r.workout = w
                 r.result = form.cleaned_data['results']
+                r.time = form.cleaned_data['time']
+                r.weight = form.cleaned_data['weight']
+                r.notes = form.cleaned_data['notes']
                 r.save()
                 
                 #for tag in form.cleaned_data['tags'].split(','):
@@ -275,6 +278,9 @@ def result_add_form(request, wodslug):
 
             r.workout = wod
             r.result = form.cleaned_data['results']
+            r.time = form.cleaned_data['time']
+            r.weight = form.cleaned_data['weight']
+            r.notes = form.cleaned_data['notes']
             r.save()
             
             #for tag in form.cleaned_data['tags'].split(','):

@@ -14,6 +14,15 @@
 			<p>Results</p>
 			{{ form.results }}
 			{{ form.results.errors }}
+			<p>Max Weight for this result (if applicable, will be used for charts, coming soon)</p>
+			{{ form.weight }}
+			{{ form.weight.errors }}
+			<p>Fastest Time for this result (if applicable, will be used for charts, coming soon)</p>
+			{{ form.time }}
+			{{ form.time.errors }}
+			<p>Notes</p>
+			{{ form.notes }}
+			{{ form.notes.errors }}
 		</div>
 		<div id="form_tags"{% ifequal form.has_result.data "False" %} style="display: none;"{% endifequal %}>
 			<p>Result Tags</p>

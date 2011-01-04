@@ -47,18 +47,24 @@
 			<p>Results</p>
 			{{ form.results }}
 			{{ form.results.errors }}
-				
+			<p>Max Weight for this result (if applicable, will be used for charts, coming soon)</p>
+			{{ form.weight }}
+			{{ form.weight.errors }}
+			<p>Fastest Time for this result (if applicable, will be used for charts, coming soon)</p>
+			{{ form.time }}
+			{{ form.time.errors }}
 			<p>Result Tags</p>
 			<p id="tags_from_wod"></p>
 			{{ form.tags }}
 			{{ form.tags.errors }}
-			
+			<p>Notes</p>
+			{{ form.notes }}
+			{{ form.notes.errors }}
 		</div>
 		{{ form.has_results }}
 		{{ form.has_results.errors }}
 		<input type="submit" name="sumit" value="submit">
-	{{ form.errors }}
-	
+
 	</form>
 	
 

@@ -11,11 +11,42 @@ debug = getattr(settings, 'DEBUG', None)
 class ResultForm(forms.Form):
     date = forms.CharField(required=False)#forms.DateField(widget=SelectDateWidget(), initial=datetime.date.today())    
     results = forms.CharField(widget=forms.Textarea, required=False)
+    time = forms.CharField(required=False)
+    weight = forms.IntegerField(required=False)
     tags = TagField(widget=TagAutocomplete(), required=False) 
+    notes = forms.CharField(widget=forms.Textarea, required=False)
     
 class ResultFormAdd(ResultForm):
     date = forms.CharField()
-    results = forms.CharField(widget=forms.Textarea)
+    #results = forms.CharField(widget=forms.Textarea)
+    
+    def clean(self):
+        result = self.cleaned_data['results']
+        time = self.cleaned_data['time']
+        weight = None
+        try:
+            weight = self.cleaned_data['weight']
+        except KeyError:
+            msg = u"Please enter a number"
+            self._errors["weight"] = self.error_class([msg])
+            #del self.cleaned_data["weight"]
+
+        if debug:
+            print "clean ResultFormAdd"
+            print result
+            print time
+            print weight
+
+        if result == '' and time == '' and (weight == '' or weight == None):
+            print "YAY?"
+            msg = u"You must enter a result, or a weight, or a time."
+            self._errors["results"] = self.error_class([msg])
+            del self.cleaned_data["results"]
+
+
+            raise forms.ValidationError(result_required)
+        print 'VALID'
+        return self.cleaned_data
     
 class ResultFormAjax(ResultForm):
     wod_id = forms.CharField(required = True)
@@ -30,16 +61,22 @@ class WodForm(ResultForm):
     def clean(self):
         if debug:
             print '- add clean result form'
-        print self
-        print self.cleaned_data
+            print self
+            print self.cleaned_data
         has_result = self.cleaned_data.get('has_result', False)
         result = self.cleaned_data['results']
-        print has_result
-        print result
-        print result == ''
-        if has_result == True and result == '':
+        time = self.cleaned_data['time']
+        
+        try:
+            weight = self.cleaned_data['weight']
+        except KeyError:
+            msg = u"Please enter a number"
+            self._errors["weight"] = self.error_class([msg])
+            #del self.cleaned_data["weight"]
+
+        if has_result == True and (result == '' and time == '' and (weight == '' or weight == None)):
             print "YAY?"
-            msg = u"This field is required."
+            msg = u"You must enter a result, or a weight, or a time."
             self._errors["results"] = self.error_class([msg])
             del self.cleaned_data["results"]
 
