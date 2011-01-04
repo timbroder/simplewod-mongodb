@@ -56,7 +56,7 @@ class Result(Taggable):
     workout = models.ForeignKey(Workout)
     date = models.DateField()
     dateslug = models.CharField(max_length=16, blank=True, null=True)
-    result = models.TextField()
+    result = models.TextField(blank=True, null=True)
     time = models.CharField(max_length=16, blank=True, null=True)
     weight = models.FloatField(max_length=16, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
