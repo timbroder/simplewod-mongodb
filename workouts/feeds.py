@@ -18,6 +18,9 @@ class WodFeed(Feed):
     def item_description(self, item):
         return item.workout
     
+    def item_pubdate(self, item):
+        return item.created_at
+    
 class ResultFeed(Feed):
     title = "simpleWOD.com: Logged Results"
     link = "/"
@@ -32,6 +35,9 @@ class ResultFeed(Feed):
     
     def item_description(self, item):
         return item.workout
+    
+    def item_pubdate(self, item):
+        return item.created_at
     
 class UserFeed(Feed):
     
@@ -60,6 +66,9 @@ class UserFeed(Feed):
     
     def description(self, obj):
         return "Workout Results logged on the site by %s" % obj.username
+    
+    def item_pubdate(self, item):
+        return item.created_at
         
 class ProtectedUserFeed(Feed):
 
@@ -89,3 +98,6 @@ class ProtectedUserFeed(Feed):
     
     def description(self, obj):
         return "Workout Results logged on the site by %s" % obj.username
+    
+    def item_pubdate(self, item):
+        return item.created_at
