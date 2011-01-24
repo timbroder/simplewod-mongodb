@@ -9,12 +9,14 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'logger'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'root'             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'logger',
+        'USER': 'root',
+        'PASSWORD': 'root'
+    }
+}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -93,8 +95,8 @@ INSTALLED_APPS = (
     'tagging_autocomplete',
     'facebookconnect',
     'debug_toolbar',
-    #'socialregistration',
-    #'assignments',
+    #'socialregistration'
+    'mongo',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
