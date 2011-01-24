@@ -154,11 +154,74 @@ ResultFormSubmit.prototype = {
     }
 }
 
+var Mongo = function(canvas, trigger) {
+	this.canvas = $(canvas);
+	this.cord = null;
+	this.help = null;
+	this.start();
+};
+
+Mongo.prototype = {
+	start: function(){
+		var self = this;
+		$('#create_new').live('click', function(){
+			self.to1();
+		});
+		
+		this.help = {
+				modal: true,
+				draggable: false,
+				resizable: false,
+				autoOpen: false,
+				show: "fade",
+				hide: "fade",
+				buttons: {
+					Close: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			}
+		
+		//self.to1();
+	},
+	to1: function() {
+		var self = this;
+		console.log("YEO");
+		$.ajax({
+			url: '/ajax/add1/',
+			success: function(data) {
+				self.canvas.html(data);
+				self.cord = $('#accordion');
+				var setsD = $('#sets_help_msg');
+				self.cord.accordion({
+					autoHeight: false,
+					navigation: true,
+					icons: false,
+					event: null
+				});
+				
+				
+				setsD.dialog(self.help);
+				
+				$('#sets_help_click').click(function(){
+					console.log('click');
+					setsD.dialog('open');
+					return false;
+				});
+
+				
+
+			}
+		});
+	}
+}
+
 $(document).ready(function() {
 	new ResultToggle('#toggle_result');
 	new TagSync('#id_wod_tags', '#tags_from_wod');
     new AddResultForm('.add_result', '#result_form');
     //new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
+    new Mongo('#canvas');
     
 	$("#id_date").live('focus', function(){
         $(this).datepicker();

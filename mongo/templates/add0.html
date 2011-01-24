@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block extracss %}
+	<link rel="stylesheet" href="/static/css/jquery.autocomplete.css" />
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript" src="/static/js/forms.js"></script>
+	<script type="text/javascript" src="/static/js/add.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.autocomplete.js"></script>
+{% endblock %}
+
+{% block title %}Add a Workout{% endblock %}
+
+{% block content %}
+<div id="canvas">
+Enter a result for a workout below, or <a href="#" id="create_new">Create a new one</a>
+</div>
+{% endblock %}

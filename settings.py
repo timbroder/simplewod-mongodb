@@ -93,7 +93,8 @@ INSTALLED_APPS = (
     'tagging_autocomplete',
     'facebookconnect',
     'debug_toolbar',
-    #'socialregistration'
+    #'socialregistration',
+    #'assignments',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)

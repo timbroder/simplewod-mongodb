@@ -8,6 +8,7 @@ admin.autodiscover()
 from workouts import views as wod
 from workouts.feeds import *
 import settings 
+import mongo.urls as mongourls
 
 #from socialregistration.urls import *
 debug = getattr(settings, 'DEBUG', None)
@@ -30,12 +31,9 @@ urlpatterns = patterns('',
     (r'^contact/', wod.contactview),
 
     (r'^ajax/addresultform/$', wod.result_add_ajax_form),
-    (r'^wods/add/$', wod.add_wod),
+   # (r'^wods/add/$', wod.add_wod),
     (r'^wods/rss/$', lambda request: HttpResponsePermanentRedirect('/wods/feed/')),
     (r'^wods/feed/$', WodFeed()),
-    (r'^wods/tag/(?P<tagslug>.+)/$', wod.wod_tag),
-    (r'^wods/(?P<wodslug>.+)/add/$', wod.result_add_form),
-    (r'^wods/(?P<wodslug>.+)/$', wod.wod_single),
     (r'^results/rss/$', lambda request: HttpResponsePermanentRedirect('/results/feed/')),
     (r'^results/feed/$', ResultFeed()),
     (r'^(?P<username>.+)/feed/(?P<key>.+)/$', ProtectedUserFeed()),
@@ -54,7 +52,7 @@ urlpatterns = patterns('',
     
     
     
-     (r'^(?P<username>.+)/$', wod.home_user),
+     
     (r'^$', wod.home),
     
 
@@ -67,6 +65,15 @@ urlpatterns = patterns('',
 
 )
 
+urlpatterns = urlpatterns + mongourls.urlpatterns
+
+urlpatterns = urlpatterns + patterns('',
+    (r'^wods/tag/(?P<tagslug>.+)/$', wod.wod_tag),
+    (r'^wods/(?P<wodslug>.+)/add/$', wod.result_add_form),
+    (r'^wods/(?P<wodslug>.+)/$', wod.wod_single),
+    (r'^(?P<username>.+)/$', wod.home_user),
+)
+                                     
 if debug:
     urlpatterns = urlpatterns + patterns('',
         (r'^static/(?P<path>.*)$', 'django.views.static.serve',
