@@ -132,3 +132,7 @@ FACEBOOK_INTERNAL = True
 from local_settings import *
 #except ImportError:
 #pass
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
