@@ -158,6 +158,8 @@ var Mongo = function(canvas, trigger) {
 	this.canvas = $(canvas);
 	this.cord = null;
 	this.help = null;
+	this.multiset = false;
+	this.numsSets = 1;
 	this.start();
 };
 
@@ -165,7 +167,7 @@ Mongo.prototype = {
 	start: function(){
 		var self = this;
 		$('#create_new').live('click', function(){
-			self.to1();
+			self.setChoice();
 		});
 		
 		this.help = {
@@ -182,9 +184,9 @@ Mongo.prototype = {
 				}
 			}
 		
-		//self.to1();
+		self.setChoice();
 	},
-	to1: function() {
+	setChoice: function() {
 		var self = this;
 		console.log("YEO");
 		$.ajax({
@@ -208,11 +210,44 @@ Mongo.prototype = {
 					setsD.dialog('open');
 					return false;
 				});
-
+				$('#name_complete').click(function(){
+					self.nameComplete();
+				});
 				
+				$('#one_set').click(function(){
+					self.setSingleSet();
+				});
+				
+				$('#multiple_sets').click(function(){
+					self.setMultiSet();
+				});
 
 			}
 		});
+	},
+	
+	setSingleSet: function() {
+		console.log('single');
+		this.afterSetChoice();
+	},
+	
+	setMultiSet: function() {
+		console.log('multi');
+		this.multiset = true;
+		$('#set1_header').html('Set 1 Rounds');
+		this.afterSetChoice();
+	},
+	
+	afterSetChoice: function() {
+		var self = this;
+		console.log('slide');
+		console.log(self.cord);
+		self.cord.accordion('activate' , 2);
+	},
+	
+	nameComplete: function() {
+		$('#name_header').html($('#wod_name').val());
+		this.cord.accordion('activate' , 1);
 	}
 }
 
