@@ -136,3 +136,7 @@ from local_settings import *
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
+
+SERIALIZATION_MODULES = {
+    'json': 'wadofstuff.django.serializers.json'
+}
