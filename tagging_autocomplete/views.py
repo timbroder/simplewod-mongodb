@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.core import serializers
 from tagging.models import Tag
+from django.utils.datastructures import MultiValueDictKeyError
 
 def list_tags(request):
 	try:

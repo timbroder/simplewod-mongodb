@@ -16,6 +16,7 @@ class MeasureType(models.Model):
     name = models.CharField(max_length=128)
     measures = models.ManyToManyField(Measure)
     #django_id = models.IntegerField(blank=True, null=True)
+    has_reps = models.BooleanField(default=True)
     
     def __unicode__(self):
         return self.name
@@ -36,7 +37,7 @@ class MeasureType(models.Model):
         
 class Exercise(models.Model):
     name = models.CharField(max_length=128)
-    type = models.ForeignKey(MeasureType)
+    type = models.ManyToManyField(MeasureType)
     
     #full json 
     #serializers.serialize('json', [Exercise.objects.all()[0]], indent=4, relations={'type': {'relations': ('measures',)}})

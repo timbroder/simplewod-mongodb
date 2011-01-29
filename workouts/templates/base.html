@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!doctype html> 
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
@@ -6,7 +6,7 @@
 {% macro title %}
     {% block title %}{% endblock %}
 {% endmacro %}
-{% load facebook_tags %}
+
 
 <head>
 	<title>{% usemacro title %} - simpleWOD</title>
@@ -21,9 +21,8 @@
     <script type="text/javascript" src="/static/js/Octin_Spraypaint_Free_400.font.js"></script>
     <script type="text/javascript" src="/static/js/base.js"></script>
     {% block extrajs %}{% endblock %}
-    {% facebook_js %}
-    
-    {% initialize_facebook_connect %}
+
+
 	
 </head>
 <body>

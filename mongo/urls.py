@@ -8,5 +8,8 @@ urlpatterns = patterns('',
     (r'^wods/$', mongo.wods),
     (r'^wods/add/$', mongo.add_wod),
     (r'^ajax/add1/$', mongo.add1),
+    (r'^ajax/list_exercises/$', mongo.list_exercises),
+    (r'^ajax/get_ex/$', mongo.get_ex_type),
+    (r'^ajax/get_ex_type_ops/$', mongo.get_ex_type_ops),
 )
  

@@ -1,0 +1,23 @@
+<span class="type-data">
+{% ifequal ex.type.count 1 %}
+	{% for type in ex.type.all %}
+		<input type="hidden" data-type_id="{{ type.id }}" data-type_name="{{ type.name }}"/>
+		{{ type.name }}: 
+	{% endfor %}
+{% else %}
+	for 
+	<select>
+		<option value="---">---</option>
+		{% for type in ex.type.all %}
+			<option data-type_id="'{{ type.id }}'" data-type_name="'{{ type.name }}'">{{ type.name }}</option>
+		{% endfor %}
+	</select>
+{% endifequal %}
+</span>
+
+
+
+
+
+
+{% include 'get_ex_add_ops.html' %}

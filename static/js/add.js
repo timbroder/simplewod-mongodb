@@ -58,7 +58,7 @@ TagSync.prototype = {
 
 	},
 	update: function(msg){
-		this.to.html(this.msg + msg.replace('-', ' '));
+		//this.to.html(this.msg + msg.replace('-', ' '));
 	}
 };
 
@@ -86,7 +86,7 @@ AddResultForm.prototype = {
 	            success: function(data) {
 	                self.callback(data);
 	            },
-	            data: { 'wod_id': id },	            
+	            data: { 'wod_id': id }        
 	        });
 			this.hook.addClass('once');    		
     		this.hook.addClass('shown');
@@ -140,7 +140,7 @@ ResultFormSubmit.prototype = {
         var tags = $('#id_tags').val();
         var wod_id = $('#wodid').val();
        $.ajax({
-            method: 'post',
+            type: 'get',
             url: '/ajax/addresultform/',
             success: function(data) {
                 self.callback(data);
@@ -159,7 +159,8 @@ var Mongo = function(canvas, trigger) {
 	this.cord = null;
 	this.help = null;
 	this.multiset = false;
-	this.numsSets = 1;
+	this.numSets = 1;
+	this.setCount = 1;
 	this.start();
 };
 
@@ -168,6 +169,18 @@ Mongo.prototype = {
 		var self = this;
 		$('#create_new').live('click', function(){
 			self.setChoice();
+		});
+		
+		$('.type-data select').live('change', function() {
+			var type = $(this).find('option:selected');
+			console.log(type);
+			console.log(type.metadata().type_id);
+			console.log(type.metadata().type_name);
+			console.log(this);
+			var typeData = '<input type="hidden" data-type_id="' + type.metadata().type_id + '" data-type_name="' + type.metadata().type_name + '"/>';
+			$(this).parent().find('input:hidden').remove();
+			$(this).parent().append(typeData);
+
 		});
 		
 		this.help = {
@@ -185,6 +198,7 @@ Mongo.prototype = {
 			}
 		
 		self.setChoice();
+		
 	},
 	setChoice: function() {
 		var self = this;
@@ -193,16 +207,16 @@ Mongo.prototype = {
 			url: '/ajax/add1/',
 			success: function(data) {
 				self.canvas.html(data);
-				self.cord = $('#accordion');
-				var setsD = $('#sets_help_msg');
+				/*self.cord = $('#accordion');
+				
 				self.cord.accordion({
 					autoHeight: false,
 					navigation: true,
 					icons: false,
 					event: null
-				});
+				});*/
 				
-				
+				var setsD = $('#sets_help_msg');
 				setsD.dialog(self.help);
 				
 				$('#sets_help_click').click(function(){
@@ -221,6 +235,8 @@ Mongo.prototype = {
 				$('#multiple_sets').click(function(){
 					self.setMultiSet();
 				});
+				
+				self.startSets();
 
 			}
 		});
@@ -248,6 +264,69 @@ Mongo.prototype = {
 	nameComplete: function() {
 		$('#name_header').html($('#wod_name').val());
 		this.cord.accordion('activate' , 1);
+	},
+	
+	startSets: function(){
+		var self = this;
+		self.sc = $('#sets_container');
+		//console.log(sc);
+		self.numSets++;
+		console.log('Sets: ' + self.numSets);
+		//$("#id_wod_tags").autocomplete("/tagging_autocomplete/json", { multiple: true });
+		self.addSet();
+	},
+	
+	addSet: function() {
+		var self = this;
+		console.log('Add Set');
+		console.log(self.setCount);
+		var set = $('<div id="' + self.setCount + '">Set ' + self.setCount + '</div>');
+		//self.getRounds().appendTo(set);
+		set.append(self.getRoundsNum());
+		set.append(self.getRounds());
+		set.append(self.getExBox());
+		self.sc.append(set);
+
+
+		
+	},
+	
+	getRoundsNum: function() {
+		return $('<p class="num-rounds">Number of Rounds: <input type="text"></p>');
+	},
+	
+	getRounds: function() {
+		return $('<div class="round"></div>');
+	},
+	
+	getExBox: function() {
+		var ex = $('<div class="ex-line"><span class="excersize">Exercise: <input type="text" class=ex-name></span><span class="ex-data"></span></div>');
+		
+		ex.find(".ex-name").autocomplete("/ajax/list_exercises/", { multiple: false })
+			.result(function(event, item) {
+				console.log(event);
+				console.log(item[0]);
+		        $.ajax({
+		            type: 'get',
+		            url: '/ajax/get_ex/',
+		            success: function(data) {
+		            	//console.log($(data).find('select'));
+		            	//TIM bind this properly or move it
+		            	$('.measurement').live('change', function() {
+		            		
+		            	});
+		            	if(!ex.find('.ex-data').is(':empty')) {
+		            		ex.find('.ex-data').empty();
+		            	}
+		            	ex.find('.ex-data').append(data);
+		            	
+		            	
+		            },
+		            data: { 'name': item[0] }	            
+		        });
+			});
+		
+		return ex;
 	}
 }
 
