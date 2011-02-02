@@ -134,7 +134,7 @@ ResultFormSubmit.prototype = {
     click: function() {
         var self = this;
         console.log('self.clicked');
-        console.log($(this.form));
+        //console.log($(this.form));
         var dt = $('#id_date').val();
         var results = $('#id_results').val();
         var tags = $('#id_tags').val();
@@ -162,6 +162,9 @@ var Mongo = function(canvas, trigger) {
 	this.numSets = 1;
 	this.setCount = 1;
 	this.fadeTime = 500;
+	
+	this.addButton = $('&nbsp;<span class="add-ex-rest">(<a href="#" class="remove-line">remove</a>) Add: <a href="#" class="add-ex">Exercise</a>, <a href="#" class="add-rest">Rest</a></span>');
+	
 	this.start();
 };
 
@@ -175,7 +178,7 @@ Mongo.prototype = {
 		$('.type-data select').live('change', function() {
 			var type = $(this).find('option:selected');
 
-			var typeData = '<input type="hidden" data-type_id="' + type.metadata().type_id + '" data-type_name="' + type.metadata().type_name + '"/>';
+			var typeData = '<input type="hidden" data-type_id="' + type.metadata().type_id + '" data-type_name="\'' + type.metadata().type_name + '\'"/>';
 			$(this).parent().find('input:hidden').remove();
 			$(this).parent().append(typeData);
 
@@ -201,7 +204,7 @@ Mongo.prototype = {
 	},
 	setChoice: function() {
 		var self = this;
-		console.log("YEO");
+		//console.log("YEO");
 		$.ajax({
 			url: '/ajax/add1/',
 			success: function(data) {
@@ -228,7 +231,7 @@ Mongo.prototype = {
 				});
 				
 				$('#one_set').click(function(){
-					self.setSingleSet();
+					self.setSingleSet();f
 				});
 				
 				$('#multiple_sets').click(function(){
@@ -344,8 +347,9 @@ Mongo.prototype = {
 		            		exdata.empty();
 		            	}
 		            	exdata.append(data);
-		            	
-		            	if (!$(data).find('select').length) {
+		            	console.log('looking for single');
+		            	console.log($(data).find('select:not(.opsbase)'));
+		            	if (!$(data).find('select:not(.opsbase)').length) {
 		            		console.log('single');
 		            		console.log(exdata);
 		            		//console.log(data);
@@ -362,9 +366,20 @@ Mongo.prototype = {
 	
 	getExBox2: function(hook) {
 		console.log('continue');
-		console.log(hook);
+		//console.log(hook);
 		var self = this;
-		hook.append('<span>UAAAAU</span>');
+		if (!hook.find('.amount-holder').length) {
+			hook.append('<span class="amount-holder"></span>')
+		}
+		else {
+			hook.find('.amount-holder').empty();
+		}
+		amount = hook.find('.amount-holder');
+		amount.append('<input type="text" class="amount-val"/>');
+		var id = hook.find('.type-data input').metadata().type_id;
+		hook.find('.measure-options:not(.opsbase)').remove();
+		hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);
+		this.addButton.clone().appendTo(hook);
 		
 	}
 }
