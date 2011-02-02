@@ -163,8 +163,6 @@ var Mongo = function(canvas, trigger) {
 	this.setCount = 1;
 	this.fadeTime = 500;
 	
-	this.addButton = $('&nbsp;<span class="add-ex-rest">(<a href="#" class="remove-line">remove</a>) Add: <a href="#" class="add-ex">Exercise</a>, <a href="#" class="add-rest">Rest</a></span>');
-	
 	this.start();
 };
 
@@ -183,6 +181,14 @@ Mongo.prototype = {
 			$(this).parent().append(typeData);
 
 			self.getExBox2($(this).parent().parent());
+		});
+		
+		$('.add-ex').live('click', function() {
+			self.addEx(this);
+		});
+		
+		$('.remove-line').live('click', function(){
+			self.removeEx($(this));
 		});
 		
 		this.help = {
@@ -285,8 +291,10 @@ Mongo.prototype = {
 		var set = $('<div id="' + self.setCount + '">Set ' + self.setCount + '</div>');
 		//self.getRounds().appendTo(set);
 		set.append(self.getRoundsNum());
-		set.append(self.getRounds());
-		set.append(self.getExBox());
+		
+		var round = self.getRounds();
+		round.append(self.getExBox());
+		set.append(round);
 		self.sc.append(set);
 
 
@@ -303,7 +311,7 @@ Mongo.prototype = {
 	
 	getExBox: function() {
 		var self = this;
-		var ex = $('<div class="ex-line"><span class="excersize">Exercise: <input type="text" class=ex-name></span><span class="ex-data"></span></div>');
+		var ex = $('<div class="ex-line"><span class="remove-ex-btn">(<a href="#" class="remove-line">X</a>)&nbsp;</span><span class="excersize">Exercise: <input type="text" class=ex-name></span><span class="ex-data"></span></div>');
 		
 		ex.find(".ex-name").autocomplete("/ajax/list_exercises/", { multiple: false })
 			.result(function(event, item) {
@@ -364,6 +372,10 @@ Mongo.prototype = {
 		return ex;
 	},
 	
+	getAddButton: function() {
+		return $('<span class="add-s">&nbsp; Add: <a href="#" class="add-ex">Exercise</a>, <a href="#" class="add-rest">Rest</a></span>');
+	},
+	
 	getExBox2: function(hook) {
 		console.log('continue');
 		//console.log(hook);
@@ -379,7 +391,55 @@ Mongo.prototype = {
 		var id = hook.find('.type-data input').metadata().type_id;
 		hook.find('.measure-options:not(.opsbase)').remove();
 		hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);
-		this.addButton.clone().appendTo(hook);
+		self.getAddButton().clone().appendTo(hook);
+		
+	},
+	
+	validateExRow: function() {
+		return true;
+	},
+	
+	addEx: function(start) {
+		var self = this;
+		console.log('add ex');
+		console.log(start);
+		if (!self.validateExRow()) {
+			return false;
+		}
+		
+		if ($('.ex-name:input[value=""]').length > 0) {
+			alert('please fill in the empty exercize');
+			return false;
+		}
+		
+		
+		hook = $(start).parent().parent().parent();
+		
+		//console.log(hook);
+		hook.after(this.getExBox());
+		console.log($('.ex-name:input[value=""]').length);
+	},
+	
+	removeEx: function(trigger) {
+		var line = trigger.parent().parent();
+		console.log(line);
+		console.log(line.find('.ex-name').val());
+		var ques = 'Are you sure you want to delete this excersize?';
+		if (line.find('.ex-name').val()) {
+			ques += ' (' + line.find('.ex-name').val() + ')';
+		}
+		var answer = confirm(ques);
+		
+		if (answer) {
+			var round = line.parent();
+			console.log(round);
+			line.remove();
+			console.log(round.find('.ex-line'));
+			if (round.find('.ex-line').length == 0) {
+				round.append(this.getExBox());
+				console.log(this.getExBox());
+			}
+		}
 		
 	}
 }
