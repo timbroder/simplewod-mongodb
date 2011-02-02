@@ -22,7 +22,7 @@ def add_wod(request):
     return r2r('add0.html')
 
 def add1(request):
-    return r2r('add1.html')
+    return r2r('add1.html', context_instance=RequestContext(request))
 
 def list_exercises(request):
     try:
@@ -34,6 +34,13 @@ def list_exercises(request):
     return HttpResponse('\n'.join(exercises), mimetype='text/plain')
 
 def get_ex_type(request):
-    ex = Exercise.objects.get(name = request.GET['name'])
-    return r2r('get_ex_type.html', locals())
+    if request.is_ajax():
+        print 'yes ajax'
+        ex = Exercise.objects.get(name = request.GET['name'])
+        return r2r('get_ex_type.html', locals(), context_instance=RequestContext(request))
+
+def get_ex_type_ops(request):
+    if request.is_ajax():
+        ex = Exercise.objects.get(name = request.GET['name'])
+        return r2r('get_ex_type.html', locals())
 

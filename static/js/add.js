@@ -161,6 +161,7 @@ var Mongo = function(canvas, trigger) {
 	this.multiset = false;
 	this.numSets = 1;
 	this.setCount = 1;
+	this.fadeTime = 500;
 	this.start();
 };
 
@@ -173,14 +174,12 @@ Mongo.prototype = {
 		
 		$('.type-data select').live('change', function() {
 			var type = $(this).find('option:selected');
-			console.log(type);
-			console.log(type.metadata().type_id);
-			console.log(type.metadata().type_name);
-			console.log(this);
+
 			var typeData = '<input type="hidden" data-type_id="' + type.metadata().type_id + '" data-type_name="' + type.metadata().type_name + '"/>';
 			$(this).parent().find('input:hidden').remove();
 			$(this).parent().append(typeData);
 
+			self.getExBox2($(this).parent().parent());
 		});
 		
 		this.help = {
@@ -300,26 +299,58 @@ Mongo.prototype = {
 	},
 	
 	getExBox: function() {
+		var self = this;
 		var ex = $('<div class="ex-line"><span class="excersize">Exercise: <input type="text" class=ex-name></span><span class="ex-data"></span></div>');
 		
 		ex.find(".ex-name").autocomplete("/ajax/list_exercises/", { multiple: false })
 			.result(function(event, item) {
-				console.log(event);
+				//console.log(event);
+				//console.log(item[0]);
+				var box = $(this);
+				
+				console.log('selected');
+				console.log(this);
 				console.log(item[0]);
+				
+				
+				box.bind('click', function(){ 
+					console.log('clicked');
+					var answer = confirm("Would you like to change this exercise? This will remove and reps and information you have added.");
+					if (answer) {
+						var remove = $(this).parent().parent().find('.ex-data');
+						remove.fadeOut(self.fadeTime, function() { remove.empty(); });
+						remove.fadeIn();
+						box.removeAttr("readonly"); 
+						box.unbind('click');
+					}
+				})
+				//box.attr("disabled", "disabled");
+				box.attr('readonly', true);
+				//ex.find(".ex-name").autocomplete({ disabled: true });
+
 		        $.ajax({
 		            type: 'get',
 		            url: '/ajax/get_ex/',
 		            success: function(data) {
+		            	console.log('back');
+		            	var exdata = ex.find('.ex-data');
+		            	console.log(exdata);
 		            	//console.log($(data).find('select'));
 		            	//TIM bind this properly or move it
-		            	$('.measurement').live('change', function() {
+		            	//$('.measurement').live('change', function() {
 		            		
-		            	});
-		            	if(!ex.find('.ex-data').is(':empty')) {
-		            		ex.find('.ex-data').empty();
+		            	//});
+		            	if(!exdata.is(':empty')) {
+		            		exdata.empty();
 		            	}
-		            	ex.find('.ex-data').append(data);
+		            	exdata.append(data);
 		            	
+		            	if (!$(data).find('select').length) {
+		            		console.log('single');
+		            		console.log(exdata);
+		            		//console.log(data);
+		            		self.getExBox2(exdata);
+		            	}
 		            	
 		            },
 		            data: { 'name': item[0] }	            
@@ -327,6 +358,14 @@ Mongo.prototype = {
 			});
 		
 		return ex;
+	},
+	
+	getExBox2: function(hook) {
+		console.log('continue');
+		console.log(hook);
+		var self = this;
+		hook.append('<span>UAAAAU</span>');
+		
 	}
 }
 
