@@ -191,6 +191,18 @@ Mongo.prototype = {
 			self.removeEx($(this));
 		});
 		
+		$('.add-round-control').live('click', function() {
+			self.addRound($(this));
+		});
+		
+		$('.remove-round-control').live('click', function() {
+			self.removeRound($(this));
+		});
+		
+		$('.add-all-rounds-control').live('click', function() {
+			self.addAllRounds($(this));
+		});
+		
 		this.help = {
 				modal: true,
 				draggable: false,
@@ -288,13 +300,14 @@ Mongo.prototype = {
 		var self = this;
 		console.log('Add Set');
 		console.log(self.setCount);
-		var set = $('<div id="' + self.setCount + '">Set ' + self.setCount + '</div>');
+		var set = $('<div class="section">Set ' + self.setCount + '</div>');
 		//self.getRounds().appendTo(set);
-		set.append(self.getRoundsNum());
+		//set.append(self.getRoundsNum());
 		
-		var round = self.getRounds();
+		var round = self.getRound();
 		round.append(self.getExBox());
 		set.append(round);
+		set.append(self.getRoundControl());
 		self.sc.append(set);
 
 
@@ -305,8 +318,12 @@ Mongo.prototype = {
 		return $('<p class="num-rounds">Number of Rounds: <input type="text"></p>');
 	},
 	
-	getRounds: function() {
+	getRound: function() {
 		return $('<div class="round"></div>');
+	},
+	
+	getRoundControl: function() {
+		return $('<div class="round-control"><a href="#" class="add-round-control">Add Round</a> | <a href="#" class="add-all-rounds-control">Add all Rounds</a> | <a href="#" class="remove-round-control">Remove Round</a><hr></div>');
 	},
 	
 	getExBox: function() {
@@ -334,7 +351,8 @@ Mongo.prototype = {
 						box.removeAttr("readonly"); 
 						box.unbind('click');
 					}
-				})
+				});
+				
 				//box.attr("disabled", "disabled");
 				box.attr('readonly', true);
 				//ex.find(".ex-name").autocomplete({ disabled: true });
@@ -399,6 +417,16 @@ Mongo.prototype = {
 		return true;
 	},
 	
+	areEmptyExs: function() {
+		//check empty name, ---- in any selects, and values and shit
+		if ($('.ex-name:input[value=""]').length > 0) {
+			//validate
+			alert('please fill in the empty exercize');
+			return true;
+		}
+		return false;
+	},
+	
 	addEx: function(start) {
 		var self = this;
 		console.log('add ex');
@@ -407,8 +435,7 @@ Mongo.prototype = {
 			return false;
 		}
 		
-		if ($('.ex-name:input[value=""]').length > 0) {
-			alert('please fill in the empty exercize');
+		if (self.areEmptyExs()) {
 			return false;
 		}
 		
@@ -437,10 +464,55 @@ Mongo.prototype = {
 			console.log(round.find('.ex-line'));
 			if (round.find('.ex-line').length == 0) {
 				round.append(this.getExBox());
-				console.log(this.getExBox());
 			}
 		}
 		
+	},
+	
+	addRound: function(trigger) {
+		console.log('add round');
+		var set = trigger.parent().parent();
+		var round = trigger.parent().prev().clone();
+		var control = trigger.parent().clone();
+		console.log(round);
+		var self = this;
+		if (self.areEmptyExs()) {
+			return false;
+		}
+		control.after(control);
+		control.after(round);
+		
+	
+		
+	},
+	
+	removeRound: function(trigger) {
+		var set = trigger.parent().parent();
+		console.log(set);
+		
+		if (set.find('.round').length == 1) {
+			alert('Cannot remove round, there has to be at least 1 in a set');
+			return false;
+		}
+		
+		var answer = confirm('Are you sure you want to remove the round?');
+		
+		if (answer) {
+			var round = trigger.parent().prev();
+			var control = trigger.parent();
+			
+			round.remove();
+			control.remove();
+		}
+		
+	},
+	
+	addAllRounds: function(trigger) {
+		console.log('add all rounds');
+		var self = this;
+		if (!self.areEmptyExs()) {
+			return false;
+		}
 	}
 }
 
