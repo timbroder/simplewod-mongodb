@@ -203,6 +203,10 @@ Mongo.prototype = {
 			self.addAllRounds($(this));
 		});
 		
+		$('.ex-name').live('click', function() {
+			self.boxClick($(this));
+		});
+		
 		this.help = {
 				modal: true,
 				draggable: false,
@@ -341,7 +345,7 @@ Mongo.prototype = {
 				console.log(item[0]);
 				
 				
-				box.bind('click', function(){ 
+				/*box.bind('click', function(){ 
 					console.log('clicked');
 					var answer = confirm("Would you like to change this exercise? This will remove and reps and information you have added.");
 					if (answer) {
@@ -351,7 +355,7 @@ Mongo.prototype = {
 						box.removeAttr("readonly"); 
 						box.unbind('click');
 					}
-				});
+				});*/
 				
 				//box.attr("disabled", "disabled");
 				box.attr('readonly', true);
@@ -419,6 +423,7 @@ Mongo.prototype = {
 	
 	areEmptyExs: function() {
 		//check empty name, ---- in any selects, and values and shit
+		console.log($('.ex-name:input[value=""]').length);
 		if ($('.ex-name:input[value=""]').length > 0) {
 			//validate
 			alert('please fill in the empty exercize');
@@ -479,8 +484,8 @@ Mongo.prototype = {
 		if (self.areEmptyExs()) {
 			return false;
 		}
-		control.after(control);
-		control.after(round);
+		set.after(control);
+		set.after(round);
 		
 	
 		
@@ -510,9 +515,26 @@ Mongo.prototype = {
 	addAllRounds: function(trigger) {
 		console.log('add all rounds');
 		var self = this;
-		if (!self.areEmptyExs()) {
+		if (self.areEmptyExs()) {
 			return false;
 		}
+	},
+	
+	boxClick: function(trigger) {
+		//trigger.bind('click', function(){ 
+			console.log('clicked');
+			console.log(trigger.attr('readonly'));
+			if(trigger.attr('readonly')) {
+				var answer = confirm("Would you like to change this exercise? This will remove and reps and information you have added.");
+				if (answer) {
+					var remove = trigger.parent().parent().find('.ex-data');
+					remove.fadeOut(self.fadeTime, function() { remove.empty(); });
+					remove.fadeIn();
+					box.removeAttr("readonly"); 
+					box.unbind('click');
+				}
+			}
+		//});
 	}
 }
 
