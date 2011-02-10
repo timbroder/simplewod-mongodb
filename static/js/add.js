@@ -476,19 +476,27 @@ Mongo.prototype = {
 	
 	addRound: function(trigger) {
 		console.log('add round');
+		this.addMultiRounds(trigger, 1);
+	},
+	
+	addMultiRounds: function(trigger, num) {
+		console.log("addrounds: " + num);
 		var set = trigger.parent().parent();
-		var round = trigger.parent().prev().clone();
-		var control = trigger.parent().clone();
+		var round = null;
+		var control = null;
 		console.log(round);
 		var self = this;
 		if (self.areEmptyExs()) {
 			return false;
 		}
-		set.after(control);
-		set.after(round);
-		
-	
-		
+		for (var i=0; i<num; i++) {
+			console.log('i ' + i);
+			round = trigger.parent().prev().clone();
+			control = trigger.parent().clone();
+			set.after(control);
+			set.after(round);
+		}
+
 	},
 	
 	removeRound: function(trigger) {
@@ -518,6 +526,29 @@ Mongo.prototype = {
 		if (self.areEmptyExs()) {
 			return false;
 		}
+		if($('.round').length > 1) {
+			alert('This will only work if you have 1 round in this set.');
+			return;
+		}
+		var p = "Enter the total number of rounds for this set: ";
+		var num = prompt(p, "");
+		console.log(num);
+		if (num == null || num == "") {
+			alert('you must enter a number');
+			return;
+		}
+		
+		if (num != parseInt(num)) {
+			alert('you must enter a number');
+			return
+		}
+		
+		if (num < 1) {
+			alert('you must enter a number greater then 0');
+			return;
+		}
+
+		this.addMultiRounds(trigger, num-1);
 	},
 	
 	boxClick: function(trigger) {
