@@ -66,7 +66,7 @@ var AddResultForm = function(trigger, hook) {
     this.trigger = $(trigger);
     this.hook = $(hook);
     this.setup();
-}
+};
 
 AddResultForm.prototype = {
     setup: function() {
@@ -88,8 +88,8 @@ AddResultForm.prototype = {
 	            },
 	            data: { 'wod_id': id }        
 	        });
-			this.hook.addClass('once');    		
-    		this.hook.addClass('shown');
+	        this.hook.addClass('once');    		
+	        this.hook.addClass('shown');
     	}
     	else if (this.hook.hasClass('once') && this.hook.hasClass('shown')) {
 			this.hook.hide();
@@ -108,14 +108,14 @@ AddResultForm.prototype = {
             self.click();
         });
     }
-}
+};
 
 var ResultFormSubmit = function(form, button, hook) {
     this.form = $(form);
     this.button = $(button);
     this.button = $(hook);
     this.setup();
-}
+};
 
 ResultFormSubmit.prototype = {
     setup: function() {
@@ -145,14 +145,14 @@ ResultFormSubmit.prototype = {
             success: function(data) {
                 self.callback(data);
             },
-            data: { 'wod_id': id },
+            data: { 'wod_id': id }
             
         });
     },
     callback: function() {
     	console.log('callback');
     }
-}
+};
 
 var Mongo = function(canvas, trigger) {
 	this.canvas = $(canvas);
@@ -223,7 +223,7 @@ Mongo.prototype = {
 						$( this ).dialog( "close" );
 					}
 				}
-			}
+			};
 		
 		self.setChoice();
 		
@@ -257,7 +257,7 @@ Mongo.prototype = {
 				});
 				
 				$('#one_set').click(function(){
-					self.setSingleSet();f
+					self.setSingleSet();
 				});
 				
 				$('#multiple_sets').click(function(){
@@ -435,7 +435,7 @@ Mongo.prototype = {
 		//console.log(hook);
 		var self = this;
 		if (!hook.find('.amount-holder').length) {
-			hook.append('<span class="amount-holder"></span>')
+			hook.append('<span class="amount-holder"></span>');
 		}
 		else {
 			hook.find('.amount-holder').empty();
