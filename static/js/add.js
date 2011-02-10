@@ -207,6 +207,10 @@ Mongo.prototype = {
 			self.boxClick($(this));
 		});
 		
+		$('.add-set-control').live('click', function() {
+			self.addAnotherSet($(this));
+		});
+		
 		this.help = {
 				modal: true,
 				draggable: false,
@@ -300,11 +304,20 @@ Mongo.prototype = {
 		self.addSet();
 	},
 	
+	getSet: function() {
+		return $('<div class="section">Set ' + this.setCount++ + '</div>').clone();
+	},
+	
+	getSetControl: function() {
+		return $('<div class="section-control"><hr><a href="#" class="add-set-control">Add Set</a></div>').clone();
+	},
+	
 	addSet: function() {
 		var self = this;
 		console.log('Add Set');
 		console.log(self.setCount);
-		var set = $('<div class="section">Set ' + self.setCount + '</div>');
+		var set = self.getSet();
+		var setControl = self.getSetControl();
 		//self.getRounds().appendTo(set);
 		//set.append(self.getRoundsNum());
 		
@@ -313,8 +326,27 @@ Mongo.prototype = {
 		set.append(round);
 		set.append(self.getRoundControl());
 		self.sc.append(set);
+		self.sc.append(setControl);
 
 
+		
+	},
+	
+	addAnotherSet: function(trigger) {
+		var self = this;
+		var currSet = trigger.parent();
+		var set = self.getSet();
+		var setControl = self.getSetControl();
+		var round = self.getRound();
+		
+		round.append(self.getExBox());
+		set.append(round);
+		set.append(self.getRoundControl());
+		
+		currSet.after(setControl);
+		currSet.after(set);
+		
+		
 		
 	},
 	
