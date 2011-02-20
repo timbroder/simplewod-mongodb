@@ -14,10 +14,12 @@ from django.views.decorators.cache import cache_page
 from django.contrib.sites.models import Site
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
+from django.views.decorators.csrf import csrf_protect
 
 def wods(request):
     return r2r()
 
+@csrf_protect
 def add_wod(request):
     return r2r('add0.html')
 

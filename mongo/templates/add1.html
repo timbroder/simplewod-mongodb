@@ -1,27 +1,29 @@
-<div id="accordion">
-	<!-- <h3><a href="#" id="name_header">Workout Name</a></h3>
-	<div id="name_def">
-		<p>Name: <input type="text" id="wod_name" value="Fran" /></p>
-		<p><a href="#" id="name_complete">Next</a>
+<form action="." method="POST">{% csrf_token %}
+	<div id="accordion">
+		<!-- <h3><a href="#" id="name_header">Workout Name</a></h3>
+		<div id="name_def">
+			<p>Name: <input type="text" id="wod_name" value="Fran" /></p>
+			<p><a href="#" id="name_complete">Next</a>
+		</div>
+		<h3><a href="#">Sets</a></h3>
+		<div>
+			<p>
+			<span>Does your workout have sets of rounds?
+			<span id="sets_help_click" class="ui-icon ui-icon-help" style="margin:0 7px 50px 0;"></span></span>
+			</p>
+			<p>
+				<a href="#" id="one_set">No</a>, <a href="#" id="multiple_sets">Yes</a>
+			</p>
+				<div id="sets_help_msg" title="What are sets?">
+					<p>Sets are for when you have multiple groups of different rounds in the same workout.</p>
+					<p>All workouts have at least 1 set</p>
+					<p>Example: do 3 rounds of xxx, then do 4 rounds of yyy</p>
+					<p>This comes up a lot in OPT workouts. For more information please see section 2 in the <a href="http://optfaq.blogspot.com/"target="_blank">OPT FAQ</a></p>
+				</div>
+	
+		</div> -->
+		<h3><a href="#" id="set1_header">Workouta</a></h3>
+		<div id="sets_container"></div>
+		<div id="next1"><input type="submit" /></div>
 	</div>
-	<h3><a href="#">Sets</a></h3>
-	<div>
-		<p>
-		<span>Does your workout have sets of rounds?
-		<span id="sets_help_click" class="ui-icon ui-icon-help" style="margin:0 7px 50px 0;"></span></span>
-		</p>
-		<p>
-			<a href="#" id="one_set">No</a>, <a href="#" id="multiple_sets">Yes</a>
-		</p>
-			<div id="sets_help_msg" title="What are sets?">
-				<p>Sets are for when you have multiple groups of different rounds in the same workout.</p>
-				<p>All workouts have at least 1 set</p>
-				<p>Example: do 3 rounds of xxx, then do 4 rounds of yyy</p>
-				<p>This comes up a lot in OPT workouts. For more information please see section 2 in the <a href="http://optfaq.blogspot.com/"target="_blank">OPT FAQ</a></p>
-			</div>
-
-	</div> -->
-	<h3><a href="#" id="set1_header">Workouta</a></h3>
-	<div id="sets_container"></div>
-
-</div>
+</form>

@@ -186,6 +186,10 @@ Mongo.prototype = {
 			$('.add-ex').live('click', function() {
 				self.addEx(this);
 			});
+			
+			$('.add-rest').live('click', function() {
+				self.addEx(this, true);
+			});
 
 			$('.remove-line').live('click', function(){
 				self.removeEx($(this));
@@ -359,12 +363,16 @@ Mongo.prototype = {
 		},
 
 		getRoundControl: function() {
-			return $('<div class="round-control"><a href="#" class="add-round-control">Add Round</a> | <a href="#" class="add-all-rounds-control">Add all Rounds</a> | <a href="#" class="remove-round-control">Remove Round</a><hr></div>');
+			return $('<div class="round-control"><a href="#" class="add-round-control">Add Round</a> | <a href="#" class="add-all-rounds-control">Add all Rounds</a> | <a href="#" class="remove-round-control">Remove Round</a><hr></div>').clone();
+		},
+		
+		getEx: function(){
+			return $('<div class="ex-line"><span class="remove-ex-btn">(<a href="#" class="remove-line">X</a>)&nbsp;</span><span class="excersize">Exercise: <input type="text" class=ex-name></span><span class="ex-data"></span></div>').clone();
 		},
 
 		getExBox: function() {
 			var self = this;
-			var ex = $('<div class="ex-line"><span class="remove-ex-btn">(<a href="#" class="remove-line">X</a>)&nbsp;</span><span class="excersize">Exercise: <input type="text" class=ex-name></span><span class="ex-data"></span></div>');
+			var ex = self.getEx();
 
 			ex.find(".ex-name").autocomplete("/ajax/list_exercises/", { multiple: false })
 			.result(function(event, item) {
@@ -397,33 +405,37 @@ Mongo.prototype = {
 					type: 'get',
 					url: '/ajax/get_ex/',
 					success: function(data) {
-						console.log('back');
-						var exdata = ex.find('.ex-data');
-						console.log(exdata);
-						//console.log($(data).find('select'));
-						//TIM bind this properly or move it
-						//$('.measurement').live('change', function() {
-
-						//});
-						if(!exdata.is(':empty')) {
-							exdata.empty();
-						}
-						exdata.append(data);
-						console.log('looking for single');
-						console.log($(data).find('select:not(.opsbase)'));
-						if (!$(data).find('select:not(.opsbase)').length) {
-							console.log('single');
-							console.log(exdata);
-							//console.log(data);
-							self.getExBox2(exdata);
-						}
-
+						self.getExBoxData(ex, data);
 					},
 					data: { 'name': item[0] }	            
 				});
 			});
 
 			return ex;
+		},
+		
+		getExBoxData: function(ex, data) {
+			var self = this;
+			console.log('back');
+			var exdata = ex.find('.ex-data');
+			console.log(exdata);
+			//console.log($(data).find('select'));
+			//TIM bind this properly or move it
+			//$('.measurement').live('change', function() {
+
+			//});
+			if(!exdata.is(':empty')) {
+				exdata.empty();
+			}
+			exdata.append(data);
+			console.log('looking for single');
+			console.log($(data).find('select:not(.opsbase)'));
+			if (!$(data).find('select:not(.opsbase)').length) {
+				console.log('single');
+				console.log(exdata);
+				//console.log(data);
+				self.getExBox2(exdata);
+			}
 		},
 
 		getAddButton: function() {
@@ -464,7 +476,8 @@ Mongo.prototype = {
 			return false;
 		},
 
-		addEx: function(start) {
+		addEx: function(start, rest) {
+			rest = rest || false;
 			var self = this;
 			console.log('add ex');
 			console.log(start);
@@ -480,8 +493,27 @@ Mongo.prototype = {
 			hook = $(start).parent().parent().parent();
 
 			//console.log(hook);
-			hook.after(this.getExBox());
-			console.log($('.ex-name:input[value=""]').length);
+			if (rest) {
+				var key = 'Rest';
+				var r = this.getExBox();
+				var input = r.find('input.ex-name');
+				input.val(key);
+				input.attr('readonly', true);
+				$.ajax({
+					type: 'get',
+					url: '/ajax/get_ex/',
+					success: function(data) {
+						self.getExBoxData(r, data);
+					},
+					data: { 'name': key }	            
+				});
+				hook.after(r);
+			}
+			else {
+				hook.after(this.getExBox());
+				console.log($('.ex-name:input[value=""]').length);
+			}
+
 		},
 
 		removeEx: function(trigger) {
