@@ -10,7 +10,7 @@ AddSubmit.prototype = {
 			console.log('form');
 			console.log(this.form);
 //			
-//			console.log('start');
+			console.log('start');
 //			var myObject = {
 //			    workout: {
 //			    	name: 'some workout',
@@ -25,10 +25,11 @@ AddSubmit.prototype = {
 			
 			this.form.submit(function(e){
 				e.preventDefault();
-				if ($("#add_w_form").validationEngine('validate')) {
+				//ENABLE!!!!!!!
+				//if ($("#add_w_form").validationEngine('validate')) {
 					console.log('yea');
 					self.submit();
-				}
+				//}
 			});
 		},
 		
@@ -50,7 +51,6 @@ AddSubmit.prototype = {
 			console.log(sets);
 			var setsArray = [];
 			sets.find('div.section').each(function(){
-//				var setOb = 
 				setsArray.push(self.getRounds($(this)));
 			});
 
@@ -78,6 +78,7 @@ AddSubmit.prototype = {
 		getRound: function(round) {
 			var self = this;
 			var roundArray = [];
+			
 			round.find('div.ex-line').each( function() {
 				roundArray.push(self.getExLine($(this)));
 			});
@@ -87,7 +88,31 @@ AddSubmit.prototype = {
 		},
 		
 		getExLine: function(line) {
-			return 'an ex';
+			console.log('getExLine');
+			console.log(line);
+			var type = line.find('span.type-data input');
+			var amount = line.find('span.amount-holder');
+			var amount_name = type.metadata().type_name;
+			var measure = line.find('select.measure-options:visible option:selected');
+			var ex = {
+				'name': line.find('input.ex-name').val(),
+				'type': amount_name,
+				'type_id': type.metadata().type_id,
+				'amount': amount.find('input.amount-val').val(),
+				'measure': measure.val(),
+				'measure_id': measure.metadata().type_id				
+			}
+			
+			return ex;
+			
+//			var json = '{"name":"' + line.find('input.ex-name').val() + '","' 
+//						+ amount_name + '":"' + amount.find('input.amount-val').val() + '",'
+//						+ '"type_id":' + type.metadata().type_id + ','
+//						+ 'measure'
+//						+ '}';
+//			console.log(json);
+//			return eval( "(" + json + ")" );
+
 		}
 };
 

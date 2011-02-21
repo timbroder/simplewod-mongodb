@@ -447,7 +447,7 @@ Mongo.prototype = {
 				hook.find('.amount-holder').empty();
 			}
 			amount = hook.find('.amount-holder');
-			amount.append('<input type="text" class="amount-val validate[required,alertText[\'hello?\']"' + self.getInputId() + '/>');
+			amount.append('<input type="text" class="amount-val validate[required,onlyNumberSp]"' + self.getInputId() + '/>');
 			var id = hook.find('.type-data input').metadata().type_id;
 			hook.find('.measure-options:not(.opsbase)').remove();
 			hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);
@@ -656,17 +656,7 @@ Mongo.prototype = {
 }
 
 $(document).ready(function() {
-	new ResultToggle('#toggle_result');
-	new TagSync('#id_wod_tags', '#tags_from_wod');
-	new AddResultForm('.add_result', '#result_form');
-	//new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
-	new Mongo('#canvas');
 
-	$("#id_date").live('focus', function(){
-		$(this).datepicker();
-	});
-	
-	$("#add_w_form").validationEngine();
 
 
 });
