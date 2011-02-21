@@ -50,7 +50,6 @@ TagSync.prototype = {
 			});
 
 			/*$('.ac_results').live('click', function() {
-			console.log('hi');
 		    //self.update(this.value );
 		});*/
 			$('body').bind('autocompleteClick', function(e) {
@@ -130,8 +129,6 @@ ResultFormSubmit.prototype = {
 		},
 		click: function() {
 			var self = this;
-			console.log('self.clicked');
-			//console.log($(this.form));
 			var dt = $('#id_date').val();
 			var results = $('#id_results').val();
 			var tags = $('#id_tags').val();
@@ -284,12 +281,10 @@ Mongo.prototype = {
 		},
 
 		setSingleSet: function() {
-			console.log('single');
 			this.afterSetChoice();
 		},
 
 		setMultiSet: function() {
-			console.log('multi');
 			this.multiset = true;
 			$('#set1_header').html('Set 1 Rounds');
 			this.afterSetChoice();
@@ -382,51 +377,59 @@ Mongo.prototype = {
 
 			ex.find(".ex-name").autocomplete("/ajax/list_exercises/", { multiple: false })
 			.result(function(event, item) {
-				var box = $(this);
+				//var box = $(this);
+				self.autoCompleteReturn($(this), ex, item);
 
-				/*box.bind('click', function(){ 
-					console.log('clicked');
-					var answer = confirm("Would you like to change this exercise? This will remove and reps and information you have added.");
-					if (answer) {
-						var remove = $(this).parent().parent().find('.ex-data');
-						remove.fadeOut(self.fadeTime, function() { remove.empty(); });
-						remove.fadeIn();
-						box.removeAttr("readonly"); 
-						box.unbind('click');
-					}
-				});*/
 
-				//box.attr("disabled", "disabled");
-				box.attr('readonly', true);
-				//ex.find(".ex-name").autocomplete({ disabled: true });
-
-				$.ajax({
-					type: 'get',
-					url: '/ajax/get_ex/',
-					success: function(data) {
-						//self.addSelectInputIds(data);
-						self.getExBoxData(ex, data);
-					},
-					data: { 'name': item[0] }	            
-				});
 			});
 
 			return ex;
 		},
 		
+		autoCompleteReturn: function(box, ex, item) {
+			var self = this;
+			/*box.bind('click', function(){ 
+			var answer = confirm("Would you like to change this exercise? This will remove and reps and information you have added.");
+			if (answer) {
+				var remove = $(this).parent().parent().find('.ex-data');
+				remove.fadeOut(self.fadeTime, function() { remove.empty(); });
+				remove.fadeIn();
+				box.removeAttr("readonly"); 
+				box.unbind('click');
+			}
+			});*/
+	
+			//box.attr("disabled", "disabled");
+			box.attr('readonly', true);
+			//ex.find(".ex-name").autocomplete({ disabled: true });
+	
+			$.ajax({
+				type: 'get',
+				url: '/ajax/get_ex/',
+				success: function(data) {
+					//self.addSelectInputIds(data);
+					console.log(ex);
+					//console.log(data);
+					self.getExBoxData(ex, data);
+				},
+				data: { 'name': item[0] }	            
+			});
+		},
+		
 		getExBoxData: function(ex, data) {
 			var self = this;
 			var exdata = ex.find('.ex-data');
-			//console.log($(data).find('select'));
-			//TIM bind this properly or move it
-			//$('.measurement').live('change', function() {
-
-			//});
+			console.log('get');
+			console.log(ex);
+			console.log(exdata);
+			console.log
 			if(!exdata.is(':empty')) {
+				console.log('empty');
 				exdata.empty();
 			}
-			exdata.append(data);
 			
+			exdata.append(data);
+			console.log('appended?');
 			if (!$(data).find('select:not(.opsbase)').length) {
 				self.getExBox2(exdata);
 			}
@@ -438,7 +441,6 @@ Mongo.prototype = {
 		},
 
 		getExBox2: function(hook) {
-			//console.log(hook);
 			var self = this;
 			if (!hook.find('.amount-holder').length) {
 				hook.append('<span class="amount-holder"></span>');
@@ -456,7 +458,6 @@ Mongo.prototype = {
 		},
 
 		validate: function() {
-			console.log('validate?');
 			return $("#add_w_form").validationEngine('validate');
 			return true;
 		},
@@ -485,7 +486,6 @@ Mongo.prototype = {
 
 			hook = $(start).parent().parent().parent();
 
-			//console.log(hook);
 			if (rest) {
 				var key = 'Rest';
 				var r = this.getExBox();
@@ -505,15 +505,12 @@ Mongo.prototype = {
 			}
 			else {
 				hook.after(this.getExBox());
-				console.log($('.ex-name:input[value=""]').length);
 			}
 
 		},
 
 		removeEx: function(trigger) {
 			var line = trigger.parent().parent();
-			console.log(line);
-			console.log(line.find('.ex-name').val());
 			var ques = 'Are you sure you want to delete this excersize?';
 			if (line.find('.ex-name').val()) {
 				ques += ' (' + line.find('.ex-name').val() + ')';
@@ -522,9 +519,7 @@ Mongo.prototype = {
 
 			if (answer) {
 				var round = line.parent();
-				console.log(round);
 				line.remove();
-				console.log(round.find('.ex-line'));
 				if (round.find('.ex-line').length == 0) {
 					round.append(this.getExBox());
 				}
@@ -534,7 +529,6 @@ Mongo.prototype = {
 		},
 
 		addRound: function(trigger) {
-			console.log('add round');
 			this.addMultiRounds(trigger, 1);
 		},
 
@@ -543,17 +537,14 @@ Mongo.prototype = {
 			if (!self.validate()) {
 				return false;
 			}
-			console.log("addrounds: " + num);
 			var set = trigger.parent();//.parent();
 			var round = null;
 			var control = null;
-			console.log(round);
 			
 			if (self.areEmptyExs()) {
 				return false;
 			}
 			for (var i=0; i<num; i++) {
-				console.log('i ' + i);
 				round = trigger.parent().prev().clone();
 				control = trigger.parent().clone();
 				set.after(control);
@@ -564,7 +555,6 @@ Mongo.prototype = {
 
 		removeRound: function(trigger) {
 			var set = trigger.parent().parent();
-			console.log(set);
 
 			if (set.find('.round').length == 1) {
 				alert('Cannot remove round, there has to be at least 1 in a set');
@@ -585,7 +575,6 @@ Mongo.prototype = {
 		},
 
 		addAllRounds: function(trigger) {
-			console.log('add all rounds');
 			var self = this;
 			if (!self.validate()) {
 				return false;
@@ -599,7 +588,6 @@ Mongo.prototype = {
 			}
 			var p = "Enter the total number of rounds for this set: ";
 			var num = prompt(p, "");
-			console.log(num);
 			if (num == null || num == "") {
 				alert('you must enter a number');
 				return;
@@ -619,9 +607,8 @@ Mongo.prototype = {
 		},
 
 		boxClick: function(trigger) {
+			var self = this;
 			//trigger.bind('click', function(){ 
-			console.log('clicked');
-			console.log(trigger.attr('readonly'));
 			if(trigger.attr('readonly')) {
 				var answer = confirm("Would you like to change this exercise? This will remove and reps and information you have added.");
 				if (answer) {
@@ -630,6 +617,14 @@ Mongo.prototype = {
 					remove.fadeIn();
 					trigger.removeAttr("readonly"); 
 					trigger.unbind('click');
+					trigger.autocomplete("/ajax/list_exercises/", { multiple: false })
+					.result(function(event, item) {
+						//var box = $(this);
+						self.autoCompleteReturn($(this), trigger.parent().parent(), item);
+
+
+					});
+					//trigger.attr('autocomplete', 'on');
 					$("#add_w_form").validationEngine('hideAll');
 				}
 			}
@@ -647,7 +642,6 @@ Mongo.prototype = {
 			hook.find('select').each(function() {
 				select = $(this);
 				if (!select.id || select.id === "") {
-					console.log('yay');
 					var newId = 'id_' + self.idCounter++;
 					select.attr('id', newId);
 				}

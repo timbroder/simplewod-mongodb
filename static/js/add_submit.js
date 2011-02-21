@@ -7,10 +7,6 @@ var AddSubmit = function(sets, form) {
 AddSubmit.prototype = {
 		setup: function(){
 			var self = this;
-			console.log('form');
-			console.log(this.form);
-//			
-			console.log('start');
 //			var myObject = {
 //			    workout: {
 //			    	name: 'some workout',
@@ -21,13 +17,11 @@ AddSubmit.prototype = {
 //			    
 //			myJSONText = JSON.stringify(myObject);
 //
-//			console.log(myJSONText);
 			
 			this.form.submit(function(e){
 				e.preventDefault();
 				//ENABLE!!!!!!!
 				//if ($("#add_w_form").validationEngine('validate')) {
-					console.log('yea');
 					self.submit();
 				//}
 			});
@@ -47,17 +41,12 @@ AddSubmit.prototype = {
 		
 		getSets: function(sets){
 			var self = this;
-			console.log('getSets');
-			console.log(sets);
 			var setsArray = [];
 			sets.find('div.section').each(function(){
 				setsArray.push(self.getRounds($(this)));
 			});
-
 			
 			return setsArray;
-			
-			
 		},
 		
 		getRounds: function(rounds) {
@@ -88,8 +77,6 @@ AddSubmit.prototype = {
 		},
 		
 		getExLine: function(line) {
-			console.log('getExLine');
-			console.log(line);
 			var type = line.find('span.type-data input');
 			var amount = line.find('span.amount-holder');
 			var amount_name = type.metadata().type_name;

@@ -1127,11 +1127,8 @@
      *            method (optional) action
      */
     $.fn.validationEngine = function(method) {
-    	console.log('val eng');
-    	console.log(this);
         var form = $(this);
 		  if(!form[0]){
-			  console.log('return false')
 			  return false;  // stop here if the form do not exist
 		  }
 		  
