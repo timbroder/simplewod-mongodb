@@ -309,7 +309,7 @@ Mongo.prototype = {
 		},
 
 		getSet: function() {
-			return $('<div class="section">Set ' + this.setCount++ + '</div>').clone();
+			return $('<div class="section"><span class="setname">Set ' + this.setCount++ + '</span></div>').clone();
 		},
 
 		getSetControl: function() {
@@ -545,7 +545,7 @@ Mongo.prototype = {
 
 		addMultiRounds: function(trigger, num) {
 			console.log("addrounds: " + num);
-			var set = trigger.parent().parent();
+			var set = trigger.parent();//.parent();
 			var round = null;
 			var control = null;
 			console.log(round);
