@@ -625,8 +625,8 @@ Mongo.prototype = {
 					var remove = trigger.parent().parent().find('.ex-data');
 					remove.fadeOut(self.fadeTime, function() { remove.empty(); });
 					remove.fadeIn();
-					box.removeAttr("readonly"); 
-					box.unbind('click');
+					trigger.removeAttr("readonly"); 
+					trigger.unbind('click');
 				}
 			}
 			//});
