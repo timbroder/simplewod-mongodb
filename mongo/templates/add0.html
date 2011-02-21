@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="/static/css/validationEngine.jquery.css" />
 {% endblock %}
 
-{% block extrajs %}, "forms", "jquery.autocomplete", "jquery.metadata", "jquery.validationEngine-en", "jquery.validationEngine", "add_submit", "add"{% endblock %}
+{% block extrajs %}, "forms", "jquery.autocomplete", "jquery.metadata", "jquery.validationEngine-en", "jquery.validationEngine", "add_submit", "add", "jquery.editable"{% endblock %}
 {% block extraextrajs %}
 	new ResultToggle('#toggle_result');
 	new TagSync('#id_wod_tags', '#tags_from_wod');
@@ -18,6 +18,7 @@
 	});
 	
 	$("#add_w_form").validationEngine();
+	
 {% endblock %}
 
 {% block title %}Add a Workout{% endblock %}

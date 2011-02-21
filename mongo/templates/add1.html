@@ -22,7 +22,7 @@
 				</div>
 	
 		</div> -->
-		<h3><a href="#" id="set1_header">Workouta</a></h3>
+		<h3 id="wod_title">Workout Title (click to edit)</h3> 
 		<div id="sets_container"></div>
 		<div id="next1"><input type="submit" id="add_workout_form_submit" /></div>
 	</div>
@@ -31,4 +31,7 @@
 <script>
 	$("#add_w_form").validationEngine();
 	new AddSubmit('#sets_container', '#add_w_form');
+	$('#wod_title').editable({
+		submit:'save'
+		}); 
 </script>
