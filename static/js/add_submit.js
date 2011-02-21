@@ -31,13 +31,25 @@ AddSubmit.prototype = {
 			var self = this;
 			var myObject = {
 			    workout: {
-			    	name: 'some workout',
+			    	name: $('#wod_title').html(),
 			    	sets: self.getSets(self.sets)
 			    }  
 			};
-			console.log(myObject);
-			console.log(JSON.stringify(myObject));
+			
+			var json = JSON.stringify(myObject);
+			try {
+				jQuery.parseJSON(value);
+				self.post(json);
+			
+			} catch(e) {
+				alert('there was an error submitting');
+			} 
 		},
+		
+		post: function(json) {
+			console.log('have json');
+			console.log(json);
+		}
 		
 		getSets: function(sets){
 			var self = this;
