@@ -630,6 +630,7 @@ Mongo.prototype = {
 					remove.fadeIn();
 					trigger.removeAttr("readonly"); 
 					trigger.unbind('click');
+					$("#add_w_form").validationEngine('hideAll');
 				}
 			}
 			//});
