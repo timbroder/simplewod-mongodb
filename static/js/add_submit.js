@@ -25,8 +25,10 @@ AddSubmit.prototype = {
 			
 			this.form.submit(function(e){
 				e.preventDefault();
-				console.log('yea');
-				self.submit();
+				if ($("#add_w_form").validationEngine('validate')) {
+					console.log('yea');
+					self.submit();
+				}
 			});
 		},
 		
