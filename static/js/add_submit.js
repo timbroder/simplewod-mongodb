@@ -18,16 +18,18 @@ AddSubmit.prototype = {
 //			myJSONText = JSON.stringify(myObject);
 //
 			
-			this.form.submit(function(e){
+			self.form.submit(function(e){
+				console.log('STOP SUBMITTING!!!');
 				e.preventDefault();
 				//ENABLE!!!!!!!
 				if ($("#add_w_form").validationEngine('validate')) {
-					self.submit();
+					self.submit2();
 				}
+				return false;
 			});
 		},
 		
-		submit: function(){
+		submit2: function(){
 			var self = this;
 			var myObject = {
 			    workout: {

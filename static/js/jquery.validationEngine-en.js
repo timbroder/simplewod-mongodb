@@ -86,6 +86,10 @@
                     "regex": /^[0-9\ ]+$/,
                     "alertText": "Numbers only"
                 },
+                "onlyNumber": {
+                    "regex": /^[0-9\]+$/,
+                    "alertText": "Numbers only"
+                },
                 "onlyLetterSp": {
                     "regex": /^[a-zA-Z\ \']+$/,
                     "alertText": "Letters only"
