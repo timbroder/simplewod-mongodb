@@ -21,9 +21,9 @@ AddSubmit.prototype = {
 			this.form.submit(function(e){
 				e.preventDefault();
 				//ENABLE!!!!!!!
-				//if ($("#add_w_form").validationEngine('validate')) {
+				if ($("#add_w_form").validationEngine('validate')) {
 					self.submit();
-				//}
+				}
 			});
 		},
 		
