@@ -6,11 +6,7 @@
 	<link rel="stylesheet" href="/static/css/jquery.autocomplete.css" />
 {% endblock %}
 
-{% block extrajs %}
-	<script type="text/javascript" src="/static/js/forms.js"></script>
-	<script type="text/javascript" src="/static/js/add.js"></script>
-	<script type="text/javascript" src="/static/js/jquery.autocomplete.js"></script>
-{% endblock %}
+{% block extrajs %}, "forms", "add", "jquery.autocomplete"{% endblock %}
 
 {% block content %}
 {% load extra_args %}
