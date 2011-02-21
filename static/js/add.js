@@ -1,6 +1,7 @@
 var ResultToggle = function(trigger) {
 	this.trigger = $(trigger);
 	this.setup();
+
 };
 
 ResultToggle.prototype = {
@@ -120,13 +121,9 @@ var ResultFormSubmit = function(form, button, hook) {
 ResultFormSubmit.prototype = {
 		setup: function() {
 			var self = this;
-			console.log(this);
 			this.button.live('click', function(event){
 				event.preventDefault();
 				//self.button.disable();
-				console.log('clicked');
-
-
 				self.click();
 				return false;
 			});
@@ -162,7 +159,7 @@ var Mongo = function(canvas, trigger) {
 	this.numSets = 1;
 	this.setCount = 1;
 	this.fadeTime = 500;
-
+	this.idCounter = 1;
 	this.start();
 };
 
@@ -234,7 +231,6 @@ Mongo.prototype = {
 		},
 		setChoice: function() {
 			var self = this;
-			//console.log("YEO");
 			$.ajax({
 				url: '/ajax/add1/',
 				success: function(data) {
@@ -252,7 +248,6 @@ Mongo.prototype = {
 					setsD.dialog(self.help);
 
 					$('#sets_help_click').click(function(){
-						console.log('click');
 						setsD.dialog('open');
 						return false;
 					});
@@ -288,8 +283,6 @@ Mongo.prototype = {
 
 		afterSetChoice: function() {
 			var self = this;
-			console.log('slide');
-			console.log(self.cord);
 			self.cord.accordion('activate' , 2);
 		},
 
@@ -301,9 +294,7 @@ Mongo.prototype = {
 		startSets: function(){
 			var self = this;
 			self.sc = $('#sets_container');
-			//console.log(sc);
 			self.numSets++;
-			console.log('Sets: ' + self.numSets);
 			//$("#id_wod_tags").autocomplete("/tagging_autocomplete/json", { multiple: true });
 			self.addSet();
 		},
@@ -318,8 +309,6 @@ Mongo.prototype = {
 
 		addSet: function() {
 			var self = this;
-			console.log('Add Set');
-			console.log(self.setCount);
 			var set = self.getSet();
 			var setControl = self.getSetControl();
 			//self.getRounds().appendTo(set);
@@ -338,6 +327,9 @@ Mongo.prototype = {
 
 		addAnotherSet: function(trigger) {
 			var self = this;
+			if (!self.validate()) {
+				return false;
+			}
 			var currSet = trigger.parent();
 			var set = self.getSet();
 			var setControl = self.getSetControl();
@@ -367,7 +359,7 @@ Mongo.prototype = {
 		},
 		
 		getEx: function(){
-			return $('<div class="ex-line"><span class="remove-ex-btn">(<a href="#" class="remove-line">X</a>)&nbsp;</span><span class="excersize">Exercise: <input type="text" class=ex-name></span><span class="ex-data"></span></div>').clone();
+			return $('<div class="ex-line"><span class="remove-ex-btn">(<a href="#" class="remove-line">X</a>)&nbsp;</span><span class="excersize">Exercise: <input type="text" class="ex-name validate[required]"'+ this.getInputId() + '></span><span class="ex-data"></span></div>').clone();
 		},
 
 		getExBox: function() {
@@ -376,14 +368,7 @@ Mongo.prototype = {
 
 			ex.find(".ex-name").autocomplete("/ajax/list_exercises/", { multiple: false })
 			.result(function(event, item) {
-				//console.log(event);
-				//console.log(item[0]);
 				var box = $(this);
-
-				console.log('selected');
-				console.log(this);
-				console.log(item[0]);
-
 
 				/*box.bind('click', function(){ 
 					console.log('clicked');
@@ -405,6 +390,7 @@ Mongo.prototype = {
 					type: 'get',
 					url: '/ajax/get_ex/',
 					success: function(data) {
+						//self.addSelectInputIds(data);
 						self.getExBoxData(ex, data);
 					},
 					data: { 'name': item[0] }	            
@@ -416,9 +402,7 @@ Mongo.prototype = {
 		
 		getExBoxData: function(ex, data) {
 			var self = this;
-			console.log('back');
 			var exdata = ex.find('.ex-data');
-			console.log(exdata);
 			//console.log($(data).find('select'));
 			//TIM bind this properly or move it
 			//$('.measurement').live('change', function() {
@@ -428,14 +412,11 @@ Mongo.prototype = {
 				exdata.empty();
 			}
 			exdata.append(data);
-			console.log('looking for single');
-			console.log($(data).find('select:not(.opsbase)'));
+			
 			if (!$(data).find('select:not(.opsbase)').length) {
-				console.log('single');
-				console.log(exdata);
-				//console.log(data);
 				self.getExBox2(exdata);
 			}
+			self.addSelectInputIds(exdata);
 		},
 
 		getAddButton: function() {
@@ -443,7 +424,6 @@ Mongo.prototype = {
 		},
 
 		getExBox2: function(hook) {
-			console.log('continue');
 			//console.log(hook);
 			var self = this;
 			if (!hook.find('.amount-holder').length) {
@@ -453,7 +433,7 @@ Mongo.prototype = {
 				hook.find('.amount-holder').empty();
 			}
 			amount = hook.find('.amount-holder');
-			amount.append('<input type="text" class="amount-val"/>');
+			amount.append('<input type="text" class="amount-val validate[required,alertText[\'hello?\']"' + self.getInputId() + '/>');
 			var id = hook.find('.type-data input').metadata().type_id;
 			hook.find('.measure-options:not(.opsbase)').remove();
 			hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);
@@ -461,16 +441,17 @@ Mongo.prototype = {
 
 		},
 
-		validateExRow: function() {
+		validate: function() {
+			console.log('validate?');
+			return $("#add_w_form").validationEngine('validate');
 			return true;
 		},
 
 		areEmptyExs: function() {
 			//check empty name, ---- in any selects, and values and shit
-			console.log($('.ex-name:input[value=""]').length);
 			if ($('.ex-name:input[value=""]').length > 0) {
 				//validate
-				alert('please fill in the empty exercize');
+				//alert('please fill in the empty exercize');
 				return true;
 			}
 			return false;
@@ -479,9 +460,7 @@ Mongo.prototype = {
 		addEx: function(start, rest) {
 			rest = rest || false;
 			var self = this;
-			console.log('add ex');
-			console.log(start);
-			if (!self.validateExRow()) {
+			if (!self.validate()) {
 				return false;
 			}
 
@@ -503,6 +482,7 @@ Mongo.prototype = {
 					type: 'get',
 					url: '/ajax/get_ex/',
 					success: function(data) {
+						//self.addSelectInputIds(data);
 						self.getExBoxData(r, data);
 					},
 					data: { 'name': key }	            
@@ -534,6 +514,7 @@ Mongo.prototype = {
 				if (round.find('.ex-line').length == 0) {
 					round.append(this.getExBox());
 				}
+				$("#add_w_form").validationEngine('hideAll');
 			}
 
 		},
@@ -544,12 +525,16 @@ Mongo.prototype = {
 		},
 
 		addMultiRounds: function(trigger, num) {
+			var self = this;
+			if (!self.validate()) {
+				return false;
+			}
 			console.log("addrounds: " + num);
 			var set = trigger.parent();//.parent();
 			var round = null;
 			var control = null;
 			console.log(round);
-			var self = this;
+			
 			if (self.areEmptyExs()) {
 				return false;
 			}
@@ -580,6 +565,7 @@ Mongo.prototype = {
 
 				round.remove();
 				control.remove();
+				$("#add_w_form").validationEngine('hideAll');
 			}
 
 		},
@@ -587,6 +573,9 @@ Mongo.prototype = {
 		addAllRounds: function(trigger) {
 			console.log('add all rounds');
 			var self = this;
+			if (!self.validate()) {
+				return false;
+			}
 			if (self.areEmptyExs()) {
 				return false;
 			}
@@ -630,6 +619,24 @@ Mongo.prototype = {
 				}
 			}
 			//});
+		},
+		
+		getInputId: function() {
+			var id = ' id="id_' + this.idCounter++ + '"';
+			return id;
+		},
+		
+		addSelectInputIds: function(hook) {
+			var self = this;
+			hook = $(hook);
+			hook.find('select').each(function() {
+				select = $(this);
+				if (!select.id || select.id === "") {
+					console.log('yay');
+					var newId = 'id_' + self.idCounter++;
+					select.attr('id', newId);
+				}
+			});
 		}
 }
 
@@ -643,6 +650,9 @@ $(document).ready(function() {
 	$("#id_date").live('focus', function(){
 		$(this).datepicker();
 	});
+	
+	$("#add_w_form").validationEngine();
+
 
 });
 

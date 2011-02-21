@@ -6,8 +6,8 @@
 	{% endfor %}
 {% else %}
 	for&nbsp;
-	<select>
-		<option value="---">---</option>
+	<select class="validate[required]">
+		<option value="">---</option>
 		{% for type in ex.type.all %}
 			<option data-type_id="'{{ type.id }}'" data-type_name="'{{ type.name }}'">{{ type.name }}</option>
 		{% endfor %}
@@ -16,8 +16,8 @@
 </span>
 <span class="measure-all-options" style="display: none;">
 	{% for type in ex.type.all %}
-		<select class="measure-options opsbase" data-type_id="{{ type.id }}" data-type_name="'{{ type.name }}'">
-			<option value="---">---</option>
+		<select class="measure-options opsbase validate[required]" data-type_id="{{ type.id }}" data-type_name="'{{ type.name }}'">
+			<option value="">---</option>
 			{% for measure in type.measures.all %}
 				<option data-measure_id="{{ measure.id }}">{{ measure.name }}</option>
 			{% endfor %}

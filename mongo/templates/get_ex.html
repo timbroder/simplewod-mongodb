@@ -6,8 +6,8 @@
 	{% endfor %}
 {% else %}
 	for 
-	<select>
-		<option value="---">---</option>
+	<select validate[required]>
+		<option value="">---</option>
 		{% for type in ex.type.all %}
 			<option data-type_id="'{{ type.id }}'" data-type_name="'{{ type.name }}'">{{ type.name }}</option>
 		{% endfor %}
