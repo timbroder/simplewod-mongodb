@@ -163,6 +163,20 @@ var Mongo = function(canvas, trigger) {
 	this.start();
 };
 
+function checkEx(field, rules, i, options){
+	console.log('checkEx');
+	
+	if (field.val() == "") {
+		return;
+	}
+	
+	if (field.parent().parent().find('.ex-data').children().length < 2) {
+	//if (field.val() != "HELLO") {
+		return options.allrules.checkEx1.alertText;
+	}
+	console.log('endcheck');
+}
+
 Mongo.prototype = {
 		start: function(){
 			var self = this;
@@ -359,7 +373,7 @@ Mongo.prototype = {
 		},
 		
 		getEx: function(){
-			return $('<div class="ex-line"><span class="remove-ex-btn">(<a href="#" class="remove-line">X</a>)&nbsp;</span><span class="excersize">Exercise: <input type="text" class="ex-name validate[required]"'+ this.getInputId() + '></span><span class="ex-data"></span></div>').clone();
+			return $('<div class="ex-line"><span class="remove-ex-btn">(<a href="#" class="remove-line">X</a>)&nbsp;</span><span class="excersize">Exercise: <input type="text" class="ex-name validate[required,funcCall[checkEx]]"'+ this.getInputId() + '></span><span class="ex-data"></span></div>').clone();
 		},
 
 		getExBox: function() {
