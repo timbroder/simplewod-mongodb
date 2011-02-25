@@ -15,6 +15,10 @@ from django.contrib.sites.models import Site
 from django.http import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.csrf import csrf_protect
+from pymongo import Connection
+from django.core import serializers
+from django.utils import simplejson
+
 
 def wods(request):
     return r2r()
@@ -25,6 +29,30 @@ def add_wod(request):
 
 def add1(request):
     return r2r('add1.html', context_instance=RequestContext(request))
+
+def add2(request):
+    print "add2"
+    w = MongoWorkout()
+    #w.wods.remove()
+    print 'm'
+    post = request.POST['data']
+    print post
+    #post =  request.raw_post_data
+    #print post
+    #validate the json!!!!
+    print request.raw_post_data
+    w.json = post
+    w.user_id = request.user.id
+    w.insert()
+    #print '1'
+    #json = simplejson.loads(request.raw_post_data)
+    
+    #print '2'
+    #print json['data']
+    #json = serializers.deserialize("json", json)
+    #print json
+    #w.wods.insert(json)
+    
 
 def list_exercises(request):
     try:

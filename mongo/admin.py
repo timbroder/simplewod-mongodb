@@ -4,3 +4,4 @@ from models import *
 admin.site.register(Exercise)
 admin.site.register(Measure)
 admin.site.register(MeasureType)
+admin.site.register(MongoWorkout)

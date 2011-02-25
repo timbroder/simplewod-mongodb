@@ -449,7 +449,7 @@ Mongo.prototype = {
 				hook.find('.amount-holder').empty();
 			}
 			amount = hook.find('.amount-holder');
-			amount.append('<input type="text" class="amount-val validate[required,custom[onlyNumber]]"' + self.getInputId() + '/>');
+			amount.append('<input type="text" class="amount-val validate[required]"' + self.getInputId() + '/>');
 			var id = hook.find('.type-data input').metadata().type_id;
 			hook.find('.measure-options:not(.opsbase)').remove();
 			hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);

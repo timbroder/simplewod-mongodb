@@ -17,13 +17,21 @@ AddSubmit.prototype = {
 //			    
 //			myJSONText = JSON.stringify(myObject);
 //
-			
-			self.form.submit(function(e){
+			console.log('setup');
+			$('#add_w_form').submit(function(e){
 				console.log('STOP SUBMITTING!!!');
-				e.preventDefault();
+				//e.preventDefault();
 				//ENABLE!!!!!!!
 				if ($("#add_w_form").validationEngine('validate')) {
+					console.log(self.form.find('#jsoninput').length);
+					if (self.form.find('#jsoninput').length > 0) {
+						console.log('actually submit?');
+						console.log(self.form);
+						//e.enableDefault();
+						return true;
+					}
 					self.submit2();
+					return false;
 				}
 				return false;
 			});
@@ -32,26 +40,53 @@ AddSubmit.prototype = {
 		submit2: function(){
 			var self = this;
 			var myObject = {
-			    workout: {
+			    //workout: {
 			    	name: $('#wod_title').html(),
 			    	sets: self.getSets(self.sets)
-			    }  
+			    //}  
 			};
 			
 			var json = JSON.stringify(myObject);
+			console.log(json);
 			try {
-				jQuery.parseJSON(value);
+				jQuery.parseJSON(json);
 				self.post(json);
 			
 			} catch(e) {
+				console.log(e);
 				alert('there was an error submitting');
 			} 
 		},
 		
+		getJsonForm: function(json) {
+			return $('<input id="jsoninput" value="' + json + '"></input>').clone();
+		},
+		
+		
 		post: function(json) {
-			console.log('have json');
-			console.log(json);
-		}
+//			var self = this;
+//			console.log('have json');
+//			console.log(json);
+//			var input = self.getJsonForm(json);
+//			//input.val(json);
+//			input.hide();
+//			console.log('ready to submit');
+//			console.log(json);
+//			self.form.append(input);
+//			console.log(input);
+//			console.log(self.form);
+//			self.form.submit();
+			
+			$.ajax({
+				type: 'POST',
+				url: '/ajax/add2/',
+				success: function(data) {
+					//self.addSelectInputIds(data);
+					console.log('back?');
+				},
+				data: { 'data': json }
+			});
+		},
 		
 		getSets: function(sets){
 			var self = this;
@@ -71,8 +106,8 @@ AddSubmit.prototype = {
 			});
 			
 			var roundsObj = {
-				'set_name': rounds.find('span.setname').html(),
-				'rounds': roundsArray	
+				'name': rounds.find('span.setname').html(),
+				'rds': roundsArray	
 			};
 			
 			return roundsObj;
@@ -86,7 +121,11 @@ AddSubmit.prototype = {
 				roundArray.push(self.getExLine($(this)));
 			});
 			
-			return roundArray;
+			var roundObj = {
+					'exs': roundArray
+			};
+			
+			return roundObj;
 			
 		},
 		
@@ -102,7 +141,7 @@ AddSubmit.prototype = {
 				'amount': amount.find('input.amount-val').val(),
 				'measure': measure.val(),
 				'measure_id': measure.metadata().type_id				
-			}
+			};
 			
 			return ex;
 			

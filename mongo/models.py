@@ -1,6 +1,9 @@
 from django.db import models
 from django.core import serializers
 import simplejson
+from workouts.models import Workout
+from pymongo import Connection, json_util
+import json as jlib
 
 # Create your models here.
 class Measure(models.Model):
@@ -47,3 +50,36 @@ class Exercise(models.Model):
     
     class Meta:
         ordering = ['name']
+
+class MongoConnection(object):
+    def __init__(self, *args, **kwargs):
+        print 'init mongoconn'
+        connection = Connection()
+        self.db = connection.simplewod
+        self.wods = self.db.wods
+        
+        
+        return super(MongoConnection,self).__init__(*args, **kwargs)  
+        
+class MongoWorkout(MongoConnection, Workout):
+    json = models.TextField()
+    mongo_id = models.CharField(max_length=32)
+    
+    def insert(self, json=None):
+        if not json:
+            json = self.json
+        if not self.json:
+            raise Exception
+        
+        self.save()
+        self.wods.remove()
+        
+        load = jlib.loads(self.json)
+        load['django_id'] = self.id
+        load['user_id'] = self.user_id
+
+        self.mongo_id = self.wods.insert(load)
+        self.save()
+    
+    
+    

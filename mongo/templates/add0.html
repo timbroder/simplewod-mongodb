@@ -7,6 +7,7 @@
 
 {% block extrajs %}, "forms", "jquery.autocomplete", "jquery.metadata", "jquery.validationEngine-en", "jquery.validationEngine", "add_submit", "add", "jquery.editable"{% endblock %}
 {% block extraextrajs %}
+	console.log('extraextra');
 	new ResultToggle('#toggle_result');
 	new TagSync('#id_wod_tags', '#tags_from_wod');
 	new AddResultForm('.add_result', '#result_form');
