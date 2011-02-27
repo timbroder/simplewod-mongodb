@@ -72,7 +72,7 @@ class MongoWorkout(MongoConnection, Workout):
             raise Exception
         
         self.save()
-        self.wods.remove()
+        #self.wods.remove()
         
         load = jlib.loads(self.json)
         load['django_id'] = self.id

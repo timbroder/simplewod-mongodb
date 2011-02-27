@@ -83,6 +83,8 @@ AddSubmit.prototype = {
 				success: function(data) {
 					//self.addSelectInputIds(data);
 					console.log('back?');
+					$('#header').find('h2').html('Workout Added');
+					$('#canvas').html('put workout desc here or something')
 				},
 				data: { 'data': json }
 			});

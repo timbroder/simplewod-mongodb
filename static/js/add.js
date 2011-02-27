@@ -182,13 +182,20 @@ Mongo.prototype = {
 			});
 
 			$('.type-data select').live('change', function() {
+				console.log('yo');
 				var type = $(this).find('option:selected');
-
+				
+				var addControls = true;
+				console.log($(this).parent().find('input:hidden').length);
+				if ($(this).parent().find('input:hidden').length >= 1) {
+					addControls = false;
+				}
 				var typeData = '<input type="hidden" data-type_id="' + type.metadata().type_id + '" data-type_name="\'' + type.metadata().type_name + '\'"/>';
 				$(this).parent().find('input:hidden').remove();
 				$(this).parent().append(typeData);
-
-				self.getExBox2($(this).parent().parent());
+				if (addControls) {
+					self.getExBox2($(this).parent().parent());
+				}
 			});
 
 			$('.add-ex').live('click', function() {

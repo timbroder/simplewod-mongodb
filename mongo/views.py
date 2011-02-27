@@ -52,6 +52,7 @@ def add2(request):
     #json = serializers.deserialize("json", json)
     #print json
     #w.wods.insert(json)
+    return HttpResponse("Submitted", mimetype='text/plain')
     
 
 def list_exercises(request):
