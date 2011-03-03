@@ -4,8 +4,22 @@
 <link rel="stylesheet" href="/static/css/jquery.autocomplete.css" />
 {% endblock %}
 
-{% block extrajs %}, "forms", "add", "jquery.autocomplete"{% endblock %}
+{% block extrajs %}, "forms", "add", "jquery.autocomplete", "add_result"{% endblock %}
+{% block extraextrajs %}
+	console.log('extraextra');
+	new ResultToggle('#toggle_result');
+	new TagSync('#id_wod_tags', '#tags_from_wod');
+	new AddMongoResult('.add_result', '#result_form');
+	//new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
+	//new Mongo('#canvas');
 
+	/*$("#id_date").live('focus', function(){
+		$(this).datepicker();
+	});*/
+	
+	//$("#add_w_form").validationEngine();
+	
+{% endblock %}
 
 {% block title%}{% if header %}{{ header }}{% else %}WOD: {{ wod }}{% endif %}{% endblock %}
 

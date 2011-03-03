@@ -13,6 +13,8 @@ from django.template import RequestContext, Context
 from django.core.mail import send_mail, BadHeaderError
 from django.views.decorators.cache import cache_page
 from django.contrib.sites.models import Site
+from mongo.models import *
+from mongo.views import *
 
 debug = getattr(settings, 'DEBUG', None)
 
@@ -163,7 +165,7 @@ def wod_single(request, wodslug):
     if debug:
         print '- wods single'
     user = request.user
-    wod = Workout.objects.get(slug = wodslug)
+    wod = MongoWorkout.objects.get(slug = wodslug)
     
     results = Result.private_objects.filter(workout = wod).order_by('-date')
     print results

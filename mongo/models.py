@@ -77,6 +77,7 @@ class MongoWorkout(MongoConnection, Workout):
         load = jlib.loads(self.json)
         load['django_id'] = self.id
         load['user_id'] = self.user_id
+        load['slug'] = self.slug
 
         self.mongo_id = self.wods.insert(load)
         self.save()
