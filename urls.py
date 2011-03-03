@@ -13,9 +13,12 @@ import mongo.urls as mongourls
 #from socialregistration.urls import *
 debug = getattr(settings, 'DEBUG', None)
 
-
+urlpatterns = patterns('login_as.views',
+    url('^admin/su/$', 'chooser', name='login-as-chooser'),
+    url('^admin/su/(.+?)/$', 'login', name='login-as-login'),
+)
 #urlpatterns = urlpatterns + patterns('',
-urlpatterns = patterns('',
+urlpatterns = urlpatterns + patterns('',
     #(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     #(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
     

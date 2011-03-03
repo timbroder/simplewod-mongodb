@@ -76,6 +76,7 @@ AUTHENTICATION_BACKENDS = (
     'facebookconnect.models.FacebookBackend',
     #'socialregistration.auth.FacebookAuth',
     'django.contrib.auth.backends.ModelBackend',
+    'login_as.auth_backend.LoginAsBackend'
 )
 
 ROOT_URLCONF = 'urls'
@@ -97,6 +98,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     #'socialregistration'
     'mongo',
+    'login_as'
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
