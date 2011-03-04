@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     (r'^ajax/list_exercises/$', mongo.list_exercises),
     (r'^ajax/get_ex/$', mongo.get_ex_type),
     (r'^ajax/get_ex_type_ops/$', mongo.get_ex_type_ops),
+    (r'^ajax/get_wod.json/$', mongo.get_wod_json),
 )
  

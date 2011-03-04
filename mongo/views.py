@@ -75,3 +75,12 @@ def get_ex_type_ops(request):
     ex = Exercise.objects.get(name = request.GET['name'])
     return r2r('get_ex_type.html', locals())
 
+def get_wod_json(request):
+    try:
+        id = request.GET['wod']
+    except:
+        return HttpResponse({'error': 'wod not found'}, mimetype='application/json')
+    json = MongoWorkout.objects.get(mongo_id=id).json
+    return HttpResponse(json, mimetype='application/json')
+
+
