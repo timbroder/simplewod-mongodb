@@ -66,10 +66,23 @@ AddMongoResult.prototype = {
 	},
 	
 	getEx: function(rnd) {
-		console.log(rnd);
-		var html = '<div class="ex">';
-		html += 'cool';
-		html += '</div>';
+		var html = '';
+		for (var i = 0; i < rnd.exs.length; i++){
+			var ex = rnd.exs[i];
+			console.log(ex);
+			html += '<div class="ex" data-ex="' + ex.name + '" data-type_id="' + ex.type_id + '" data-type_name="' + ex.type_name + '" data-type_has_reps="' + ex.type_has_reps + '">';
+			html += ex.name + ' ';
+			html += '<input type="text" class="amount-val validate[required]" value="' + ex.amount + '">';
+			html += ' 	' + ex.measure;
+			if (ex.reps) {
+				html += ' x ';
+				html += '<input type=text class="num-reps" value="' + ex.reps + '">';
+				html += ' reps';
+			}
+
+			html += '</div>';
+		}
+		
 		
 		return html;
 	}
