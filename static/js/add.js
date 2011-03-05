@@ -190,7 +190,7 @@ Mongo.prototype = {
 				if ($(this).parent().find('input:hidden').length >= 1) {
 					addControls = false;
 				}
-				var typeData = '<input type="hidden" data-type_id="' + type.metadata().type_id + '" data-type_name="\'' + type.metadata().type_name + '\'"/>';
+				var typeData = '<input type="hidden" data-type_id="' + type.metadata().type_id + '" data-type_name="\'' + type.metadata().type_name + '\'" data-type_has_reps="\'' + type.metadata().has_reps + '\'"/>';
 				$(this).parent().find('input:hidden').remove();
 				$(this).parent().append(typeData);
 				if (addControls) {
@@ -444,7 +444,11 @@ Mongo.prototype = {
 		},
 
 		getAddButton: function() {
-			return $('<span class="add-s">&nbsp; Add: <a href="#" class="add-ex">Exercise</a>, <a href="#" class="add-rest">Rest</a></span>');
+			return $('<span class="add-s">&nbsp; Add: <a href="#" class="add-ex">Exercise</a>, <a href="#" class="add-rest">Rest</a></span>').clone();
+		},
+		
+		getRepsBox: function() {
+			return $('<span class="add-reps">Reps: <input type="text/></span>');
 		},
 
 		getExBox2: function(hook) {
@@ -458,9 +462,14 @@ Mongo.prototype = {
 			amount = hook.find('.amount-holder');
 			amount.append('<input type="text" class="amount-val validate[required]"' + self.getInputId() + '/>');
 			var id = hook.find('.type-data input').metadata().type_id;
+			var has_reps = hook.find('.type-data input').metadata().type_has_reps;
 			hook.find('.measure-options:not(.opsbase)').remove();
 			hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);
-			self.getAddButton().clone().appendTo(hook);
+			console.log(has_reps);
+			if (has_reps == 'True') {
+				self.getRepsBox().appendTo(hook);
+			}
+			self.getAddButton().appendTo(hook);
 
 		},
 

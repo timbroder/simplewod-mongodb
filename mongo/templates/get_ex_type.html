@@ -1,7 +1,7 @@
 <span class="type-data">
 {% ifequal ex.type.count 1 %}
 	{% for type in ex.type.all %}
-		<input type="hidden" data-type_id="{{ type.id }}" data-type_name="'{{ type.name }}'"/>
+		<input type="hidden" data-type_id="{{ type.id }}" data-type_name="'{{ type.name }}'" data-type_has_reps="'{{ type.has_reps }}'"/>
 		{{ type.name }}: 
 	{% endfor %}
 {% else %}
@@ -9,14 +9,14 @@
 	<select class="validate[required]">
 		<option value="">---</option>
 		{% for type in ex.type.all %}
-			<option data-type_id="'{{ type.id }}'" data-type_name="'{{ type.name }}'">{{ type.name }}</option>
+			<option data-type_id="'{{ type.id }}'" data-type_name="'{{ type.name }}'" data-type_has_reps="'{{ type.has_reps }}'">{{ type.name }}</option>
 		{% endfor %}
 	</select>
 {% endifequal %}
 </span>
 <span class="measure-all-options" style="display: none;">
 	{% for type in ex.type.all %}
-		<select class="measure-options opsbase validate[required]" data-type_id="{{ type.id }}" data-type_name="'{{ type.name }}'">
+		<select class="measure-options opsbase validate[required]" data-type_id="{{ type.id }}" data-type_name="'{{ type.name }}'" data-type_has_reps="'{{ type.has_reps }}'">
 			<option value="">---</option>
 			{% for measure in type.measures.all %}
 				<option data-measure_id="{{ measure.id }}">{{ measure.name }}</option>

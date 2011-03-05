@@ -39,8 +39,6 @@ AddMongoResult.prototype = {
 	},
 	
 	getSets: function(root) {
-		console.log('sets');
-		console.log(root.sets);
 		var html = '<section class="sets>"';
 		
 		for (var i = 0; i < root.sets.length; i++) {
@@ -68,6 +66,7 @@ AddMongoResult.prototype = {
 	},
 	
 	getEx: function(rnd) {
+		console.log(rnd);
 		var html = '<div class="ex">';
 		html += 'cool';
 		html += '</div>';

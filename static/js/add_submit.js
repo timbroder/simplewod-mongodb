@@ -142,8 +142,14 @@ AddSubmit.prototype = {
 				'type_id': type.metadata().type_id,
 				'amount': amount.find('input.amount-val').val(),
 				'measure': measure.val(),
-				'measure_id': measure.metadata().type_id				
+				'measure_id': measure.metadata().type_id
 			};
+			
+			console.log('rep[s: ');
+			console.log(type.metadata().type_has_reps);
+			if (type.metadata().type_has_reps == 'True') {
+				ex.reps = line.find('.add-reps').find('input').val();
+			}
 			
 			return ex;
 			
