@@ -649,12 +649,13 @@ Mongo.prototype = {
 			}
 			var p = "Enter the total number of rounds for this set: ";
 			var num = prompt(p, "");
+			console.log(num);
 			if (num === null || num === "") {
 				alert('you must enter a number');
 				return;
 			}
 
-			if (num !== parseInt(num)) {
+			if (num != parseInt(num)) {
 				alert('you must enter a number');
 				return;
 			}

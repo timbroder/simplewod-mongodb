@@ -22,7 +22,14 @@
 				</div>
 	
 		</div> -->
-		<h3 id="wod_title">Workout Title (click to edit)</h3> 
+		<h3 id="wod_title">Workout Title (click to edit)</h3>
+		<div id="wod_measure">
+			<ol id="selectable">
+				{% for score in scores %}
+					<li class="ui-widget-content" data-id="{{ score.id }}">{{ score.name }}</li>
+				{% endfor %}
+			</ol>
+		</div>
 		<div id="sets_container"></div>
 		<div id="next1"><input type="submit" id="add_workout_form_submit" /></div>
 	</div>

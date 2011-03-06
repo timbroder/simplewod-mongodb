@@ -28,7 +28,8 @@ def add_wod(request):
     return r2r('add0.html')
 
 def add1(request):
-    return r2r('add1.html', context_instance=RequestContext(request))
+    scores = Score.objects.all()
+    return r2r('add1.html', locals())
 
 def add2(request):
     print "add2"

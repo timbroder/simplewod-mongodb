@@ -81,4 +81,19 @@ class MongoWorkout(MongoConnection, Workout):
 
         self.mongo_id = self.wods.insert(load)
         self.save()
+
+class ScoreExample(models.Model):
+    name = models.CharField(max_length=64)
+    url= models.URLField(verify_exists=True, max_length=255)
+    
+    def __unicode__(self):
+        return self.name
+       
+class Score(models.Model):
+    name = models.CharField(max_length=64)
+    measure = models.ManyToManyField(MeasureType)
+    example = models.ManyToManyField(ScoreExample, blank=True, null=True)
+    help = models.TextField(blank=True, null=True)
+    
+
     

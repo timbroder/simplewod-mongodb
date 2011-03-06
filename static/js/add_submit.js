@@ -44,7 +44,8 @@ AddSubmit.prototype = {
 			var myObject = {
 			    //workout: {
 			    	name: $('#wod_title').html(),
-			    	sets: self.getSets(self.sets)
+			    	sets: self.getSets(self.sets),
+			    	score: score.getSelected()
 			    //}  
 			};
 			
