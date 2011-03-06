@@ -16,7 +16,7 @@ ResultToggle.prototype = {
 			var result = $('#form_result');
 			var rtxt = $('#result_text');
 
-			if(hasResult.val() == 'True'){
+			if(hasResult.val() === 'True'){
 				result.slideUp();
 				rtxt.html('Want to add a result also? ');
 				hasResult.val('False');
@@ -163,7 +163,7 @@ var Mongo = function(canvas, trigger) {
 function checkEx(field, rules, i, options){
 	console.log('checkEx');
 	
-	if (field.val() == "") {
+	if (field.val() === "") {
 		return;
 	}
 	
@@ -426,10 +426,6 @@ Mongo.prototype = {
 		getExBoxData: function(ex, data) {
 			var self = this;
 			var exdata = ex.find('.ex-data');
-			console.log('get');
-			console.log(ex);
-			console.log(exdata);
-			console.log
 			if(!exdata.is(':empty')) {
 				console.log('empty');
 				exdata.empty();
@@ -466,7 +462,7 @@ Mongo.prototype = {
 			hook.find('.measure-options:not(.opsbase)').remove();
 			hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);
 			console.log(has_reps);
-			if (has_reps == 'True') {
+			if (has_reps === 'True') {
 				self.getRepsBox().appendTo(hook);
 			}
 			self.getAddButton().appendTo(hook);
@@ -475,7 +471,7 @@ Mongo.prototype = {
 
 		validate: function() {
 			return $("#add_w_form").validationEngine('validate');
-			return true;
+//			return true;
 		},
 
 		areEmptyExs: function() {
@@ -536,7 +532,7 @@ Mongo.prototype = {
 			if (answer) {
 				var round = line.parent();
 				line.remove();
-				if (round.find('.ex-line').length == 0) {
+				if (round.find('.ex-line').length === 0) {
 					round.append(this.getExBox());
 				}
 				$("#add_w_form").validationEngine('hideAll');
@@ -549,7 +545,8 @@ Mongo.prototype = {
 		},
 
 		addMultiRounds: function(trigger, num) {
-			var self = this;
+			var self = this,
+				i;
 			if (!self.validate()) {
 				return false;
 			}
@@ -560,7 +557,7 @@ Mongo.prototype = {
 			if (self.areEmptyExs()) {
 				return false;
 			}
-			for (var i=0; i<num; i++) {
+			for (i=0; i<num; i++) {
 				round = trigger.parent().prev().clone();
 				control = trigger.parent().clone();
 				set.after(control);
@@ -572,7 +569,7 @@ Mongo.prototype = {
 		removeRound: function(trigger) {
 			var set = trigger.parent().parent();
 
-			if (set.find('.round').length == 1) {
+			if (set.find('.round').length === 1) {
 				alert('Cannot remove round, there has to be at least 1 in a set');
 				return false;
 			}
@@ -604,14 +601,14 @@ Mongo.prototype = {
 			}
 			var p = "Enter the total number of rounds for this set: ";
 			var num = prompt(p, "");
-			if (num == null || num == "") {
+			if (num === null || num === "") {
 				alert('you must enter a number');
 				return;
 			}
 
-			if (num != parseInt(num)) {
+			if (num !== parseInt(num)) {
 				alert('you must enter a number');
-				return
+				return;
 			}
 
 			if (num < 1) {
@@ -663,7 +660,7 @@ Mongo.prototype = {
 				}
 			});
 		}
-}
+};
 
 $(document).ready(function() {
 

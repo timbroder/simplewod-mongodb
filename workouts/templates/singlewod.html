@@ -2,9 +2,11 @@
 
 {% block extracss %}
 <link rel="stylesheet" href="/static/css/jquery.autocomplete.css" />
+<link rel="stylesheet" href="/static/css/validationEngine.jquery.css" />
+
 {% endblock %}
 
-{% block extrajs %}, "forms", "add", "jquery.autocomplete", "add_result"{% endblock %}
+{% block extrajs %}, "forms", "add", "jquery.autocomplete", "add_result", "jquery.metadata", "jquery.validationEngine-en", "jquery.validationEngine"{% endblock %}
 {% block extraextrajs %}
 	console.log('extraextra');
 	new ResultToggle('#toggle_result');

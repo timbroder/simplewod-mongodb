@@ -1,5 +1,5 @@
 <article id="{{ wod.mongo_id }}">
-	<h3>{{ wod.title }}</h3>
+	<h3 class="wod-title">{{ wod.title }}</h3>
 	{{ wod.workout|linebreaks }}
 	{% if wod.json %}
 		{{ wod.json }}

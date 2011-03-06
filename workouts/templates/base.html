@@ -1,5 +1,5 @@
 <!doctype html> 
-
+<html lang="en-us">
 {% load macros %}
 {% macro title %}
     {% block title %}{% endblock %}
@@ -57,7 +57,7 @@
 			
 		</div>
 	    <div id="content">
-	    	{% ifnotequal title "Home" %}<div id="header"><h2>{% usemacro title %}</h2></div>{% endifnotequal %}
+	    	{% ifnotequal title "Home" %}<div id="header"><h1>{% usemacro title %}</h1></div>{% endifnotequal %}
 	        {% block content %}{% endblock %}
 	        
 	    </div>
