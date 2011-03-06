@@ -157,7 +157,9 @@ var Mongo = function(canvas, trigger) {
 	this.setCount = 1;
 	this.fadeTime = 500;
 	this.idCounter = 1;
+	this.cache = new LocalCache();
 	this.start();
+	
 };
 
 function checkEx(field, rules, i, options){
@@ -195,39 +197,58 @@ Mongo.prototype = {
 				$(this).parent().append(typeData);
 				if (addControls) {
 					self.getExBox2($(this).parent().parent());
+					
 				}
 			});
 
 			$('.add-ex').live('click', function() {
 				self.addEx(this);
+				self.cache.update('wod');
 			});
 			
 			$('.add-rest').live('click', function() {
 				self.addEx(this, true);
+				self.cache.update('wod');
 			});
 
 			$('.remove-line').live('click', function(){
 				self.removeEx($(this));
+				self.cache.update('wod');
 			});
 
 			$('.add-round-control').live('click', function() {
 				self.addRound($(this));
+				self.cache.update('wod');
 			});
 
 			$('.remove-round-control').live('click', function() {
 				self.removeRound($(this));
+				self.cache.update('wod');
 			});
 
 			$('.add-all-rounds-control').live('click', function() {
 				self.addAllRounds($(this));
+				self.cache.update('wod');
 			});
 
 			$('.ex-name').live('click', function() {
 				self.boxClick($(this));
+				self.cache.update('wod');
 			});
 
 			$('.add-set-control').live('click', function() {
 				self.addAnotherSet($(this));
+				self.cache.update('wod');
+			});
+			
+			$('input').live('blur', function() {
+				self.blurInput($(this));
+				self.cache.update('wod');
+			});
+			
+			$('option').live('click', function() {
+				self.blurSelect($(this));
+				self.cache.update('wod');
 			});
 
 			this.help = {
@@ -244,11 +265,30 @@ Mongo.prototype = {
 					}
 			};
 
-			self.setChoice();
+		self.setChoice();
 
 		},
+		
+		blurInput: function(e) {
+			console.log('input blue');
+			console.log(e);
+			console.log(e.val());
+			e.attr('VALUE', e.val());
+			console.log(e.attr('value'));
+		},
+		
+		blurSelect: function(e) {
+			console.log('select blue');
+			console.log(e.find('option:selected'));
+			e.parent().find('option').each( function(){
+				$(this).removeAttr('SELECTED');
+			});
+			e.parent().find('option:selected').attr('SELECTED', 'selected');
+		},
+		
 		setChoice: function() {
 			var self = this;
+			
 			$.ajax({
 				url: '/ajax/add1/',
 				success: function(data) {
@@ -282,7 +322,15 @@ Mongo.prototype = {
 					});
 
 					self.startSets();
-
+					if (self.cache.has('wod')) {
+						var conf = confirm('You have a draft of a workout in progress. Would you like to load it?');
+						if (conf) {
+							self.cache.get('wod');
+						}
+						else {
+							self.cache.remove('wod');
+						}
+					}
 				}
 			});
 		},
@@ -660,6 +708,8 @@ Mongo.prototype = {
 				}
 			});
 		}
+		
+
 };
 
 $(document).ready(function() {

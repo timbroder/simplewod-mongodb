@@ -2,6 +2,7 @@ var AddSubmit = function(sets, form) {
 	this.sets = $(sets);
 	this.form = $(form);
 	this.setup();
+	this.cache = new LocalCache();
 };
 
 AddSubmit.prototype = {
@@ -19,6 +20,7 @@ AddSubmit.prototype = {
 //
 			console.log('setup');
 			$('#add_w_form').submit(function(e){
+				self.cache.updateWod();
 				console.log('STOP SUBMITTING!!!');
 				//e.preventDefault();
 				//ENABLE!!!!!!!

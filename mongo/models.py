@@ -1,7 +1,7 @@
 from django.db import models
 from django.core import serializers
 import simplejson
-from workouts.models import Workout
+from workouts.models import Workout, Result
 from pymongo import Connection, json_util
 import json as jlib
 
@@ -81,6 +81,4 @@ class MongoWorkout(MongoConnection, Workout):
 
         self.mongo_id = self.wods.insert(load)
         self.save()
-    
-    
     

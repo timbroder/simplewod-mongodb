@@ -119,12 +119,13 @@ AddMongoResult.prototype = {
 	
 	submit: function() {
 		if ($("#resultform").validationEngine('validate')) {
-			var title = this.hook.parent().find('.wod-title').html();
-			var d = this.hook.parent().find('form #id_date').val();
-			console.log(d);
+			var parent = this.hook.parent();
+			var title = parent.find('.wod-title').html();
+			var d = parent.find('form #id_date').val();
 			var sets = this.hook.find('.sets');
 			var myObject = {
 		    	name: title,
+		    	wod: parent.attr('id'),
 		    	date: d,
 		    	sets: this.getSetsJson(sets)
 			};
