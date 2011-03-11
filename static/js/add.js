@@ -326,6 +326,13 @@ Mongo.prototype = {
 						var conf = confirm('You have a draft of a workout in progress. Would you like to load it?');
 						if (conf) {
 							self.cache.get('wod');
+							self.canvas.find(".ex-name").each(function() {
+								$(this).autocomplete("/ajax/list_exercises/", { multiple: false })
+									.result(function(event, item) {
+										//var box = $(this);
+										self.autoCompleteReturn($(this), ex, item);
+									});
+							});
 						}
 						else {
 							self.cache.remove('wod');
