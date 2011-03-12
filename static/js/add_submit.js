@@ -20,7 +20,7 @@ AddSubmit.prototype = {
 //
 			console.log('setup');
 			$('#add_w_form').submit(function(e){
-				self.cache.updateWod();
+				self.cache.update('wod');
 				console.log('STOP SUBMITTING!!!');
 				//e.preventDefault();
 				//ENABLE!!!!!!!
@@ -96,13 +96,16 @@ AddSubmit.prototype = {
 		
 		getMeasures: function() {
 			var mArray = [];
-			$('#wod_measure').find('li.ui-selected').each(function() {
+			$('#wod_measure').find('.ui-selected').each(function() {
 				var m = $(this);
 				mArray.push({
 					id: m.metadata().id,
-					m: t.html()
+					m: m.html()
 				});
 			});
+			console.log('measures');
+			console.log(mArray);
+			return mArray;
 		},
 		
 		getSets: function(sets){

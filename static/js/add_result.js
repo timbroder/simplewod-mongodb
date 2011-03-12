@@ -33,12 +33,22 @@ AddMongoResult.prototype = {
 				url: '/ajax/get_wod.json/',
 				data: { 'wod': mongoId },
 				success: function(resp) {
-					form.append(self.getSets(resp));
-					form.append(self.getOptional);
-					form.append(self.getSubmit());
+					self.buildform(form, resp);
 				}
 		});
 
+	},
+	
+	buildform: function(form, resp) {
+		var html = self.getMeasures(resp);
+		html += self.getSets(resp);
+		html += self.getOptional();
+		html += self.getSubmit();
+		form.append(html);
+	},
+	
+	getMeasures: function(root) {
+		
 	},
 	
 	getOptional: function() {
