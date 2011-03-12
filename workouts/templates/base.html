@@ -11,10 +11,18 @@
     <link rel="stylesheet" href="/static/css/base.css" />
     <link rel="stylesheet" href="/static/css/dark-hive/jquery-ui.css"></link>
     {% block extracss %}{% endblock %}
-	
-    <script type="text/javascript" src="/static/js/require-jquery.js"></script>
+
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/js/cufon-yui.js"></script>
+    <script type="text/javascript" src="/static/js/Amsterdam_Graffiti_400.font.js"></script>
+    <script type="text/javascript" src="/static/js/Octin_Spraypaint_Free_400.font.js"></script>
+    <script type="text/javascript" src="/static/js/modernizr.js"></script>
+    <script type="text/javascript" src="/static/js/base.js"></script>
+    {% block extrajs %}{% endblock %}
+    <!-- <script type="text/javascript" src="/static/js/require-jquery.js"></script>
     <script>
-	    require({baseUrl: "/static/js/" }, ["jquery", "jquery-ui", "modernizr", "cufon-yui", "Amsterdam_Graffiti_400.font", "Octin_Spraypaint_Free_400.font", "base"{% block extrajs %}{% endblock %}], function($) {
+	    require({baseUrl: "/static/js/" }, ["jquery", "jquery-ui", "modernizr", "cufon-yui", "Amsterdam_Graffiti_400.font", "Octin_Spraypaint_Free_400.font", "base"], function($) {
 	        //the jquery.alpha.js and jquery.beta.js plugins have been loaded.
 	        $(function() {
 	        	Cufon.replace('#logowod', { fontFamily: 'Octin Spraypaint Free' });
@@ -22,6 +30,7 @@
 	        });
 	    });
     </script>
+    -->
     
 
 

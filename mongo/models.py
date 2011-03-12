@@ -95,5 +95,8 @@ class Score(models.Model):
     example = models.ManyToManyField(ScoreExample, blank=True, null=True)
     help = models.TextField(blank=True, null=True)
     
+    def __unicode__(self):
+        return self.name
+    
 
     
