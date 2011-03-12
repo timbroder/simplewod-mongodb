@@ -40,12 +40,13 @@ AddSubmit.prototype = {
 		},
 		
 		submit2: function(){
+			console.log("SUBMIT");
 			var self = this;
 			var myObject = {
 			    //workout: {
 			    	name: $('#wod_title').html(),
-			    	sets: self.getSets(self.sets),
-			    	score: score.getSelected()
+			    	measures: self.getMeasures(),
+			    	sets: self.getSets(self.sets)
 			    //}  
 			};
 			
@@ -90,6 +91,17 @@ AddSubmit.prototype = {
 					$('#canvas').html('put workout desc here or something');
 				},
 				data: { 'data': json }
+			});
+		},
+		
+		getMeasures: function() {
+			var mArray = [];
+			$('#wod_measure').find('li.ui-selected').each(function() {
+				var m = $(this);
+				mArray.push({
+					id: m.metadata().id,
+					m: t.html()
+				});
 			});
 		},
 		

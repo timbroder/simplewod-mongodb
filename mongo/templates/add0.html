@@ -5,24 +5,20 @@
 	<link rel="stylesheet" href="/static/css/validationEngine.jquery.css" />
 {% endblock %}
 
-{% block extrajs %}, "forms", "jquery.autocomplete", "jquery.metadata", "localCache", "jquery.validationEngine-en", "jquery.validationEngine", "add_submit", "add", "jquery.editable", "jquery.multiselect"{% endblock %}
-{% block extraextrajs %}
-	console.log('extraextra');
-	new ResultToggle('#toggle_result');
-	new TagSync('#id_wod_tags', '#tags_from_wod');
-	new AddResultForm('.add_result', '#result_form');
-	//new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
-	var score = new MultiSelect('#selectable');
-	new Mongo('#canvas');
-	
-
-	$("#id_date").live('focus', function(){
-		$(this).datepicker();
-	});
-	
-	$("#add_w_form").validationEngine();
-	
+{% block extrajs %}
+	<script type="text/javascript" src="/static/js/forms.js"></script>
+	<script type="text/javascript" src="/static/js/add.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.autocomplete.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.metadata.js"></script>
+	<script type="text/javascript" src="/static/js/localCache.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.validationEngine-en.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.validationEngine.js"></script>
+	<script type="text/javascript" src="/static/js/add_submit.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.editable.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.multiselect.js"></script>
 {% endblock %}
+
+
 
 {% block title %}Add a Workout{% endblock %}
 

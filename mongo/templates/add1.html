@@ -22,7 +22,7 @@
 				</div>
 	
 		</div> -->
-		<h3 id="wod_title">Workout Title (click to edit)</h3>
+		<h3 id="wod_title" class="editable">Workout Title (click to edit)</h3>
 		<div id="wod_measure">
 			<ol id="selectable">
 				{% for score in scores %}
@@ -36,9 +36,5 @@
 </form>
 
 <script>
-	$("#add_w_form").validationEngine();
-	new AddSubmit('#sets_container', '#add_w_form');
-	$('#wod_title').editable({
-		submit:'save'
-		}); 
+	new Bind();
 </script>

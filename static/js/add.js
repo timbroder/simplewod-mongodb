@@ -195,10 +195,10 @@ Mongo.prototype = {
 				var typeData = '<input type="hidden" data-type_id="' + type.metadata().type_id + '" data-type_name="\'' + type.metadata().type_name + '\'" data-type_has_reps="\'' + type.metadata().has_reps + '\'"/>';
 				$(this).parent().find('input:hidden').remove();
 				$(this).parent().append(typeData);
-				if (addControls) {
-					self.getExBox2($(this).parent().parent());
+				//if (addControls) {
+					self.getExBox2($(this).parent().parent(), addControls);
 					
-				}
+				//}
 			});
 
 			$('.add-ex').live('click', function() {
@@ -242,8 +242,10 @@ Mongo.prototype = {
 			});
 			
 			$('input').live('blur', function() {
-				self.blurInput($(this));
-				self.cache.update('wod');
+				if (!$(this).parent().hasClass('editable')) {
+					self.blurInput($(this));
+					self.cache.update('wod');
+				}
 			});
 			
 			$('option').live('click', function() {
@@ -278,12 +280,14 @@ Mongo.prototype = {
 		},
 		
 		blurSelect: function(e) {
-			console.log('select blue');
-			console.log(e.find('option:selected'));
-			e.parent().find('option').each( function(){
-				$(this).removeAttr('SELECTED');
+			var s = e;
+			console.log(e.parent().find('option:selected'));
+			e.parent().find('option').not(e).each( function(){
+				if ($(this).attr('SELECTED') == 'selected')
+					$(this).removeAttr('SELECTED');
 			});
-			e.parent().find('option:selected').attr('SELECTED', 'selected');
+			e = s;
+			e.attr('SELECTED', 'selected');
 		},
 		
 		setChoice: function() {
@@ -323,7 +327,7 @@ Mongo.prototype = {
 
 					self.startSets();
 					if (self.cache.has('wod')) {
-						var conf = confirm('You have a draft of a workout in progress. Would you like to load it?');
+						var conf = false; //confirm('You have a draft of a workout in progress. Would you like to load it?');
 						if (conf) {
 							self.cache.get('wod');
 							self.canvas.find(".ex-name").each(function() {
@@ -333,6 +337,7 @@ Mongo.prototype = {
 										self.autoCompleteReturn($(this), ex, item);
 									});
 							});
+							Bind();
 						}
 						else {
 							self.cache.remove('wod');
@@ -371,7 +376,15 @@ Mongo.prototype = {
 		},
 
 		getSet: function() {
-			return $('<div class="section"><span class="setname">Set ' + this.setCount++ + '</span></div>').clone();
+			var set = $('<div class="section"><span class="setname editable">Set ' + this.setCount++ + '</span></div>');
+			/*set.find('.editable').editable({
+					cancel: 'cancel',
+					submit:'save'
+			});*/
+			return set.clone()/*.find('.editable').editable({
+				cancel: 'cancel',
+				submit:'save'
+			})*/;
 		},
 
 		getSetControl: function() {
@@ -489,7 +502,7 @@ Mongo.prototype = {
 			exdata.append(data);
 			console.log('appended?');
 			if (!$(data).find('select:not(.opsbase)').length) {
-				self.getExBox2(exdata);
+				self.getExBox2(exdata, true);
 			}
 			self.addSelectInputIds(exdata);
 		},
@@ -502,13 +515,18 @@ Mongo.prototype = {
 			return $('<span class="add-reps">Reps: <input type="text/></span>');
 		},
 
-		getExBox2: function(hook) {
+		getExBox2: function(hook, addControls) {
+			console.log('2');
 			var self = this;
 			if (!hook.find('.amount-holder').length) {
+				console.log('append');
 				hook.append('<span class="amount-holder"></span>');
 			}
 			else {
+				console.log('empty');
 				hook.find('.amount-holder').empty();
+				hook.find('.add-s').remove();
+				
 			}
 			amount = hook.find('.amount-holder');
 			amount.append('<input type="text" class="amount-val validate[required]"' + self.getInputId() + '/>');
@@ -520,7 +538,7 @@ Mongo.prototype = {
 			if (has_reps === 'True') {
 				self.getRepsBox().appendTo(hook);
 			}
-			self.getAddButton().appendTo(hook);
+				self.getAddButton().appendTo(hook);
 
 		},
 
@@ -720,16 +738,34 @@ Mongo.prototype = {
 
 };
 
-$(document).ready(function() {
+var Bind = function() {
+	console.log('BIND()');
+	$("#add_w_form").validationEngine();
+	new AddSubmit('#sets_container', '#add_w_form');
+	$('.editable').editable({
+		cancel: 'cancel',
+		submit:'save'
+		
+	}); 
+};
 
 
 
+
+
+$(function(){
+console.log('extraextra');
+new ResultToggle('#toggle_result');
+new TagSync('#id_wod_tags', '#tags_from_wod');
+new AddResultForm('.add_result', '#result_form');
+//new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
+var score = new MultiSelect('#selectable');
+new Mongo('#canvas');
+
+
+$("#id_date").live('focus', function(){
+	$(this).datepicker();
 });
 
-
-//$(function(){
-//$("#addform").form();
-//date picker
-//var d = new Date();
-//$("#id_date").datepicker();
-//});
+$("#add_w_form").validationEngine();
+});
