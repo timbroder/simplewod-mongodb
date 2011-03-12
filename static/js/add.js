@@ -241,7 +241,7 @@ Mongo.prototype = {
 				self.cache.update('wod');
 			});
 			
-			$('input').live('blur', function() {
+			$('input:not(#add_workout_form_submit)').live('blur', function() {
 				if (!$(this).parent().hasClass('editable')) {
 					self.blurInput($(this));
 					self.cache.update('wod');
