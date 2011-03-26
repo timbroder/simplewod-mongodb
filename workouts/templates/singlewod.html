@@ -6,12 +6,25 @@
 
 {% endblock %}
 
-{% block extrajs %}, "forms", "add", "jquery.autocomplete", "add_result", "jquery.metadata", "jquery.validationEngine-en", "jquery.validationEngine"{% endblock %}
+{% block extrajs %}
+	<script type="text/javascript" src="/static/js/forms.js"></script>
+	<script type="text/javascript" src="/static/js/jquery-ui.timepicker.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.autocomplete.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.metadata.js"></script>
+	<script type="text/javascript" src="/static/js/localCache.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.validationEngine-en.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.validationEngine.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.multiselect.js"></script>
+	<script type="text/javascript" src="/static/js/add_result.js"></script>
+	
+{% endblock %}
+
+{#% block extrajs %#}, "forms", "add", "jquery.autocomplete", "add_result", "jquery.metadata", "jquery.validationEngine-en", "jquery.validationEngine"{#% endblock %#}
 {% block extraextrajs %}
 	console.log('extraextra');
 	new ResultToggle('#toggle_result');
 	new TagSync('#id_wod_tags', '#tags_from_wod');
-	new AddMongoResult('.add_result', '#result_form');
+	
 	//new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
 	//new Mongo('#canvas');
 
@@ -38,5 +51,11 @@
 	{% include '_result.html' %}		
 		
 {% endfor %}
+
+<script>
+$(function(){
+	new AddMongoResult('.add_result', '#result_form');
+});
+</script>
 
 {% endblock %}

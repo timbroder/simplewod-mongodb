@@ -23,7 +23,12 @@
 	
 		</div> -->
 		<h3 id="wod_title" class="editable">Workout Title (click to edit)</h3>
+		<div id="wod_desc">
+			<p>Description</p>
+			<textarea rows="15" cols="40"></textarea>
+		</div>
 		<div id="wod_measure">
+			<p>Please choose the ways this workout is scored</p>
 			<ol id="selectable">
 				{% for score in scores %}
 					<li class="ui-widget-content" data-id="{{ score.id }}">{{ score.name }}</li>

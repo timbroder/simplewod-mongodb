@@ -70,7 +70,10 @@ class MongoWorkout(MongoConnection, Workout):
             json = self.json
         if not self.json:
             raise Exception
-        
+        json = simplejson.loads(json)
+        print json
+        self.title = json['name']
+        print self.title
         self.save()
         #self.wods.remove()
         
@@ -93,6 +96,8 @@ class Score(models.Model):
     name = models.CharField(max_length=64)
     measure = models.ManyToManyField(MeasureType)
     example = models.ManyToManyField(ScoreExample, blank=True, null=True)
+    input_test = models.CharField(max_length=64)
+    clazz = models.CharField(max_length=32, default="")
     help = models.TextField(blank=True, null=True)
     
     def __unicode__(self):

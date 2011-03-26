@@ -538,7 +538,15 @@ Mongo.prototype = {
 			if (has_reps === 'True') {
 				self.getRepsBox().appendTo(hook);
 			}
-				self.getAddButton().appendTo(hook);
+			self.getAddButton().appendTo(hook);
+			if (hook.find('.type-data input').metadata().type_name == 'Count') {
+				console.log('yesssss');
+				hook.find('.type-data').hide();
+				hook.find('.amount-holder').hide();
+				hook.find('select').hide();
+				hook.find('select option:eq(1)').attr('SELECTED', 'selected');
+
+			}
 
 		},
 
@@ -757,7 +765,7 @@ $(function(){
 console.log('extraextra');
 new ResultToggle('#toggle_result');
 new TagSync('#id_wod_tags', '#tags_from_wod');
-new AddResultForm('.add_result', '#result_form');
+//new AddResultForm('.add_result', '#result_form');
 //new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
 var score = new MultiSelect('#selectable');
 new Mongo('#canvas');

@@ -84,4 +84,12 @@ def get_wod_json(request):
     json = MongoWorkout.objects.get(mongo_id=id).json
     return HttpResponse(json, mimetype='application/json')
 
+def get_measures_json(request):
+    try:
+        ids = request.GET['ms']
+    except:
+        return #HttpResponse({'error': 'measure ids not found'}, mimetype='application/json')
 
+    ids = ids.split(',')
+    scores = Score.objects.filter(id__in=ids)
+    return r2r('get_measures.html', {'scores': scores})

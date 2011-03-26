@@ -1,0 +1,6 @@
+{% for score in scores %}
+<div class="score">
+	{{ score.input_test }}: 
+		<input type="text" class="{{ score.clazz }}" />
+</div>
+{% endfor %} 

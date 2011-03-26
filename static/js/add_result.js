@@ -1,3 +1,36 @@
+var LiveUpdate = function(input, output) {
+	this.total = 0;
+	this.input = input;
+	this.output = output;
+	this.setup();
+};
+
+LiveUpdate.prototype = {
+	setup: function() {
+		var self = this;
+		this.update();
+		
+		this.input.live('keyup', function(){
+			self.update();
+		});
+	},
+	
+	update: function() {
+		var self = this,
+			intRegex = /^\d+$/;
+		self.total = 0;
+		self.input.each(function() {
+			if(intRegex.test($(this).val())) {
+				self.total += parseInt($(this).val())*1;
+			}
+		});
+		
+		self.output.val(self.total);
+		
+	}
+};
+
+
 var AddMongoResult = function(trigger, hook) {
 	this.trigger = $(trigger);
 	this.hook = $(hook);
@@ -10,12 +43,21 @@ AddMongoResult.prototype = {
 		var self = this;
 		this.trigger.bind('click', function(){
 			self.click();
+			$(this).hide();
 		});
 		
 		$('#addresult').live('click', function(e){
 			e.preventDefault();
 			self.submit();
 		});
+		
+		$('#cancelresult').live('click', function() {
+			self.cancel();
+		});
+		
+		//FIX
+		//remove
+		self.click();
 	},
 	
 	
@@ -39,16 +81,62 @@ AddMongoResult.prototype = {
 
 	},
 	
+	cancel: function() {
+		this.hook.empty();
+		$('a.add_result').show();
+	},
+	
 	buildform: function(form, resp) {
-		var html = self.getMeasures(resp);
+		var self = this,
+			html = '',
+			totalweight = 0,
+			totalreps = 0
+			;
+		
 		html += self.getSets(resp);
+		html += self.getMeasures(resp);
 		html += self.getOptional();
 		html += self.getSubmit();
 		form.append(html);
+		
+		totalweight = $('input.totalweight');
+		totalreps = $('input.totalreps');
+		
+		if (totalweight.length > 0) {
+			new LiveUpdate($('.ex-line[data-type="Weight"] input.amount-val'), totalweight);
+		}
+		
+		if (totalreps.length > 0) {
+			new LiveUpdate($('input.num-reps'), totalreps);
+		}
+		
+		$('.totaltime').timepicker({
+			showSecond: true,
+			timeFormat: 'hh:mm:ss'
+		});
+
 	},
 	
 	getMeasures: function(root) {
+		var ids = [],
+			i,
+			l = root.measures.length,
+			req,
+			html = '';
 		
+		for (i=0; i<l; i++) {
+			ids.push(root.measures[i].id);
+		}
+		req = $.ajax('/ajax/get_measures.json/', {
+			data: { "ms": ids.toString() },
+			type: 'GET',
+			async: false
+			//dataType: 'json'
+		})
+		.success( function(resp) {
+			html = resp;
+		});
+		return html;
 	},
 	
 	getOptional: function() {
@@ -56,7 +144,7 @@ AddMongoResult.prototype = {
 		html += '<div><p>Notes</p><textarea id="notes" />';
 		
 		html += '<br/>';
-		return $(html);
+		return html;
 	},
 	
 	getForm: function() {
@@ -66,21 +154,28 @@ AddMongoResult.prototype = {
 	},
 	
 	getSubmit: function() {
-		return $('<input id="addresult" type="submit" name="submit" value="submit" />').clone();
+		return '<input id="cancelresult" type="button" name="cancel" value="cancel" /> <input id="addresult" type="submit" name="submit" value="submit" />';
 	},
 	
 	getDatePicker: function() {
-		var picker =  $('<div>Date <input type="text" id="id_date" name="date" class="validate[required]"></div>').clone();
-		picker.find('#id_date').datepicker();
+		var picker =  $('<div>Date/Time Completed <input type="text" id="id_date" name="date" class="validate[required]"></div>').clone();
+		picker.find('#id_date').datetimepicker({
+			ampm: true
+			//,
+			//hourGrid: 4,
+			//minuteGrid: 10
+		});
+
 		
 		return picker;
 	},
 	
 	getSets: function(root) {
 		var html = '<section class="sets">',
-			i;
+			i,
+			l = root.sets.length;
 		
-		for (i = 0; i < root.sets.length; i++) {
+		for (i = 0; i < l; i++) {
 			set = root.sets[i];
 			html += '<div class="set">' +
 					'<h4 class="set-name">' + set.name + '</h4>';
@@ -90,14 +185,15 @@ AddMongoResult.prototype = {
 		
 		html += '<hr><hr><hr></section>';
 		
-		return $(html);
+		return html;
 	},
 	
 	getRounds: function(rounds) {
 		var html = '',
-			i;
+			i,
+			l = rounds.length;
 		
-		for (i = 0; i < rounds.length; i++) {
+		for (i = 0; i < l; i++) {
 			html += '<div class="round">';
 			html += this.getEx(rounds[i]);
 			html += '<hr></div>';
@@ -107,13 +203,17 @@ AddMongoResult.prototype = {
 	
 	getEx: function(rnd) {
 		var html = '',
-			i;
-		for (i = 0; i < rnd.exs.length; i++){
+			i,
+			l = rnd.exs.length;
+		
+		for (i = 0; i < l; i++){
 			var ex = rnd.exs[i];
-			html += '<div class="ex-line" data-ex="\'' + ex.name + '\'" data-type_id="' + ex.type_id + '" data-type="\'' + ex.type + '\'" data-measure="\'' + ex.measure + '\'" data-type_has_reps="\'' + ex.type_has_reps + '\'">';
+			html += '<div class="ex-line" data-ex="' + ex.name + '" data-type_id="' + ex.type_id + '" data-type="' + ex.type + '" data-measure="' + ex.measure + '" data-type_has_reps="' + ex.type_has_reps + '">';
 			html += ex.name + ' ';
-			html += '<input type="text" class="amount-val validate[required]" value="' + ex.amount + '"' + this.getInputId() + '>';
-			html += ' 	' + ex.measure;
+			if (ex.type != 'Count') {
+				html += '<input type="text" class="amount-val validate[required]" value="' + ex.amount + '"' + this.getInputId() + '>';
+				html += ' 	' + ex.measure;
+			}
 			if (ex.reps) {
 				html += ' x ';
 				html += '<input type=text class="num-reps validate[required]" value="' + ex.reps + '"' + this.getInputId() + '>';
@@ -141,13 +241,11 @@ AddMongoResult.prototype = {
 			};
 			
 			var json = JSON.stringify(myObject);
-			console.log(json);
 			try {
 				jQuery.parseJSON(json);
 				//self.post(json);
 			
 			} catch(e) {
-				console.log(e);
 				alert('there was an error submitting');
 			} 
 		}
@@ -198,11 +296,11 @@ AddMongoResult.prototype = {
 	
 	getExLineJson: function(line) {
 		var ex = {
-			'name': line.metadata().ex,
-			'type': line.metadata().type,
-			'type_id': line.metadata().type_id,
+			'name': line.data('ex'),
+			'type': line.data('type'),
+			'type_id': line.data('type_id'),
 			'amount': line.find('.amount-val').val(),
-			'measure': line.metadata().measure //,
+			'measure': line.data('measure') //,
 			//'measure_id': line.metadata().type_id
 		};
 		
@@ -214,3 +312,7 @@ AddMongoResult.prototype = {
 		return id;
 	}
 };
+
+//$(function(){
+//	new AddResultForm('.add_result', '#result_form');
+//});

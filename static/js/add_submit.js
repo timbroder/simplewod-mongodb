@@ -45,6 +45,7 @@ AddSubmit.prototype = {
 			var myObject = {
 			    //workout: {
 			    	name: $('#wod_title').html(),
+			    	desc: $('#wod_desc textarea').val(),
 			    	measures: self.getMeasures(),
 			    	sets: self.getSets(self.sets)
 			    //}  
@@ -53,6 +54,7 @@ AddSubmit.prototype = {
 			var json = JSON.stringify(myObject);
 			console.log(json);
 			try {
+				console.log('in try');
 				jQuery.parseJSON(json);
 				self.post(json);
 			
@@ -80,7 +82,7 @@ AddSubmit.prototype = {
 //			console.log(input);
 //			console.log(self.form);
 //			self.form.submit();
-			
+			console.log('in post');
 			$.ajax({
 				type: 'POST',
 				url: '/ajax/add2/',
@@ -111,6 +113,8 @@ AddSubmit.prototype = {
 		getSets: function(sets){
 			var self = this;
 			var setsArray = [];
+			
+			console.log('getting sets');
 			sets.find('div.section').each(function(){
 				setsArray.push(self.getRounds($(this)));
 			});
@@ -150,10 +154,24 @@ AddSubmit.prototype = {
 		},
 		
 		getExLine: function(line) {
+			console.log('1');
+			console.log(line);
 			var type = line.find('span.type-data input');
 			var amount = line.find('span.amount-holder');
 			var amount_name = type.metadata().type_name;
-			var measure = line.find('select.measure-options:visible option:selected');
+			var measure;
+			try {
+				measure = line.find('select.measure-options:visible option:selected');
+				measure.metadata().type_id;
+			} catch(e) {
+				console.log('c');
+				console.log(e);
+				measure = line.find('.measure-options option:eq(1)');
+			}
+			
+			
+			console.log(measure);
+			console.log('getting ex');
 			var ex = {
 				'name': line.find('input.ex-name').val(),
 				'type': amount_name,
