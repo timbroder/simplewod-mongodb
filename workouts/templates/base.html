@@ -28,10 +28,10 @@
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 	
 	<!-- CSS: implied media="all" -->
-	<link rel="stylesheet" href="static/css/style.css?v=2">
+	<link rel="stylesheet" href="/static/css/style.css?v=2">
 	
 	<!-- Uncomment if you are specifically targeting less enabled mobile browsers
-	<link rel="stylesheet" media="handheld" href="static/css/handheld.css?v=2">  -->
+	<link rel="stylesheet" media="handheld" href="/static/css/handheld.css?v=2">  -->
 	
 	<!-- mine -->
     <link rel="stylesheet" href="/static/css/base.css" />
@@ -39,7 +39,7 @@
     {% block extracss %}{% endblock %}
 
 	<!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
-	<script src="static/js/libs/modernizr-1.7.min.js"></script>
+	<script src="/static/js/libs/modernizr-1.7.min.js"></script>
 
 </head>
 <body>
@@ -47,39 +47,26 @@
 
 
 <body>
-	<div id="main">
-	<div id="logo">
-		<a href="/" style="text-decoration: none;"><span id="logosimple"><strong>simple</strong></span><span id="logowod">WOD</span><span id="logobeta">&nbsp;&nbsp;&nbsp;(beta)</span></a>
-		
-	</div>
-		<div id="nav">
-			<div class="fg-buttonset fg-buttonset-single">
-				<button class="fg-button ui-state-default ui-priority-primary ui-corner-left" onclick="window.location='/'">Home</button>
-				{% if user.is_authenticated %}	
-					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/{{ user.username }}/'">{{ user.username }}</button>
-					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/wods/add'">Add Workout</button>
-				{% endif %}
-					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/feeds/'">RSS</button>
-					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/contact/'">Contact</button>
-				{% if user.is_authenticated %}	
-					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/settings/'">Settings</button>
-					<button class="fg-button ui-state-default ui-priority-primary ui-corner-right" onclick="window.location='/accounts/logout'">Logout</button>
-				{% else %}	
-					<button class="fg-button ui-state-default ui-priority-primary" onclick="window.location='/accounts/register/'">Register</button>
-					<button class="fg-button ui-state-default ui-priority-primary ui-corner-right" onclick="window.location='/accounts/login'">Login</button>
-				{% endif %}
-			</div>
-			
-		</div>
-	    <div id="content">
-	    	{% ifnotequal title "Home" %}<div id="header"><h1>{% usemacro title %}</h1></div>{% endifnotequal %}
-	        {% block content %}{% endblock %}
-	        
-	    </div>
-	    <div id="footer">
-	    	
-	    </div>
-	</div>
+	<div id="container">
+		<header>  
+	        <h1>Page title</h1>  
+	    </header>  
+	    <nav>  
+	        <!-- Navigation -->  
+	    </nav>  
+	    <section id="intro">  
+	        <!-- Introduction -->  
+	    </section>  
+	    <section>  
+	        <!-- Main content area -->  
+	    </section>  
+	    <aside>  
+	        <!-- Sidebar -->  
+	    </aside>  
+	    <footer>  
+	        <!-- Footer -->  
+	    </footer>  
+	</div> <!--! end of #container -->
 	
 	<!-- JavaScript at the bottom for fast page loading -->
 	
@@ -97,8 +84,8 @@
     {% block extrajs %}{% endblock %}
 
 	<!-- scripts concatenated and minified via ant build script-->
-	<script src="static/js/plugins.js"></script>
-	<script src="staticjs/script.js"></script>
+	<script src="/static/js/plugins.js"></script>
+	<script src="/staticjs/script.js"></script>
 	<!-- end scripts-->
     
     <!-- <script type="text/javascript" src="/static/js/require-jquery.js"></script>
@@ -113,7 +100,7 @@
     </script>
     -->
 	<!--[if lt IE 7 ]>
-	  <script src="static/js/libs/dd_belatedpng.js"></script>
+	  <script src="/static/js/libs/dd_belatedpng.js"></script>
 	  <script>DD_belatedPNG.fix("img, .png_bg"); // Fix any <img> or .png_bg bg-images. Also, please read goo.gl/mZiyb </script>
 	<![endif]-->
 	
