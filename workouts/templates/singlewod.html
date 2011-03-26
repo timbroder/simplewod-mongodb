@@ -21,7 +21,7 @@
 
 {#% block extrajs %#}, "forms", "add", "jquery.autocomplete", "add_result", "jquery.metadata", "jquery.validationEngine-en", "jquery.validationEngine"{#% endblock %#}
 {% block extraextrajs %}
-	console.log('extraextra');
+	window.log('extraextra');
 	new ResultToggle('#toggle_result');
 	new TagSync('#id_wod_tags', '#tags_from_wod');
 	

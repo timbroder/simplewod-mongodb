@@ -144,7 +144,7 @@ ResultFormSubmit.prototype = {
 			});
 		},
 		callback: function() {
-			console.log('callback');
+			window.log('callback');
 		}
 };
 
@@ -163,7 +163,7 @@ var Mongo = function(canvas, trigger) {
 };
 
 function checkEx(field, rules, i, options){
-	console.log('checkEx');
+	window.log('checkEx');
 	
 	if (field.val() === "") {
 		return;
@@ -173,7 +173,7 @@ function checkEx(field, rules, i, options){
 	//if (field.val() != "HELLO") {
 		return options.allrules.checkEx1.alertText;
 	}
-	console.log('endcheck');
+	window.log('endcheck');
 }
 
 Mongo.prototype = {
@@ -184,11 +184,11 @@ Mongo.prototype = {
 			});
 
 			$('.type-data select').live('change', function() {
-				console.log('yo');
+				window.log('yo');
 				var type = $(this).find('option:selected');
 				
 				var addControls = true;
-				console.log($(this).parent().find('input:hidden').length);
+				window.log($(this).parent().find('input:hidden').length);
 				if ($(this).parent().find('input:hidden').length >= 1) {
 					addControls = false;
 				}
@@ -272,16 +272,16 @@ Mongo.prototype = {
 		},
 		
 		blurInput: function(e) {
-			console.log('input blue');
-			console.log(e);
-			console.log(e.val());
+			window.log('input blue');
+			window.log(e);
+			window.log(e.val());
 			e.attr('VALUE', e.val());
-			console.log(e.attr('value'));
+			window.log(e.attr('value'));
 		},
 		
 		blurSelect: function(e) {
 			var s = e;
-			console.log(e.parent().find('option:selected'));
+			window.log(e.parent().find('option:selected'));
 			e.parent().find('option').not(e).each( function(){
 				if ($(this).attr('SELECTED') == 'selected')
 					$(this).removeAttr('SELECTED');
@@ -483,8 +483,8 @@ Mongo.prototype = {
 				url: '/ajax/get_ex/',
 				success: function(data) {
 					//self.addSelectInputIds(data);
-					console.log(ex);
-					//console.log(data);
+					window.log(ex);
+					//window.log(data);
 					self.getExBoxData(ex, data);
 				},
 				data: { 'name': item[0] }	            
@@ -495,12 +495,12 @@ Mongo.prototype = {
 			var self = this;
 			var exdata = ex.find('.ex-data');
 			if(!exdata.is(':empty')) {
-				console.log('empty');
+				window.log('empty');
 				exdata.empty();
 			}
 			
 			exdata.append(data);
-			console.log('appended?');
+			window.log('appended?');
 			if (!$(data).find('select:not(.opsbase)').length) {
 				self.getExBox2(exdata, true);
 			}
@@ -516,14 +516,14 @@ Mongo.prototype = {
 		},
 
 		getExBox2: function(hook, addControls) {
-			console.log('2');
+			window.log('2');
 			var self = this;
 			if (!hook.find('.amount-holder').length) {
-				console.log('append');
+				window.log('append');
 				hook.append('<span class="amount-holder"></span>');
 			}
 			else {
-				console.log('empty');
+				window.log('empty');
 				hook.find('.amount-holder').empty();
 				hook.find('.add-s').remove();
 				
@@ -534,13 +534,13 @@ Mongo.prototype = {
 			var has_reps = hook.find('.type-data input').metadata().type_has_reps;
 			hook.find('.measure-options:not(.opsbase)').remove();
 			hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);
-			console.log(has_reps);
+			window.log(has_reps);
 			if (has_reps === 'True') {
 				self.getRepsBox().appendTo(hook);
 			}
 			self.getAddButton().appendTo(hook);
 			if (hook.find('.type-data input').metadata().type_name == 'Count') {
-				console.log('yesssss');
+				window.log('yesssss');
 				hook.find('.type-data').hide();
 				hook.find('.amount-holder').hide();
 				hook.find('select').hide();
@@ -682,7 +682,7 @@ Mongo.prototype = {
 			}
 			var p = "Enter the total number of rounds for this set: ";
 			var num = prompt(p, "");
-			console.log(num);
+			window.log(num);
 			if (num === null || num === "") {
 				alert('you must enter a number');
 				return;
@@ -747,7 +747,7 @@ Mongo.prototype = {
 };
 
 var Bind = function() {
-	console.log('BIND()');
+	window.log('BIND()');
 	$("#add_w_form").validationEngine();
 	new AddSubmit('#sets_container', '#add_w_form');
 	$('.editable').editable({
@@ -762,7 +762,7 @@ var Bind = function() {
 
 
 $(function(){
-console.log('extraextra');
+window.log('extraextra');
 new ResultToggle('#toggle_result');
 new TagSync('#id_wod_tags', '#tags_from_wod');
 //new AddResultForm('.add_result', '#result_form');
