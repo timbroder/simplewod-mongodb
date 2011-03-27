@@ -57,7 +57,7 @@ AddMongoResult.prototype = {
 		
 		//FIX
 		//remove
-		self.click();
+		//self.click();
 	},
 	
 	

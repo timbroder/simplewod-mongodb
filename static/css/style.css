@@ -109,7 +109,8 @@ textarea { overflow: auto; } /* www.sitepoint.com/blogs/2010/08/20/ie-remove-tex
 
 /* Align checkboxes, radios, text inputs with their label by: Thierry Koblentz tjkdesign.com/ez-css/css/base.css  */
 input[type="radio"] { vertical-align: text-bottom; }
-input[type="checkbox"] { vertical-align: bottom; }
+//input[type="checkbox"] { vertical-align: bottom; }
+input[type="checkbox"] { vertical-align: middle; }
 .ie7 input[type="checkbox"] { vertical-align: baseline; }
 .ie6 input { vertical-align: text-bottom; }
 
@@ -196,7 +197,7 @@ nav ul li {
     nav ul li a {  
         display: block;  
         margin-right: 20px;  
-        width: 140px;  
+        width: 110px;  
         font-size: 14px;  
         line-height: 44px;  
         text-align: center;  
@@ -246,7 +247,7 @@ nav ul li {
         display: table-cell;  
         width: 670px;  
         padding-right: 11px;  
-        //background-color: green;
+        background-color: white;
         padding: 11px;  
         
         border-radius: 11px;  
@@ -264,6 +265,7 @@ nav ul li {
     aside {  
         display: table-cell;  
         width: 250px;  
+        padding: 11px;
     }  
 
 /** end base layout **/

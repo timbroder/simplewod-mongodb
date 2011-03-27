@@ -5,27 +5,29 @@
 
 {% block content %}
 {% load extra_args %}
-<div id="holder">
+<section id="workouts">
 	{% if show %}
-		<div class="leftcol">
-			<h2>{% if header %}{{ header }}{% else %}Recent Workouts{% endif %}</h2>
-			
-			<ul>
-				{% for r in results.object_list %}
-					<li><a href="{{ r.get_absolute_url }}">{% ifequal title "Home" %}{{ r }}{% else %}{{ r.workout }}{% endifequal %}</a>
-					{% ifequal title "Home" %}({{ r|args:user|call:"num_results" }}){% endifequal %}</li>
-				{% endfor %}
-			</ul>
-			
-			{% include '_paged.html' %}
-			
-		</div>
-		<div class="rightcol">
-			<h2>{% ifequal title "Home" %}Workout{% else %}Result{% endifequal %} Tags</h2>
-				{% include tag_cloud_template %}
-		</div>
+		<ul>
+			{% for r in results.object_list %}
+				<li>
+					<p>
+						<a href="{{ r.get_absolute_url }}">{% if home %}{{ r }}{% else %}{{ r.workout }}{% endif %}</a>
+						{% if home %}({{ r|args:user|call:"num_results" }}){% endif %}
+					</p>
+					<p>
+						{% if home %}{{ r.get.desc|linebreaks }}{% else %}{{ r.workout.get.desc|linebreaks }}{% endif %}
+					</p>
+				</li>
+			{% endfor %}
+		</ul>
+		
+		{% include '_paged.html' %}
 	{% else %}
-		<p>This user's results are private.</p>
+		<p>{{ username }}'s' results are private.</p>
 	{% endif %}
-</div>
+</section>
+{% endblock %}
+
+{% block sidebar %}
+	{% include '_exes.html' %}
 {% endblock %}

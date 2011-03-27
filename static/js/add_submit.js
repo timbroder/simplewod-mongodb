@@ -18,17 +18,17 @@ AddSubmit.prototype = {
 //			    
 //			myJSONText = JSON.stringify(myObject);
 //
-			window.log('setup');
+			console.log('setup');
 			$('#add_w_form').submit(function(e){
 				self.cache.update('wod');
-				window.log('STOP SUBMITTING!!!');
+				console.log('STOP SUBMITTING!!!');
 				//e.preventDefault();
 				//ENABLE!!!!!!!
 				if ($("#add_w_form").validationEngine('validate')) {
-					window.log(self.form.find('#jsoninput').length);
+					console.log(self.form.find('#jsoninput').length);
 					if (self.form.find('#jsoninput').length > 0) {
-						window.log('actually submit?');
-						window.log(self.form);
+						console.log('actually submit?');
+						console.log(self.form);
 						//e.enableDefault();
 						return true;
 					}
@@ -40,7 +40,7 @@ AddSubmit.prototype = {
 		},
 		
 		submit2: function(){
-			window.log("SUBMIT");
+			console.log("SUBMIT");
 			var self = this;
 			var myObject = {
 			    //workout: {
@@ -52,14 +52,14 @@ AddSubmit.prototype = {
 			};
 			
 			var json = JSON.stringify(myObject);
-			window.log(json);
+			console.log(json);
 			try {
-				window.log('in try');
+				console.log('in try');
 				jQuery.parseJSON(json);
 				self.post(json);
 			
 			} catch(e) {
-				window.log(e);
+				console.log(e);
 				alert('there was an error submitting');
 			} 
 		},
@@ -71,24 +71,24 @@ AddSubmit.prototype = {
 		
 		post: function(json) {
 //			var self = this;
-//			window.log('have json');
-//			window.log(json);
+//			console.log('have json');
+//			console.log(json);
 //			var input = self.getJsonForm(json);
 //			//input.val(json);
 //			input.hide();
-//			window.log('ready to submit');
-//			window.log(json);
+//			console.log('ready to submit');
+//			console.log(json);
 //			self.form.append(input);
-//			window.log(input);
-//			window.log(self.form);
+//			console.log(input);
+//			console.log(self.form);
 //			self.form.submit();
-			window.log('in post');
+			console.log('in post');
 			$.ajax({
 				type: 'POST',
 				url: '/ajax/add2/',
 				success: function(data) {
 					//self.addSelectInputIds(data);
-					window.log('back?');
+					console.log('back?');
 					$('#header').find('h2').html('Workout Added');
 					$('#canvas').html('put workout desc here or something');
 				},
@@ -105,8 +105,8 @@ AddSubmit.prototype = {
 					m: m.html()
 				});
 			});
-			window.log('measures');
-			window.log(mArray);
+			console.log('measures');
+			console.log(mArray);
 			return mArray;
 		},
 		
@@ -114,7 +114,7 @@ AddSubmit.prototype = {
 			var self = this;
 			var setsArray = [];
 			
-			window.log('getting sets');
+			console.log('getting sets');
 			sets.find('div.section').each(function(){
 				setsArray.push(self.getRounds($(this)));
 			});
@@ -154,8 +154,8 @@ AddSubmit.prototype = {
 		},
 		
 		getExLine: function(line) {
-			window.log('1');
-			window.log(line);
+			console.log('1');
+			console.log(line);
 			var type = line.find('span.type-data input');
 			var amount = line.find('span.amount-holder');
 			var amount_name = type.metadata().type_name;
@@ -164,14 +164,14 @@ AddSubmit.prototype = {
 				measure = line.find('select.measure-options:visible option:selected');
 				measure.metadata().type_id;
 			} catch(e) {
-				window.log('c');
-				window.log(e);
+				console.log('c');
+				console.log(e);
 				measure = line.find('.measure-options option:eq(1)');
 			}
 			
 			
-			window.log(measure);
-			window.log('getting ex');
+			console.log(measure);
+			console.log('getting ex');
 			var ex = {
 				'name': line.find('input.ex-name').val(),
 				'type': amount_name,
@@ -181,8 +181,8 @@ AddSubmit.prototype = {
 				'measure_id': measure.metadata().type_id
 			};
 			
-			window.log('rep[s: ');
-			window.log(type.metadata().type_has_reps);
+			console.log('rep[s: ');
+			console.log(type.metadata().type_has_reps);
 			if (type.metadata().type_has_reps === 'True') {
 				ex.reps = line.find('.add-reps').find('input').val();
 			}
@@ -194,7 +194,7 @@ AddSubmit.prototype = {
 //						+ '"type_id":' + type.metadata().type_id + ','
 //						+ 'measure'
 //						+ '}';
-//			window.log(json);
+//			console.log(json);
 //			return eval( "(" + json + ")" );
 
 		}

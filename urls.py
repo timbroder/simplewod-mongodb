@@ -74,7 +74,7 @@ urlpatterns = urlpatterns + patterns('',
     (r'^wods/tag/(?P<tagslug>.+)/$', wod.wod_tag),
     (r'^wods/(?P<wodslug>.+)/add/$', wod.result_add_form),
     (r'^wods/(?P<wodslug>.+)/$', wod.wod_single),
-    (r'^(?P<username>.+)/$', wod.home_user),
+    (r'^users/(?P<username>.+)/$', wod.home_user),
 )
                                      
 if debug:

@@ -1,4 +1,4 @@
-# Django settings for mongomode project.
+from pymongo import Connection
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -17,6 +17,9 @@ DATABASES = {
         'PASSWORD': 'root'
     }
 }
+
+#CONNECTION = Connection()
+#DB = CONNECTION.simplewod
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -69,7 +72,7 @@ MIDDLEWARE_CLASSES = (
     'facebook.djangofb.FacebookMiddleware',
     'facebookconnect.middleware.FacebookConnectMiddleware',
     #'socialregistration.middleware.FacebookMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -95,7 +98,7 @@ INSTALLED_APPS = (
     'sluggable',
     'tagging_autocomplete',
     'facebookconnect',
-    'debug_toolbar',
+    #'debug_toolbar',
     #'socialregistration'
     'mongo',
     'login_as'

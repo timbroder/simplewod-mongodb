@@ -1,0 +1,9 @@
+<section id="filterwhat">
+<p>Filtering: <input type="radio" value="wods" checked /> Workouts</p>
+</section>
+
+<section id="exfilters">
+{% for ex in exes %}
+	<p><input id="ex_{{ ex.id }}" type="checkbox" value="wods" /><label for="ex_{{ ex.id }}"> {{ ex.name }}</label></p>
+{% endfor %}
+</section>

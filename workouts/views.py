@@ -129,7 +129,7 @@ def home(request):
     if debug:
         print "home"
     user = request.user
-    r1 = Workout.objects.all().order_by('-touched_at')
+    r1 = MongoWorkout.objects.all().order_by('-touched_at')
     #r1 = Workout.private_objects.all().order_by('-created_at')
     #if user.is_authenticated() and user.get_profile().private_wods:
     #    r2 = Workout.objects.filter(user=user).order_by('-created_at')
@@ -138,8 +138,12 @@ def home(request):
     #    results = get_paginator(request, r1)
     results = get_paginator(request, r1, 20)
     tag_cloud_template = 'tags_home.html'
-    title = 'Home'
+    title = 'Recent Workouts'
+    
+    exes = Exercise.objects.all().order_by('name')
+    
     show = True
+    home = True
     return r2r('index.html', locals())
 
 #@cache_page(60 * 60 * 2)
@@ -148,6 +152,7 @@ def home_user(request, username):
         print '- home user'
         
     user = get_object_or_404(User, username=username)
+    show = False
     if user.get_profile().private_wods:
         if request.user == user:
             show = True
@@ -166,7 +171,7 @@ def wod_single(request, wodslug):
         print '- wods single'
     user = request.user
     wod = MongoWorkout.objects.get(slug = wodslug)
-    
+    mwod = wod.get()
     results = Result.private_objects.filter(workout = wod).order_by('-date')
     print results
     print "!"

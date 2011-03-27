@@ -16,6 +16,12 @@
 	<script type="text/javascript" src="/static/js/jquery.validationEngine.js"></script>
 	<script type="text/javascript" src="/static/js/jquery.multiselect.js"></script>
 	<script type="text/javascript" src="/static/js/add_result.js"></script>
+
+	<script>
+		$(function(){
+			new AddMongoResult('.add_result', '#result_form');
+		});
+	</script>
 	
 {% endblock %}
 
@@ -36,11 +42,20 @@
 	
 {% endblock %}
 
-{% block title%}{% if header %}{{ header }}{% else %}WOD: {{ wod }}{% endif %}{% endblock %}
+{% block title%}{% if header %}{{ header }}{% else %}WOD: {{ mwod.name }}{% endif %}{% endblock %}
 
 {% block content %}
 
-{% include '_wod.html' %}
+<article id="{{ wod.mongo_id }}">
+	{{ mwod.desc|linebreaks }}
+	{% if wod.json %}
+		{#{ wod.json }#}
+	{% endif %}
+	{% if request.user.is_authenticated %}
+		<p>Add Result <a href="#" class="add_result" id="{{ wod.id }}">+++</a></p>
+		<div id="result_form"></div>
+	{% endif %}
+</article>
 
 {% for wod in results %}
 	{% if forloop.first %}
@@ -52,10 +67,5 @@
 		
 {% endfor %}
 
-<script>
-$(function(){
-	new AddMongoResult('.add_result', '#result_form');
-});
-</script>
 
 {% endblock %}
