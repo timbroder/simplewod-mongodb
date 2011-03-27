@@ -100,7 +100,12 @@
     <script type="text/javascript" src="/static/js/Octin_Spraypaint_Free_400.font.js"></script>
     <!--  <script type="text/javascript" src="/static/js/modernizr.js"></script> -->
     <script type="text/javascript" src="/static/js/base.js"></script>
+    <script type="text/javascript" src="/static/js/filters.js"></script>
     {% block extrajs %}{% endblock %}
+    
+    <script type="text/javascript" >
+    {% block extraextrajs %}{% endblock %}
+    </script>
 
 	<!-- scripts concatenated and minified via ant build script-->
 	<script src="/static/js/plugins.js"></script>
@@ -113,7 +118,7 @@
 	        //the jquery.alpha.js and jquery.beta.js plugins have been loaded.
 	        $(function() {
 	        	Cufon.replace('#logowod', { fontFamily: 'Octin Spraypaint Free' });
-	        	{% block extraextrajs %}{% endblock %}
+	        	{#% block extraextrajs %#}{#% endblock %#}
 	        });
 	    });
     </script>

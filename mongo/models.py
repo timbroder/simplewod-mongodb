@@ -2,8 +2,10 @@ from django.db import models
 from django.core import serializers
 import simplejson
 from workouts.models import Workout, Result
-from pymongo import Connection, json_util
+from pymongo import json_util
 import json as jlib
+from settings import DB
+from pymongo.objectid import ObjectId
 
 # Create your models here.
 class Measure(models.Model):
@@ -54,9 +56,7 @@ class Exercise(models.Model):
 class MongoConnection(object):
     def __init__(self, *args, **kwargs):
         print 'init mongoconn'
-        connection = Connection()
-        self.db = connection.simplewod
-        self.wods = self.db.wods
+        self.wods = DB.wods
         
         
         return super(MongoConnection,self).__init__(*args, **kwargs)  
@@ -84,6 +84,9 @@ class MongoWorkout(MongoConnection, Workout):
 
         self.mongo_id = self.wods.insert(load)
         self.save()
+    
+    def get(self):
+        return self.wods.find_one({"_id": ObjectId(self.mongo_id)})
 
 class ScoreExample(models.Model):
     name = models.CharField(max_length=64)

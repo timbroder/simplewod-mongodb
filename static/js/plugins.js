@@ -7,8 +7,14 @@ window.log = function(){
   if(this.console) console.log( Array.prototype.slice.call(arguments) );
 };
 // make it safe to use console.log always
+//FIX
 //(function(b){function c(){}for(var d="assert,count,debug,dir,dirxml,error,exception,group,groupCollapsed,groupEnd,info,log,markTimeline,profile,profileEnd,time,timeEnd,trace,warn".split(","),a;a=d.pop();)b[a]=b[a]||c})(window.console=window.console||{});
 
 
 // place any jQuery/helper plugins in here, instead of separate, slower script files.
 
+/**
+* pubsub!
+* https://github.com/phiggins42/bloody-jquery-plugins/blob/master/pubsub.js
+**/
+(function(a){var b={};a.publish=function(c,e){b[c]&&a.each(b[c],function(){this.apply(a,e||[])})},a.subscribe=function(a,c){b[a]||(b[a]=[]),b[a].push(c);return[a,c]},a.unsubscribe=function(c){var e=c[0];b[e]&&a.each(b[e],function(a){this==c[1]&&b[e].splice(a,1)})}})(jQuery)
