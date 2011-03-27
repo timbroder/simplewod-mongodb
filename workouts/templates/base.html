@@ -34,7 +34,7 @@
 	<link rel="stylesheet" media="handheld" href="/static/css/handheld.css?v=2">  -->
 	
 	<!-- mine -->
-    <link rel="stylesheet" href="/static/css/base.css" />
+    <!--  <link rel="stylesheet" href="/static/css/base.css" /> -->
     <link rel="stylesheet" href="/static/css/dark-hive/jquery-ui.css"></link>
     {% block extracss %}{% endblock %}
 
@@ -44,25 +44,44 @@
 </head>
 <body>
 
-
-
 <body>
 	<div id="container">
 		<header>  
-	        <h1>Page title</h1>  
+	        <h1>simpleWOD</h1>  
 	    </header>  
 	    <nav>  
-	        <!-- Navigation -->  
+			<ul>  
+		        <li><a href="/">Home</a></li>  
+		        {% if user.is_authenticated %}
+		        	<li><a href="/{{ user.username }}/">Your Profile</a></li>  
+		        	<li><a href="/wods/add/">Add</a></li> 
+		        {% endif %} 
+		        <li><a href="/feeds/">Rss</a></li>  
+		        <li><a href="/contact/">Contact</a></li> 
+		        {% if user.is_authenticated %}
+		        	<li><a href="/settings/">Settings</a></li>  
+		        	<li><a href="/accounts/logout/">Logout</a></li> 
+		        {% else %}
+		        	<li><a href="/accounts/register/">Register</a></li>  
+		        	<li><a href="/accounts/login/">Login</a></li> 
+		        {% endif %}
+		    </ul>  
 	    </nav>  
-	    <section id="intro">  
-	        <!-- Introduction -->  
+	    <section id="intro"> 
+	    	<header>  
+        		<h2>{% usemacro title %}</h2>  
+    		</header>  
+	        {% block intro %}{% endblock %}  
 	    </section>  
-	    <section>  
-	        <!-- Main content area -->  
-	    </section>  
-	    <aside>  
-	        <!-- Sidebar -->  
-	    </aside>  
+		<div id="content">
+			<div id="main" role="main">
+				{% block content %}{% endblock %}
+			</div>
+		    <aside>  
+				{% block sidebar %}{% endblock %}
+		    </aside>
+		</div> 
+  
 	    <footer>  
 	        <!-- Footer -->  
 	    </footer>  
@@ -79,7 +98,7 @@
     <script type="text/javascript" src="/static/js/cufon-yui.js"></script>
     <script type="text/javascript" src="/static/js/Amsterdam_Graffiti_400.font.js"></script>
     <script type="text/javascript" src="/static/js/Octin_Spraypaint_Free_400.font.js"></script>
-    <script type="text/javascript" src="/static/js/modernizr.js"></script>
+    <!--  <script type="text/javascript" src="/static/js/modernizr.js"></script> -->
     <script type="text/javascript" src="/static/js/base.js"></script>
     {% block extrajs %}{% endblock %}
 

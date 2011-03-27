@@ -165,20 +165,113 @@ a:hover { color: #036; }
 /**
  * Primary styles
  *
- * Author: 
+ * Author: Tim Broder 
  */
 
+body {  
+    margin: 0 auto;  
+    width: 940px;  
+    font: 13px/22px Helvetica, Arial, sans-serif;  
+    background: #f0f0f0;  
+} 
 
+nav {  
+    position: absolute;  
+    left: 0;  
+    width: 100%;  
+    /* background: url("nav_background"); */  
+    //background-color: blue;
+}
 
+nav ul {  
+    margin: 0 auto;  
+    width: 940px;  
+    list-style: none;  
+}  
 
+nav ul li {  
+    float: left;  
+}  
+  
+    nav ul li a {  
+        display: block;  
+        margin-right: 20px;  
+        width: 140px;  
+        font-size: 14px;  
+        line-height: 44px;  
+        text-align: center;  
+        text-decoration: none;  
+        //color: #777;  
+    }  
+  
+        nav ul li a:hover {  
+            //color: #fff;  
+        }  
+  
+        nav ul li.selected a {  
+           //color: #fff;  
+        }  
+  
+        nav ul li.subscribe a {  
+            margin-left: 22px;  
+            padding-left: 33px;  
+            text-align: left;  
+           // background: url("rss.png") left center no-repeat; 
+           //background-color: orange; 
+        } 
 
+#intro {  
+    margin-top: 44px;  
+    padding: 11px;  
+    //background: #467612 url("intro_background.png") repeat-x; 
+    //background-color: red; 
+    //background-size: 100%;  
+    border-radius: 22px;  
+    
+    /* Background-size not implemented yet */  
+    -webkit-background-size: 100%;  
+    -o-background-size: 100%;  
+    -khtml-background-size: 100%;  
+  
+    /* Border-radius not implemented yet */  
+    -moz-border-radius: 11px;  
+    -webkit-border-radius: 11px; 
+}
 
+#content {  
+    display: table;  
+}  
+  
+    #main {  
+        display: table-cell;  
+        width: 670px;  
+        padding-right: 11px;  
+        //background-color: green;
+        padding: 11px;  
+        
+        border-radius: 11px;  
+    
+	    /* Background-size not implemented yet */  
+	    -webkit-background-size: 100%;  
+	    -o-background-size: 100%;  
+	    -khtml-background-size: 100%;  
+	  
+	    /* Border-radius not implemented yet */  
+	    -moz-border-radius: 11px;  
+	    -webkit-border-radius: 11px; 
+    }  
+  
+    aside {  
+        display: table-cell;  
+        width: 250px;  
+    }  
 
+/** end base layout **/
 
-
-
-
-
+#selectable .ui-selecting { background: #FECA40; }
+#selectable .ui-selected { background: #F39814; color: white; }
+#selectable { list-style-type: none; margin: 0; padding: 0; width: 200px; }
+#selectable li { margin: 3px; padding: 0.4em; height: 16px; }
 
 
 
