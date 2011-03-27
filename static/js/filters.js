@@ -1,6 +1,7 @@
 var CheckboxFilter = function(section) {
 	this.section = $(section);
 	this.exes = this.section.find('.ex');
+	this.all = this.section.find('.exall');
 	this.setup();
 };
 
@@ -26,6 +27,9 @@ CheckboxFilter.prototype = {
 				self.exes.not(box).each( function() {
 					$(this).attr('checked', false);
 				});
+			}
+			else {
+				self.all.attr('checked', false);
 			}
 		}
 		
