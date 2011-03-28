@@ -275,6 +275,9 @@ nav ul li {
 #selectable { list-style-type: none; margin: 0; padding: 0; width: 200px; }
 #selectable li { margin: 3px; padding: 0.4em; height: 16px; }
 
+.wod-snippet {
+	border: 1px;	
+}
 
 
 

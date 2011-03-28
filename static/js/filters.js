@@ -10,21 +10,27 @@ CheckboxFilter.prototype = {
 		var self = this;
 		console.log(self.section.find('.ex'));
 		self.exes.live('change', function() {
-			console.log($(this));
 			self.fixAll($(this));
+			self.getChecked();
 		});
 	},
 	
 	getChecked: function() {
-		
+		var self = this;
+		var exes = [];
+		console.log(this.section.find(".ex:checked"));
+		this.section.find(".ex:checked").each( function() {
+			exes.push($(this).data('id'));
+		});
+		console.log(exes);
+		$.publish('/filter/exes', [exes]);
 	},
 	
 	fixAll: function(box) {
 		var self = this;
 		if (box.is(':checked')) {
-			console.log('checked');
 			if(box.data('id') == 0 ){
-				self.exes.not(box).each( function() {
+				self.section.find(".ex:checked").not(box).each( function() {
 					$(this).attr('checked', false);
 				});
 			}
@@ -36,3 +42,11 @@ CheckboxFilter.prototype = {
 
 	}
 };
+
+$.subscribe('/filter/exes', function(results) {
+	console.log(results);
+});
+
+$(function() {
+	new CheckboxFilter('#exfilters');
+});
