@@ -1,3 +1,17 @@
+var inputs = {
+	exes: []
+};
+
+var WodList = function(section) {
+	this.section = $(section);
+};
+
+WodList.prototype = {
+	update: function() {
+		this.section.empty();
+	}
+};
+
 var CheckboxFilter = function(section) {
 	this.section = $(section);
 	this.exes = this.section.find('.ex');
@@ -23,7 +37,9 @@ CheckboxFilter.prototype = {
 			exes.push($(this).data('id'));
 		});
 		console.log(exes);
-		$.publish('/filter/exes', [exes]);
+		//$.publish('/filter/exes', [exes]);
+		inputs.exes = [exes];
+		$.publish('/filter/go', null);
 	},
 	
 	fixAll: function(box) {
@@ -38,15 +54,37 @@ CheckboxFilter.prototype = {
 				self.all.attr('checked', false);
 			}
 		}
-		
+	},
+	
+	disable: function() {
+		this.exes.attr("disabled", true);
 
+	},
+	
+	enable: function() {
+		this.exes.removeAttr("disabled");
 	}
 };
 
-$.subscribe('/filter/exes', function(results) {
-	console.log(results);
-});
+
 
 $(function() {
-	new CheckboxFilter('#exfilters');
+	var exChoice = new CheckboxFilter('#exfilters');
+	var main = new WodList('#main');
+
+	$.subscribe('/filter/go', function(results) {
+		$.publish('/ui/disable', null);
+		//ajaxness
+		main.update();
+		$.publish('/ui/enable', null);
+	});
+	
+	$.subscribe('/ui/disable', function(results) {
+		exChoice.disable();
+	});
+	
+	$.subscribe('/ui/enable', function(results) {
+		exChoice.enable();
+	});
+	
 });

@@ -354,4 +354,7 @@ def feeds(request):
     domain = 'http://%s/' % Site.objects.get_current().domain
 
     return r2r('feeds.html', locals())
+
+def wods_filter(request):
+  return None  
     

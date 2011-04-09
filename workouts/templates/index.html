@@ -4,30 +4,9 @@
 
 
 {% block content %}
-{% load extra_args %}
-<section id="workouts">
-	{% if show %}
-		<ul>
-			{% for r in results.object_list %}
-				<li>
-					<article class="wod-snippet">
-						<p>
-							<a href="{{ r.get_absolute_url }}">{% if home %}{{ r }}{% else %}{{ r.workout }}{% endif %}</a>
-							{% if home %}({{ r|args:user|call:"num_results" }}){% endif %}
-						</p>
-						<p>
-							{% if home %}{{ r.get.desc|linebreaks }}{% else %}{{ r.workout.get.desc|linebreaks }}{% endif %}
-						</p>
-					</article>
-				</li>
-			{% endfor %}
-		</ul>
-		
-		{% include '_paged.html' %}
-	{% else %}
-		<p>{{ username }}'s' results are private.</p>
-	{% endif %}
-</section>
+
+{% include 'index_wods.html' %}
+
 {% endblock %}
 
 {% block sidebar %}
