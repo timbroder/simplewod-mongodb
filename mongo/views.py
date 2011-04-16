@@ -18,12 +18,14 @@ from django.views.decorators.csrf import csrf_protect
 from pymongo import Connection
 from django.core import serializers
 from django.utils import simplejson
-
+from settings import DB
+from pymongo import json_util
 
 def wods(request):
     return r2r()
 
 @csrf_protect
+@login_required
 def add_wod(request):
     return r2r('add0.html')
 
@@ -93,3 +95,14 @@ def get_measures_json(request):
     ids = ids.split(',')
     scores = Score.objects.filter(id__in=ids)
     return r2r('get_measures.html', {'scores': scores})
+
+def wods_filter_json(request):
+    print 'hi2'
+    json = request.POST['json']
+    json = simplejson.loads(json)
+    print json['exes']
+
+    
+    return r2r('index_wods.html', locals(), context_instance=RequestContext(request))
+
+

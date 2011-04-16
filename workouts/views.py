@@ -355,6 +355,5 @@ def feeds(request):
 
     return r2r('feeds.html', locals())
 
-def wods_filter(request):
-  return None  
+ 
     

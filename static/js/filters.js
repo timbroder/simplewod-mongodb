@@ -1,14 +1,38 @@
+
+
 var inputs = {
-	exes: []
+	exes: Array(),
+	timing: new Date().getTime()
 };
 
 var WodList = function(section) {
 	this.section = $(section);
+	this.waitTime = 1000;
+	this.now = new Date().getTime();
 };
 
 WodList.prototype = {
 	update: function() {
-		this.section.empty();
+		if (this.canUpdate()) {
+			this.section.empty();
+			console.log(inputs.exes);
+			var req = $.ajax('/ajax/wods_list.json/', {
+	            data : { 'json' : JSON.stringify(inputs) },
+	            //dataType : 'json',
+	            type : 'POST'
+			});
+		}
+	},
+	
+	canUpdate: function() {
+		now = new Date().getTime();
+		if (now - this.now < this.waitTime) {
+			console.log('should not update');
+			return setTimeout(this.canUpdate, this.waitTime/4)
+		}
+
+		this.now = new Date().getTime();
+		return true;
 	}
 };
 
@@ -31,14 +55,15 @@ CheckboxFilter.prototype = {
 	
 	getChecked: function() {
 		var self = this;
-		var exes = [];
+		var exes = Array();
 		console.log(this.section.find(".ex:checked"));
 		this.section.find(".ex:checked").each( function() {
 			exes.push($(this).data('id'));
 		});
 		console.log(exes);
+		console.log("!");
 		//$.publish('/filter/exes', [exes]);
-		inputs.exes = [exes];
+		inputs.exes = exes;
 		$.publish('/filter/go', null);
 	},
 	
