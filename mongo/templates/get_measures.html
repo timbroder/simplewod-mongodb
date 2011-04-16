@@ -1,6 +1,6 @@
 {% for score in scores %}
 <div class="score">
 	{{ score.input_test }}: 
-		<input type="text" class="{{ score.clazz }}" />
+		<input type="text" class="{{ score.clazz }} validate[required]" />
 </div>
 {% endfor %} 

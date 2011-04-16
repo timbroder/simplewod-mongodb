@@ -21,19 +21,24 @@ from django.utils import simplejson
 from settings import DB
 from pymongo import json_util
 
+debug = getattr(settings, 'DEBUG', None)
+
 def wods(request):
     return r2r()
 
 @csrf_protect
 @login_required
 def add_wod(request):
-    return r2r('add0.html')
+    user = request.user
+    return r2r('add0.html', locals())
 
 def add1(request):
+    user = request.user
     scores = Score.objects.all()
     return r2r('add1.html', locals())
 
 def add2(request):
+    user = request.user
     print "add2"
     w = MongoWorkout()
     #w.wods.remove()
@@ -105,4 +110,21 @@ def wods_filter_json(request):
     
     return r2r('index_wods.html', locals(), context_instance=RequestContext(request))
 
-
+def result_add_ajax(request):
+    if debug:
+        print '- ajax add form'
+        
+    if request.is_ajax():
+        m = MongoResult()
+        #w.wods.remove()
+        print 'm'
+        post = request.POST['json']
+        print post
+        #post =  request.raw_post_data
+        #print post
+        #validate the json!!!!
+        print request.raw_post_data
+        m.json = post
+        m.user_id = request.user.id
+        m.insert()
+        return r2r('resultform.html', locals(), context_instance=RequestContext(request))

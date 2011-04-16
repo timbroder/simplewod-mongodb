@@ -3,7 +3,7 @@
 {% block extracss %}
 <link rel="stylesheet" href="/static/css/jquery.autocomplete.css" />
 <link rel="stylesheet" href="/static/css/validationEngine.jquery.css" />
-
+	{% include "_hideaside.html" %}
 {% endblock %}
 
 {% block extrajs %}
@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="/static/js/jquery.validationEngine-en.js"></script>
 	<script type="text/javascript" src="/static/js/jquery.validationEngine.js"></script>
 	<script type="text/javascript" src="/static/js/jquery.multiselect.js"></script>
+	<script type="text/javascript" src="/static/js/add.js"></script>
 	<script type="text/javascript" src="/static/js/add_result.js"></script>
 
 	<script>
@@ -42,11 +43,11 @@
 	
 {% endblock %}
 
-{% block title%}{% if header %}{{ header }}{% else %}WOD: {{ mwod.name }}{% endif %}{% endblock %}
+{% block title%}{% if header %}{{ header }}{% else %}Workout: {{ mwod.name }}{% endif %}{% endblock %}
 
 {% block content %}
 
-<article id="{{ wod.mongo_id }}">
+<article id="{{ wod.mongo_id }}" data-wod_name="{{ mwod.name }}">
 	{{ mwod.desc|linebreaks }}
 	{% if wod.json %}
 		{#{ wod.json }#}

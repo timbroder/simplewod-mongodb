@@ -24,7 +24,7 @@ AddSubmit.prototype = {
 				console.log('STOP SUBMITTING!!!');
 				//e.preventDefault();
 				//ENABLE!!!!!!!
-				if ($("#add_w_form").validationEngine('validate')) {
+				if (self.validateInlineEdit() && $("#add_w_form").validationEngine('validate')) {
 					console.log(self.form.find('#jsoninput').length);
 					if (self.form.find('#jsoninput').length > 0) {
 						console.log('actually submit?');
@@ -39,6 +39,16 @@ AddSubmit.prototype = {
 			});
 		},
 		
+		validateInlineEdit: function() {
+			console.log('editabletitle');
+			console.log($('.editable input'));
+			if ($('.editable input').length > 0) {
+				alert('please save the edited title');
+				return false;
+			}
+			
+			return true;
+		},	
 		submit2: function(){
 			console.log("SUBMIT");
 			var self = this;

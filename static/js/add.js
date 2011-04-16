@@ -552,8 +552,11 @@ Mongo.prototype = {
 
 		validate: function() {
 			return $("#add_w_form").validationEngine('validate');
+					//&& this.validateInlineEdit();
 //			return true;
 		},
+		
+
 
 		areEmptyExs: function() {
 			//check empty name, ---- in any selects, and values and shit
@@ -759,21 +762,23 @@ var Bind = function() {
 
 
 
-
+console.log("!");
 
 $(function(){
-console.log('extraextra');
-new ResultToggle('#toggle_result');
-new TagSync('#id_wod_tags', '#tags_from_wod');
-//new AddResultForm('.add_result', '#result_form');
-//new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
-var score = new MultiSelect('#selectable');
-new Mongo('#canvas');
-
-
-$("#id_date").live('focus', function(){
-	$(this).datepicker();
+	console.log('extraextra');
+	new ResultToggle('#toggle_result');
+	new TagSync('#id_wod_tags', '#tags_from_wod');
+	//new AddResultForm('.add_result', '#result_form');
+	//new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
+	var score = new MultiSelect('#selectable');
+	new Mongo('#canvas');
+	
+	
+	$("#id_date").live('focus', function(){
+		$(this).datepicker();
+	});
+	
+	$("#add_w_form").validationEngine();
 });
 
-$("#add_w_form").validationEngine();
-});
+console.log("2");

@@ -47,6 +47,7 @@ AddMongoResult.prototype = {
 		});
 		
 		$('#addresult').live('click', function(e){
+			console.log('click?');
 			e.preventDefault();
 			self.submit();
 		});
@@ -229,23 +230,37 @@ AddMongoResult.prototype = {
 	
 	submit: function() {
 		if ($("#resultform").validationEngine('validate')) {
-			var parent = this.hook.parent();
-			var title = parent.find('.wod-title').html();
-			var d = parent.find('form #id_date').val();
-			var sets = this.hook.find('.sets');
-			var myObject = {
-		    	name: title,
-		    	wod: parent.attr('id'),
-		    	date: d,
-		    	sets: this.getSetsJson(sets)
-			};
+			var parent = this.hook.parent(),
+				title = $('article').data('wod_name'),
+				d = parent.find('form #id_date').val(),
+				sets = this.hook.find('.sets'),
+				myObject = {
+					name: title,
+					wod: parent.attr('id'),
+					date: d,
+					sets: this.getSetsJson(sets)
+				},
 			
-			var json = JSON.stringify(myObject);
+				json = JSON.stringify(myObject);
+			
 			try {
 				jQuery.parseJSON(json);
+				console.log(json);
 				//self.post(json);
+
+				var req = $.ajax('/ajax/result_add/', {
+		            data : { json : json },
+		            dataType : 'json',
+		            type : 'POST'
+		        });
+				
+				req.success(function(resp) {
+					console.log('saved?');
+				});
+
 			
 			} catch(e) {
+				console.log(e);
 				alert('there was an error submitting');
 			} 
 		}
@@ -296,13 +311,18 @@ AddMongoResult.prototype = {
 	
 	getExLineJson: function(line) {
 		var ex = {
-			'name': line.data('ex'),
-			'type': line.data('type'),
-			'type_id': line.data('type_id'),
-			'amount': line.find('.amount-val').val(),
-			'measure': line.data('measure') //,
-			//'measure_id': line.metadata().type_id
-		};
+				'name': line.data('ex'),
+				'type': line.data('type'),
+				'type_id': line.data('type_id'),
+				'amount': line.find('.amount-val').val(),
+				'measure': line.data('measure') //,
+				//'measure_id': line.metadata().type_id
+			},
+			reps = line.find('input.num-reps');
+		
+		if(reps.length > 0) {
+			ex.reps = reps.val();
+		}
 		
 		return ex;
 	},
@@ -312,7 +332,3 @@ AddMongoResult.prototype = {
 		return id;
 	}
 };
-
-//$(function(){
-//	new AddResultForm('.add_result', '#result_form');
-//});

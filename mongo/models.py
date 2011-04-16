@@ -54,9 +54,12 @@ class Exercise(models.Model):
         ordering = ['name']
 
 class MongoConnection(object):
+
+    
     def __init__(self, *args, **kwargs):
         print 'init mongoconn'
         self.wods = DB.wods
+        self.results = DB.results
         
         
         return super(MongoConnection,self).__init__(*args, **kwargs)  
@@ -64,7 +67,6 @@ class MongoConnection(object):
 class MongoWorkout(MongoConnection, Workout):
     json = models.TextField()
     mongo_id = models.CharField(max_length=32)
-    
     def insert(self, json=None):
         if not json:
             json = self.json
@@ -87,6 +89,28 @@ class MongoWorkout(MongoConnection, Workout):
     
     def get(self):
         return self.wods.find_one({"_id": ObjectId(self.mongo_id)})
+
+class MongoResult(MongoConnection, Workout):
+    json = models.TextField()
+    mongo_id = models.CharField(max_length=32)
+    
+    def insert(self, json=None):
+        if not json:
+            json = self.json
+        if not self.json:
+            raise Exception
+        json = simplejson.loads(json)
+        print json
+        self.save()
+        #self.wods.remove()
+        
+        load = jlib.loads(self.json)
+        load['django_id'] = self.id
+        load['user_id'] = self.user_id
+        load['slug'] = self.slug
+
+        self.mongo_id = self.results.insert(load)
+        self.save()
 
 class ScoreExample(models.Model):
     name = models.CharField(max_length=64)
