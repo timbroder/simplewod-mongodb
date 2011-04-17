@@ -54,8 +54,8 @@ class Workout(SluggableModel, Taggable):
         
 class Result(Taggable):
     workout = models.ForeignKey(Workout)
-    date = models.DateField()
-    dateslug = models.CharField(max_length=16, blank=True, null=True)
+    date = models.DateTimeField()
+    dateslug = models.CharField(max_length=64, blank=True, null=True)
     result = models.TextField(blank=True, null=True)
     time = models.CharField(max_length=16, blank=True, null=True)
     weight = models.FloatField(max_length=16, blank=True, null=True)
@@ -106,9 +106,13 @@ class UserProfile(models.Model):
         domain = Site.objects.get_current().domain
 
         if self.private_wods:
-            return 'http://%s/%s/feed/%s/' % (domain, self.user.username, self.private_key)
+            return 'http://%s/users/%s/feed/%s/' % (domain, self.user.username, self.private_key)
         else:
-            return 'http://%s/%s/feed/' % (domain, self.user.username)
+            return 'http://%s/users/%s/feed/' % (domain, self.user.username)
+    
+    def get_absolute_url(self):
+        domain = Site.objects.get_current().domain
+        return "http://%s/users/%s" % (domain, self.user.username)
 
 
 def create_user_profile(sender, instance, created, **kwargs):  

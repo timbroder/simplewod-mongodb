@@ -249,7 +249,7 @@ AddMongoResult.prototype = {
 				//self.post(json);
 
 				var req = $.ajax('/ajax/result_add/', {
-		            data : { json : json },
+		            data : { json : json , id: $('article').attr('id') },
 		            dataType : 'json',
 		            type : 'POST'
 		        });

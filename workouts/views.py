@@ -171,15 +171,18 @@ def wod_single(request, wodslug):
         print '- wods single'
     user = request.user
     wod = MongoWorkout.objects.get(slug = wodslug)
+    print wod
+    
     mwod = wod.get()
-    results = Result.private_objects.filter(workout = wod).order_by('-date')
+    print mwod
+    
+    results = MongoResult.private_objects.filter(workout = wod).order_by('-updated_at')
     print results
-    print "!"
+    
     if user.is_authenticated() and user.get_profile().private_wods:
-        r2 = Result.objects.filter(workout = wod, user=user).order_by('-date')
+        r2 = Result.objects.filter(workout = wod, user=user).order_by('-updated_at')
         results = results | r2
     
-    print results
     return r2r('singlewod.html', locals())
 
 #@cache_page(60 * 60 * 2)

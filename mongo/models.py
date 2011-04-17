@@ -6,6 +6,7 @@ from pymongo import json_util
 import json as jlib
 from settings import DB
 from pymongo.objectid import ObjectId
+from datetime import datetime
 
 # Create your models here.
 class Measure(models.Model):
@@ -90,7 +91,7 @@ class MongoWorkout(MongoConnection, Workout):
     def get(self):
         return self.wods.find_one({"_id": ObjectId(self.mongo_id)})
 
-class MongoResult(MongoConnection, Workout):
+class MongoResult(MongoConnection, Result):
     json = models.TextField()
     mongo_id = models.CharField(max_length=32, unique=True)
     
@@ -101,15 +102,22 @@ class MongoResult(MongoConnection, Workout):
             raise Exception
         json = simplejson.loads(json)
         print json
+        self.workout = MongoWorkout.objects.get(mongo_id=json['wod'])
+        
+        #04/12/2011 12:00 am
+        date_object = datetime.strptime(json['date'], '%m/%d/%Y %I:%M %p')
+        
+        self.date = date_object
         self.save()
         #self.wods.remove()
         
-        load = jlib.loads(self.json)
-        load['django_id'] = self.id
-        load['user_id'] = self.user_id
-        load['slug'] = self.slug
+        #load = jlib.loads(json)
+        json['wod'] = ObjectId(json['wod'])
+        json['django_id'] = self.id
+        json['user_id'] = self.user_id
+        json['dateslug'] = self.dateslug
 
-        self.mongo_id = self.results.insert(load)
+        self.mongo_id = self.results.insert(json)
         self.save()
 
 class ScoreExample(models.Model):
