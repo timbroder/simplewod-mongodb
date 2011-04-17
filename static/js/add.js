@@ -512,7 +512,9 @@ Mongo.prototype = {
 		},
 		
 		getRepsBox: function() {
-			return $('<span class="add-reps">Reps: <input type="text/></span>');
+			console.log('getting reps box');
+			console.log($('<span class="add-reps">Reps: <input type="text/></span>'));
+			return $('<span class="add-reps">Reps: <input type="text"/></span>');
 		},
 
 		getExBox2: function(hook, addControls) {
