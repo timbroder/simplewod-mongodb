@@ -60,7 +60,8 @@ def add2(request):
     #json = serializers.deserialize("json", json)
     #print json
     #w.wods.insert(json)
-    return HttpResponse("Submitted", mimetype='text/plain')
+    #return HttpResponse("Submitted", mimetype='text/plain')
+    return r2r('add2.html', {'title': w.title, 'url': w.get_absolute_url() })
     
 
 def list_exercises(request):

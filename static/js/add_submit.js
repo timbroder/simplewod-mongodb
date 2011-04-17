@@ -99,10 +99,15 @@ AddSubmit.prototype = {
 				success: function(data) {
 					//self.addSelectInputIds(data);
 					console.log('back?');
+					console.log(data);
 					$('#header').find('h2').html('Workout Added');
-					$('#canvas').html('put workout desc here or something');
+					var h = '<p>Added: ' + data.title + ' <br>Click <a href="' + data.url + '">here</a> to add a result to it</p>';
+					console.log(h);
+					$('#canvas').html(h);
+					setTimeout("window.location='" + data.url + "'",5000);
 				},
-				data: { 'data': json }
+				data: { 'data': json },
+				dataType: 'json'
 			});
 		},
 		

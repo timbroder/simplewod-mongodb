@@ -54,7 +54,6 @@ class Exercise(models.Model):
         ordering = ['name']
 
 class MongoConnection(object):
-
     
     def __init__(self, *args, **kwargs):
         print 'init mongoconn'
@@ -66,7 +65,8 @@ class MongoConnection(object):
         
 class MongoWorkout(MongoConnection, Workout):
     json = models.TextField()
-    mongo_id = models.CharField(max_length=32)
+    mongo_id = models.CharField(max_length=32, unique=True)
+    
     def insert(self, json=None):
         if not json:
             json = self.json
@@ -92,7 +92,7 @@ class MongoWorkout(MongoConnection, Workout):
 
 class MongoResult(MongoConnection, Workout):
     json = models.TextField()
-    mongo_id = models.CharField(max_length=32)
+    mongo_id = models.CharField(max_length=32, unique=True)
     
     def insert(self, json=None):
         if not json:
