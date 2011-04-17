@@ -15,6 +15,9 @@ from django.views.decorators.cache import cache_page
 from django.contrib.sites.models import Site
 from mongo.models import *
 from mongo.views import *
+from settings import DB
+from pymongo.objectid import ObjectId
+from django.utils.encoding import smart_unicode
 
 debug = getattr(settings, 'DEBUG', None)
 
@@ -174,16 +177,36 @@ def wod_single(request, wodslug):
     print wod
     
     mwod = wod.get()
-    print mwod
+    print mwod['_id']
     
+    print 'res'
     results = MongoResult.private_objects.filter(workout = wod).order_by('-updated_at')
+    #results = DB.results.find(wod=ObjectId(mwod['_id']))
     print results
     
     if user.is_authenticated() and user.get_profile().private_wods:
-        r2 = Result.objects.filter(workout = wod, user=user).order_by('-updated_at')
-        results = results | r2
+        r2 = MongoResult.objects.filter(workout = wod, user=user).order_by('-updated_at')
+        #results = results | r2
     
-    return r2r('singlewod.html', locals())
+    results = map(ObjectId, results.values_list('mongo_id', flat=True))
+    print results
+    #for r in results:
+    #    r = ObjectId(r)
+    #({j:{$in: [2,4,6]}});
+    results = DB.results.find({"_id": { "$in": results }})
+    
+    print results
+    #<pymongo.cursor.Cursor object at 0x102a2fe50>
+    rr = []
+    for r in results:
+        print r['user_id']
+        rr.append(r)
+    #rr = [(r['user_id'],) for r in results.collection]
+    print rr
+    #prints expected user id
+    
+    
+    return r2r('singlewod.html', {'results': rr, 'mwod': mwod})
 
 #@cache_page(60 * 60 * 2)
 def result_single(request, wodslug, username):

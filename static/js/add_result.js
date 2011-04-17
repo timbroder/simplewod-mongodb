@@ -100,18 +100,19 @@ AddMongoResult.prototype = {
 		html += self.getSubmit();
 		form.append(html);
 		
-		totalweight = $('input.totalweight');
-		totalreps = $('input.totalreps');
+		self.totalweight = $('input.totalweight');
+		self.totalreps = $('input.totalreps');
+		self.totaltime = $('.totaltime');
 		
-		if (totalweight.length > 0) {
-			new LiveUpdate($('.ex-line[data-type="Weight"] input.amount-val'), totalweight);
+		if (self.totalweight.length > 0) {
+			new LiveUpdate($('.ex-line[data-type="Weight"] input.amount-val'), self.totalweight);
 		}
 		
-		if (totalreps.length > 0) {
-			new LiveUpdate($('input.num-reps'), totalreps);
+		if (self.totalreps.length > 0) {
+			new LiveUpdate($('input.num-reps'), self.totalreps);
 		}
 		
-		$('.totaltime').timepicker({
+		self.totaltime.timepicker({
 			showSecond: true,
 			timeFormat: 'hh:mm:ss'
 		});
@@ -238,7 +239,8 @@ AddMongoResult.prototype = {
 					name: title,
 					wod: parent.attr('id'),
 					date: d,
-					sets: this.getSetsJson(sets)
+					sets: this.getSetsJson(sets),
+					scores: this.getScoresJson()
 				},
 			
 				json = JSON.stringify(myObject);
@@ -256,6 +258,7 @@ AddMongoResult.prototype = {
 				
 				req.success(function(resp) {
 					console.log('saved?');
+					history.go(0);	
 				});
 
 			
@@ -330,5 +333,28 @@ AddMongoResult.prototype = {
 	getInputId: function() {
 		var id = ' id="id_' + this.idCounter++ + '"';
 		return id;
+	},
+	
+	getScoresJson: function() {
+		/*self.totalweight = $('input.totalweight');
+		self.totalreps = $('input.totalreps');
+		self.totaltime = $('.totaltime');*/
+		console.log('scores');
+		var self = this,
+			measure = {};
+		
+		if (self.totalweight.length > 0) {
+			measure['totalweight'] = self.totalweight.val();
+		}
+		
+		if (self.totalreps.length > 0) {
+			measure['totalreps'] = self.totalreps.val();
+		}
+		
+		if (self.totaltime.length > 0) {
+			measure['totaltime'] = self.totaltime.val();
+		}
+		console.log(measure);
+		return measure;
 	}
 };

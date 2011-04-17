@@ -1,24 +1,13 @@
-<div class="result">
+<article class="result">
 	<div class="result_date">
 		<b>{{ wod.date }}</b>
 	</div>
 	<div class="result_body">
-		{{ wod.result|linebreaks }}
-		
-		{% if wod.time %}
-			<p>Time: {{ wod.time }}</p>		
-		{% endif %}
-		
-		{% if wod.weight %}
-			<p>Weight: {{ wod.weight }}</p>		
-		{% endif %}
-		
-		{% if wod.notes %}
-			<p>Notes</p>
-			{{ wod.notes|linebreaks }}		
-		{% endif %}
+		{% for key, value in wod.scores %}
+			{{ key }}: {{ value }}
+		{% endfor %}
 	</div>
 	<div class="result_who">
-		Logged by: <a href="/{{ wod.user.username }}/">{{ wod.user.username }}</a>
+		Logged by: <a href="/{{ wod.user.get_absolute_url }}/">{{ wod.user.username }}</a>
 	</div>
-</div>
+</article>

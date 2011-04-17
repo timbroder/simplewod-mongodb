@@ -7,6 +7,7 @@ import json as jlib
 from settings import DB
 from pymongo.objectid import ObjectId
 from datetime import datetime
+from workouts.managers import *
 
 # Create your models here.
 class Measure(models.Model):
@@ -94,7 +95,8 @@ class MongoWorkout(MongoConnection, Workout):
 class MongoResult(MongoConnection, Result):
     json = models.TextField()
     mongo_id = models.CharField(max_length=32, unique=True)
-    
+    objects = models.Manager()
+    private_objects = WodManager()
     def insert(self, json=None):
         if not json:
             json = self.json
@@ -115,7 +117,8 @@ class MongoResult(MongoConnection, Result):
         json['wod'] = ObjectId(json['wod'])
         json['django_id'] = self.id
         json['user_id'] = self.user_id
-        json['dateslug'] = self.dateslug
+        #json['dateslug'] = self.dateslug
+        json['url'] = self.get_absolute_url() 
 
         self.mongo_id = self.results.insert(json)
         self.save()
