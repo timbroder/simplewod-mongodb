@@ -26,22 +26,6 @@
 	
 {% endblock %}
 
-{#% block extrajs %#}, "forms", "add", "jquery.autocomplete", "add_result", "jquery.metadata", "jquery.validationEngine-en", "jquery.validationEngine"{#% endblock %#}
-{% block extraextrajs %}
-	window.log('extraextra');
-	new ResultToggle('#toggle_result');
-	new TagSync('#id_wod_tags', '#tags_from_wod');
-	
-	//new ResultFormSubmit('#ajaxaddform', '#ajaxaddform #submit', '#result_form');
-	//new Mongo('#canvas');
-
-	/*$("#id_date").live('focus', function(){
-		$(this).datepicker();
-	});*/
-	
-	//$("#add_w_form").validationEngine();
-	
-{% endblock %}
 
 {% block title%}{% if header %}{{ header }}{% else %}Workout: {{ mwod.name }}{% endif %}{% endblock %}
 
@@ -60,7 +44,6 @@
 
 {% for wod in results %}
 	{% if forloop.first %}
-		
 		<h3>Results</h3>
 	{% endif %}
 	
