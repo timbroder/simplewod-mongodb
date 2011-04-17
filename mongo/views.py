@@ -128,4 +128,4 @@ def result_add_ajax(request):
         m.json = post
         m.user_id = request.user.id
         m.insert()
-        return r2r('resultform.html', locals(), context_instance=RequestContext(request))
+        return r2r('addresult.json', {}, context_instance=RequestContext(request))
