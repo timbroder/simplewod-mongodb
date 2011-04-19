@@ -30,18 +30,19 @@
 {% block title%}{% if header %}{{ header }}{% else %}Workout: {{ mwod.name }}{% endif %}{% endblock %}
 
 {% block content %}
-
-<article id="{{ wod.mongo_id }}" data-wod_name="{{ mwod.name }}">
-	{{ mwod.desc|linebreaks }}
-	{% if wod.json %}
-		{#{ wod.json }#}
-	{% endif %}
-	{% if request.user.is_authenticated %}
-		<p>Add Result <a href="#" class="add_result" id="{{ wod.id }}">+++</a></p>
-		<div id="result_form"></div>
-	{% endif %}
-</article>
-
+<section>
+	<article id="{{ wod.mongo_id }}" data-wod_name="{{ mwod.name }}">
+		{{ mwod.desc|linebreaks }}
+		{% if wod.json %}
+			{#{ wod.json }#}
+		{% endif %}
+		{% if request.user.is_authenticated %}
+			<p>Add Result <a href="#" class="add_result" id="{{ wod.id }}">+++</a></p>
+			<div id="result_form"></div>
+		{% endif %}
+	</article>
+</section>
+<section>
 {% for wod in results %}
 	{% if forloop.first %}
 		<h3>Results</h3>
@@ -50,6 +51,6 @@
 	{% include '_result.html' %}		
 		
 {% endfor %}
-
+</section>
 
 {% endblock %}

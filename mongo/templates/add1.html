@@ -27,19 +27,18 @@
 			<p>Description (this box is only temporary, it will be going away, the wod will generate its own desc)</p>
 			<textarea rows="15" cols="40"></textarea>
 		</div>
-		<div id="wod_measure">
-			<p>Please choose the ways this workout is scored</p>
-			<ol id="selectable">
-				{% for score in scores %}
-					<li class="ui-widget-content" data-id="{{ score.id }}">{{ score.name }}</li>
-				{% endfor %}
-			</ol>
-		</div>
 		<div id="sets_container"></div>
 		<div id="next1"><input type="submit" id="add_workout_form_submit" /></div>
 	</div>
 </form>
-
+<div id="wod_measure">
+	<p>Please choose the ways this set is scored</p>
+	<ul id="selectable">
+		{% for score in scores %}
+			<li class="ui-widget-content" data-id="{{ score.id }}">{{ score.name }}</li>
+		{% endfor %}
+	</ul>
+</div>
 <script>
 	new Bind();
 </script>

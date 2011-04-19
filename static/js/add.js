@@ -9,6 +9,7 @@ ResultToggle.prototype = {
 			var self = this;
 			this.trigger.bind('click', function(){
 				self.click();
+				return false;
 			});
 		},
 		click : function(){
@@ -54,6 +55,7 @@ TagSync.prototype = {
 		});*/
 			$('body').bind('autocompleteClick', function(e) {
 				self.update(self.from.val() );
+				return false;
 			});
 
 		},
@@ -73,6 +75,7 @@ AddResultForm.prototype = {
 			var self = this;
 			this.trigger.bind('click', function(){
 				self.click();
+				return false;
 			});
 		},
 		click: function() {
@@ -106,6 +109,7 @@ AddResultForm.prototype = {
 			this.hook.html(data);
 			this.hook.find('#cancel').bind('click', function(){
 				self.click();
+				return false;
 			});
 		}
 };
@@ -181,6 +185,7 @@ Mongo.prototype = {
 			var self = this;
 			$('#create_new').live('click', function(){
 				self.setChoice();
+				return false;
 			});
 
 			$('.type-data select').live('change', function() {
@@ -199,58 +204,70 @@ Mongo.prototype = {
 					self.getExBox2($(this).parent().parent(), addControls);
 					
 				//}
+					
+					return false;
 			});
 
 			$('.add-ex').live('click', function() {
 				self.addEx(this);
 				self.cache.update('wod');
+				return false;
 			});
 			
 			$('.add-rest').live('click', function() {
 				self.addEx(this, true);
 				self.cache.update('wod');
+				return false;
 			});
 
 			$('.remove-line').live('click', function(){
 				self.removeEx($(this));
 				self.cache.update('wod');
+				return false;
 			});
 
 			$('.add-round-control').live('click', function() {
 				self.addRound($(this));
 				self.cache.update('wod');
+				return false;
 			});
 
 			$('.remove-round-control').live('click', function() {
 				self.removeRound($(this));
 				self.cache.update('wod');
+				return false;
 			});
 
 			$('.add-all-rounds-control').live('click', function() {
 				self.addAllRounds($(this));
 				self.cache.update('wod');
+				return false
 			});
 
 			$('.ex-name').live('click', function() {
 				self.boxClick($(this));
 				self.cache.update('wod');
+				return false;
 			});
 
 			$('.add-set-control').live('click', function() {
 				self.addAnotherSet($(this));
 				self.cache.update('wod');
+				return false;
 			});
 			
 			$('input:not(#add_workout_form_submit)').live('blur', function() {
 				if (!$(this).parent().hasClass('editable')) {
 					self.blurInput($(this));
 					self.cache.update('wod');
+					return false;
 				}
 			});
 			
 			$('option').live('click', function() {
 				self.blurSelect($(this));
 				self.cache.update('wod');
+				return false;
 			});
 
 			this.help = {
@@ -404,9 +421,15 @@ Mongo.prototype = {
 			set.append(self.getRoundControl());
 			self.sc.append(set);
 			self.sc.append(setControl);
+			self.sc.append(self.getSetScore());
+			self.sc.append(setControl);
+			
 
 
-
+		},
+		
+		getSetScore: function() {
+			return $('#wod_measure').clone().attr('id', '');
 		},
 
 		addAnotherSet: function(trigger) {
@@ -422,7 +445,7 @@ Mongo.prototype = {
 			round.append(self.getExBox());
 			set.append(round);
 			set.append(self.getRoundControl());
-
+			self.sc.append(self.getSetScore());
 			currSet.after(setControl);
 			currSet.after(set);
 
@@ -778,6 +801,7 @@ $(function(){
 	
 	$("#id_date").live('focus', function(){
 		$(this).datepicker();
+		return false;
 	});
 	
 	$("#add_w_form").validationEngine();

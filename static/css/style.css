@@ -272,13 +272,16 @@ nav ul li {
 
 #selectable .ui-selecting { background: #FECA40; }
 #selectable .ui-selected { background: #F39814; color: white; }
-#selectable { list-style-type: none; margin: 0; padding: 0; width: 200px; }
-#selectable li { margin: 3px; padding: 0.4em; height: 16px; }
+#selectable { list-style-type: none; margin: 0; padding: 0; overflow: auto; }
+#selectable li { margin: 3px; padding: 0.4em; height: 16px; float: left; width: 100px;  }
 
 .wod-snippet {
 	border: 1px;	
 }
 
+#wod_measure {
+	display: none;
+}
 
 
 /**
