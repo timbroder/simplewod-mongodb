@@ -64,6 +64,7 @@ class MongoConnection(object):
         
         
         return super(MongoConnection,self).__init__(*args, **kwargs)  
+    
         
 class MongoWorkout(MongoConnection, Workout):
     json = models.TextField()
@@ -91,6 +92,12 @@ class MongoWorkout(MongoConnection, Workout):
     
     def get(self):
         return self.wods.find_one({"_id": ObjectId(self.mongo_id)})
+    
+    def delete(self, *args, **kwargs):
+        if self.mongo_id is not None:
+            self.wods.remove({"_id": ObjectId(self.mongo_id)})
+        
+        return super(MongoWorkout, self).delete(*args, **kwargs)
 
 class MongoResult(MongoConnection, Result):
     json = models.TextField()
@@ -122,6 +129,12 @@ class MongoResult(MongoConnection, Result):
 
         self.mongo_id = self.results.insert(json)
         self.save()
+
+    def delete(self, *args, **kwargs):
+        if self.mongo_id is not None:
+            self.results.remove({"_id": ObjectId(self.mongo_id)})
+        
+        return super(MongoResult, self).delete(*args, **kwargs)
 
 class ScoreExample(models.Model):
     name = models.CharField(max_length=64)

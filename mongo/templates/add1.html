@@ -31,11 +31,11 @@
 		<div id="next1"><input type="submit" id="add_workout_form_submit" /></div>
 	</div>
 </form>
-<div id="wod_measure">
+<div id="wod_score" class="set_score">
 	<p>Please choose the ways this set is scored</p>
 	<ul id="selectable">
 		{% for score in scores %}
-			<li class="ui-widget-content" data-id="{{ score.id }}">{{ score.name }}</li>
+			<li class="ui-widget-content set-score" data-id="{{ score.id }}" data-clazz="{{ score.clazz }}">{{ score.name }}</li>
 		{% endfor %}
 	</ul>
 </div>

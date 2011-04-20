@@ -429,7 +429,7 @@ Mongo.prototype = {
 		},
 		
 		getSetScore: function() {
-			return $('#wod_measure').clone().attr('id', '');
+			return $('#wod_score').clone().attr('id', '');
 		},
 
 		addAnotherSet: function(trigger) {

@@ -56,7 +56,7 @@ AddSubmit.prototype = {
 			    //workout: {
 			    	name: $('#wod_title').html(),
 			    	desc: $('#wod_desc textarea').val(),
-			    	measures: self.getMeasures(),
+			    	//measures: self.getMeasures(),
 			    	sets: self.getSets(self.sets)
 			    //}  
 			};
@@ -65,6 +65,7 @@ AddSubmit.prototype = {
 			console.log(json);
 			try {
 				console.log('in try');
+				console.log('json');
 				jQuery.parseJSON(json);
 				self.post(json);
 			
@@ -111,12 +112,17 @@ AddSubmit.prototype = {
 			});
 		},
 		
-		getMeasures: function() {
+		getScores: function(set) {
 			var mArray = [];
-			$('#wod_measure').find('.ui-selected').each(function() {
+			
+			console.log('getting scores');
+			console.log(set);
+			
+			set.find('.ui-selected').each(function() {
 				var m = $(this);
 				mArray.push({
-					id: m.metadata().id,
+					id: m.data('id'),
+					clazz: m.data('clazz'),
 					m: m.html()
 				});
 			});
@@ -138,14 +144,16 @@ AddSubmit.prototype = {
 		},
 		
 		getRounds: function(rounds) {
-			var self = this;
-			var roundsArray = [];
+			var self = this,
+				roundsArray = [];
+			
 			rounds.find('div.round').each( function() {
 				roundsArray.push(self.getRound($(this)));
 			});
-			
+			console.log(rounds);
 			var roundsObj = {
 				'name': rounds.find('span.setname').html(),
+				'scores': self.getScores(rounds.parent().find('.set_score')),
 				'rds': roundsArray	
 			};
 			
