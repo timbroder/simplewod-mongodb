@@ -3,8 +3,13 @@
 </section>
 
 <section id="exfilters">
-<p><input id="ex_0" type="checkbox" value="wods" data-id=0 class="ex exall" checked /><label for="ex_{{ ex.id }}"> All Exercises</label></p>
-{% for ex in exes %}
+<!--  {%# <p><input id="ex_0" type="checkbox" value="wods" data-id=0 class="ex exall" checked /><label for="ex_{{ ex.id }}"> All Exercises</label></p>
+{#% for ex in exes %#}
 	<p><input id="ex_{{ ex.id }}" type="checkbox" value="wods" data-id={{ ex.id }} class="ex" ><label for="ex_{{ ex.id }}"> {{ ex.name }}</label></input></p>
-{% endfor %}
+{#% endfor %#}
+%#}-->
 </section>
+
+<script type="text/template" id="ex-template">
+<p><%= fields.name %></p>
+</script>

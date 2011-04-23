@@ -2,13 +2,24 @@
 
 {% block title%}{{ title }}{% endblock %}
 
+{% block extrajs %}
+<script type="text/javascript" src="/static/js/underscore.js"></script>
+<script type="text/javascript" src="/static/js/backbone.js"></script>
+<script type="text/javascript" src="/static/js/filters.js"></script>
+<script>
+	Exes.refresh({{ exes|safe }});
+</script>
+{% endblock %}
 
 {% block content %}
 
 {% include 'index_wods.html' %}
 
+
+
 {% endblock %}
 
 {% block sidebar %}
-	{% include '_exes.html' %}
+{% include '_exes.html' %}
+
 {% endblock %}

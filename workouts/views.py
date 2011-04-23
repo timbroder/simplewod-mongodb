@@ -18,6 +18,7 @@ from mongo.views import *
 from settings import DB
 from pymongo.objectid import ObjectId
 from django.utils.encoding import smart_unicode
+from django.core import serializers
 
 debug = getattr(settings, 'DEBUG', None)
 
@@ -143,8 +144,9 @@ def home(request):
     tag_cloud_template = 'tags_home.html'
     title = 'Recent Workouts'
     
-    exes = Exercise.objects.all().order_by('name')
-    
+    #exes = Exercise.objects.all().order_by('name')
+    exes = serializers.serialize("json", Exercise.objects.all().order_by('name'))
+    print exes
     show = True
     home = True
     return r2r('index.html', locals())

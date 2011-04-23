@@ -1,4 +1,64 @@
 
+window.Ex = Backbone.Model.extend({
+	defaults: {
+		'active': false
+	},
+	
+	toggle: function() {
+		this.set({'active': !this.get('active')});
+	},
+	
+	initialize: function() {
+	}
+	
+});
+
+window.ExList = Backbone.Collection.extend({
+	model: Ex,
+	url: '/xml/exercise/'
+});
+
+window.TodoView = Backbone.View.extend({
+	tagName:  "p",
+	template: _.template($('#ex-template').html()),
+	
+	initialize: function() {
+		_.bindAll(this, "render");
+		this.model.bind('change', this.render);
+		this.model.view = this;
+	},
+	
+	events: {
+		"click": "toggleActive"
+	},
+	
+	toggleActive: function() {
+		this.model.toggle();
+	},
+	
+	render: function() {
+		$(this.el).html(this.template(this.model.toJSON()));
+		return this;
+	}
+});
+
+window.Exes = new ExList;
+
+Exes.bind("change", function(collection, error) {
+	//console.log(error);
+});
+
+	
+$(function() {
+	console.log(Exes.length);
+	Exes.each( function(ex) {
+		var view = new TodoView({model: ex});
+		this.$("#exfilters").append(view.render().el);
+
+	});
+});
+
+/*
 
 var inputs = {
 	exes: Array(),
@@ -112,4 +172,4 @@ $(function() {
 		exChoice.enable();
 	});
 	
-});
+});*/
