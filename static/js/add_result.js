@@ -146,7 +146,12 @@ AddMongoResult.prototype = {
 	
 	getDatePicker: function() {
 		var picker =  $('<div>Date/Time Completed <input type="text" id="id_date" name="date" class="validate[required]"></div>').clone();
-
+		picker.find('#id_date').datetimepicker({
+			ampm: true
+			//,
+			//hourGrid: 4,
+			//minuteGrid: 10
+		});
 
 		
 		return picker;
@@ -221,13 +226,13 @@ AddMongoResult.prototype = {
 					date: d,
 					sets: this.getSetsJson(sets)
 					//scores: this.getScoresJson()
-				},
+				};
 			
+				console.log(myObject);
 				json = JSON.stringify(myObject);
 			
 			try {
 				jQuery.parseJSON(json);
-				console.log(json);
 				/*var req = $.ajax('/ajax/result_add/', {
 		            data : { json : json , id: $('article').attr('id') },
 		            dataType : 'json',
@@ -315,20 +320,22 @@ AddMongoResult.prototype = {
 	
 	getScoresJson: function(set) {
 		var self = this,
-			measure = {};
+			measure = {},
+			$totalreps = set.find('.totalreps'),
+			$totalweight = set.find('.totalweight'),
+			$totaltime = set.find('.totaltime');
 		
-		if (self.totalweight.length > 0) {
-			measure['totalweight'] = self.totalweight.val();
+		if ($totalreps.length > 0) {
+			measure['totalweight'] = $totalreps.val();
 		}
 		
-		if (self.totalreps.length > 0) {
-			measure['totalreps'] = self.totalreps.val();
+		if ($totalweight.length > 0) {
+			measure['totalreps'] = $totalweight.val();
 		}
 		
-		if (self.totaltime.length > 0) {
-			measure['totaltime'] = self.totaltime.val();
+		if ($totaltime.length > 0) {
+			measure['totaltime'] = $totaltime.val();
 		}
-		console.log(measure);
 		return measure;
 	}
 };
