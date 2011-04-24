@@ -419,10 +419,12 @@ Mongo.prototype = {
 			round.append(self.getExBox());
 			set.append(round);
 			set.append(self.getRoundControl());
+			set.append(self.getSetScore());
+			set.append(setControl);
 			self.sc.append(set);
-			self.sc.append(setControl);
-			self.sc.append(self.getSetScore());
-			self.sc.append(setControl);
+			
+			//self.sc.append(setControl);
+
 			
 
 
@@ -437,7 +439,7 @@ Mongo.prototype = {
 			if (!self.validate()) {
 				return false;
 			}
-			var currSet = trigger.parent();
+			var currSet = trigger.parents('.section');
 			var set = self.getSet();
 			var setControl = self.getSetControl();
 			var round = self.getRound();
@@ -445,8 +447,8 @@ Mongo.prototype = {
 			round.append(self.getExBox());
 			set.append(round);
 			set.append(self.getRoundControl());
-			self.sc.append(self.getSetScore());
-			currSet.after(setControl);
+			set.append(self.getSetScore());
+			set.append(setControl);
 			currSet.after(set);
 
 
@@ -537,7 +539,7 @@ Mongo.prototype = {
 		getRepsBox: function() {
 			console.log('getting reps box');
 			console.log($('<span class="add-reps">Reps: <input type="text/></span>'));
-			return $('<span class="add-reps">Reps: <input type="text"/></span>');
+			return $('<span class="add-reps">Reps: <input type="text" class="validate[required]"' + this.getInputId() + '/></span>');
 		},
 
 		getExBox2: function(hook, addControls) {

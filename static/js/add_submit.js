@@ -98,7 +98,7 @@ AddSubmit.prototype = {
 			
 			
 			
-			/*$.ajax({
+			$.ajax({
 				type: 'POST',
 				url: '/ajax/add2/',
 				success: function(data) {
@@ -113,7 +113,7 @@ AddSubmit.prototype = {
 				},
 				data: { 'data': json },
 				dataType: 'json'
-			});*/
+			});
 		},
 		
 		getScores: function(set) {
@@ -158,7 +158,7 @@ AddSubmit.prototype = {
 			var roundsObj = {
 				'name': rounds.find('span.setname').html(),
 				//'scores': self.getScores(rounds.parent().find('.set_score')),
-				'scores': self.getScores(rounds.next('.set_score')),
+				'scores': self.getScores(rounds.find('.set_score')),
 				'rds': roundsArray	
 			};
 			
