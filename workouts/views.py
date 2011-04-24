@@ -373,7 +373,7 @@ def contactview(request):
         #form = ContactForm(initial={'topic': 'simpleWOD contact form submission' })
 
 
-    return r2r('contact.html', {'form': form}, context_instance=RequestContext(request))
+    return r2r('contact.html', locals(), context_instance=RequestContext(request))
 
 def thankyou(request):
         return render_to_response('thankyou.html')

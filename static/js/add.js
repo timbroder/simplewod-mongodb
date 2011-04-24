@@ -283,8 +283,8 @@ Mongo.prototype = {
 						}
 					}
 			};
-
-		self.setChoice();
+//enable fastadd
+		//self.setChoice();
 
 		},
 		
