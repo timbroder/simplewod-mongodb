@@ -11,5 +11,5 @@
 </section>
 
 <script type="text/template" id="ex-template">
-<p><%= fields.name %></p>
+<p><input type="checkbox" class="ex" <% if (active) { %> checked<% } %>><label><%= fields.name %></label></input></p>
 </script>

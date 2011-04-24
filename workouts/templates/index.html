@@ -7,7 +7,8 @@
 <script type="text/javascript" src="/static/js/backbone.js"></script>
 <script type="text/javascript" src="/static/js/filters.js"></script>
 <script>
-	Exes.refresh({{ exes|safe }});
+	var all = [{"pk": 0, "model": "mongo.exercise", "fields": {"type": [0], "name": "All"}}];
+	Exes.refresh(all.concat({{ exes|safe }}));
 </script>
 {% endblock %}
 
