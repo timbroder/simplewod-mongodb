@@ -541,7 +541,6 @@ Mongo.prototype = {
 		},
 
 		getExBox2: function(hook, addControls) {
-			console.log('2');
 			var self = this;
 			if (!hook.find('.amount-holder').length) {
 				console.log('append');
@@ -555,10 +554,21 @@ Mongo.prototype = {
 			}
 			amount = hook.find('.amount-holder');
 			amount.append('<input type="text" class="amount-val validate[required]"' + self.getInputId() + '/>');
-			var id = hook.find('.type-data input').metadata().type_id;
+			var id = hook.find('.type-data input').metadata().type_id,
+				name = hook.find('.type-data input').metadata().type_name;
+			console.log('here');
+			console.log(name);
 			var has_reps = hook.find('.type-data input').metadata().type_has_reps;
 			hook.find('.measure-options:not(.opsbase)').remove();
-			hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);
+			if(name != 'Time') {
+				hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);
+			}
+			else {
+				hook.find('.amount-val').timepicker({
+					showSecond: true,
+					timeFormat: 'hh:mm:ss'
+				});
+			}
 			console.log(has_reps);
 			if (has_reps === 'True') {
 				self.getRepsBox().appendTo(hook);

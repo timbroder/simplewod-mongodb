@@ -52,13 +52,13 @@
 	    <nav>  
 			<ul>  
 		        <li><a href="/">Home</a></li>  
-		        {% if user.is_authenticated %}
+		        {% if request.user.is_authenticated %}
 		        	<li><a href="/users/{{ user.username }}/">Your Profile</a></li>  
 		        	<li><a href="/wods/add/">Add</a></li> 
 		        {% endif %} 
 		        <li><a href="/feeds/">Rss</a></li>  
 		        <li><a href="/contact/">Contact</a></li> 
-		        {% if user.is_authenticated %}
+				{% if request.user.is_authenticated %} 
 		        	<li><a href="/settings/">Settings</a></li>  
 		        	<li><a href="/accounts/logout/">Logout</a></li> 
 		        {% else %}

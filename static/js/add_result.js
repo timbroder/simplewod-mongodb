@@ -47,7 +47,6 @@ AddMongoResult.prototype = {
 		});
 		
 		$('#addresult').live('click', function(e){
-			console.log('click?');
 			e.preventDefault();
 			self.submit();
 		});
@@ -77,6 +76,7 @@ AddMongoResult.prototype = {
 				data: { 'wod': mongoId },
 				success: function(resp) {
 					self.buildform(form, resp);
+					$.publish('/bind/live', [ ]);
 				}
 		});
 
@@ -95,48 +95,33 @@ AddMongoResult.prototype = {
 			;
 		
 		html += self.getSets(resp);
-		html += self.getMeasures(resp);
+		//html += self.getMeasures(resp);
 		html += self.getOptional();
 		html += self.getSubmit();
 		form.append(html);
 		
-		self.totalweight = $('input.totalweight');
-		self.totalreps = $('input.totalreps');
-		self.totaltime = $('.totaltime');
-		
-		if (self.totalweight.length > 0) {
-			new LiveUpdate($('.ex-line[data-type="Weight"] input.amount-val'), self.totalweight);
-		}
-		
-		if (self.totalreps.length > 0) {
-			new LiveUpdate($('input.num-reps'), self.totalreps);
-		}
-		
-		self.totaltime.timepicker({
-			showSecond: true,
-			timeFormat: 'hh:mm:ss'
-		});
+
 
 	},
 	
-	getMeasures: function(root) {
+	getMeasures: function(root, dom) {
 		var ids = [],
 			i,
-			l = root.measures.length,
+			l = root.scores.length,
 			req,
 			html = '';
 		
 		for (i=0; i<l; i++) {
-			ids.push(root.measures[i].id);
+			ids.push(root.scores[i].id);
 		}
 		req = $.ajax('/ajax/get_measures.json/', {
 			data: { "ms": ids.toString() },
 			type: 'GET',
 			async: false
-			//dataType: 'json'
 		})
 		.success( function(resp) {
 			html = resp;
+			return;
 		});
 		return html;
 	},
@@ -161,12 +146,7 @@ AddMongoResult.prototype = {
 	
 	getDatePicker: function() {
 		var picker =  $('<div>Date/Time Completed <input type="text" id="id_date" name="date" class="validate[required]"></div>').clone();
-		picker.find('#id_date').datetimepicker({
-			ampm: true
-			//,
-			//hourGrid: 4,
-			//minuteGrid: 10
-		});
+
 
 		
 		return picker;
@@ -182,6 +162,7 @@ AddMongoResult.prototype = {
 			html += '<div class="set">' +
 					'<h4 class="set-name">' + set.name + '</h4>';
 			html += this.getRounds(set.rds);
+			html += this.getMeasures(set, html);
 			html += '<hr><hr></div>';
 		}
 		
@@ -225,7 +206,6 @@ AddMongoResult.prototype = {
 			html += '</div>';
 		}
 		
-		
 		return html;
 	},
 	
@@ -239,8 +219,8 @@ AddMongoResult.prototype = {
 					name: title,
 					wod: parent.attr('id'),
 					date: d,
-					sets: this.getSetsJson(sets),
-					scores: this.getScoresJson()
+					sets: this.getSetsJson(sets)
+					//scores: this.getScoresJson()
 				},
 			
 				json = JSON.stringify(myObject);
@@ -248,19 +228,16 @@ AddMongoResult.prototype = {
 			try {
 				jQuery.parseJSON(json);
 				console.log(json);
-				//self.post(json);
-
-				var req = $.ajax('/ajax/result_add/', {
+				/*var req = $.ajax('/ajax/result_add/', {
 		            data : { json : json , id: $('article').attr('id') },
 		            dataType : 'json',
 		            type : 'POST'
 		        });
 				
 				req.success(function(resp) {
-					console.log('saved?');
 					history.go(0);	
 				});
-
+*/
 			
 			} catch(e) {
 				console.log(e);
@@ -290,7 +267,8 @@ AddMongoResult.prototype = {
 		});
 		var roundsObj = {
 			'name': rounds.find('.set-name').html(),
-			'rds': roundsArray	
+			'rds': roundsArray,
+			'scores': self.getScoresJson(rounds)
 		};
 		
 		return roundsObj;
@@ -335,11 +313,7 @@ AddMongoResult.prototype = {
 		return id;
 	},
 	
-	getScoresJson: function() {
-		/*self.totalweight = $('input.totalweight');
-		self.totalreps = $('input.totalreps');
-		self.totaltime = $('.totaltime');*/
-		console.log('scores');
+	getScoresJson: function(set) {
 		var self = this,
 			measure = {};
 		
@@ -358,3 +332,92 @@ AddMongoResult.prototype = {
 		return measure;
 	}
 };
+
+$.subscribe('/bind/live', function(results) {
+	console.log('in the binding');
+	/*self.totalweight = $('input.totalweight');
+	self.totalreps = $('input.totalreps');
+	self.totaltime = $('.totaltime');
+	
+	if (self.totalweight.length > 0) {
+		new LiveUpdate($('.ex-line[data-type="Weight"] input.amount-val'), self.totalweight);
+	}
+	
+	if (self.totalreps.length > 0) {
+		new LiveUpdate($('input.num-reps'), self.totalreps);
+	}
+	
+	self.totaltime.timepicker({
+		showSecond: true,
+		timeFormat: 'hh:mm:ss'
+	});*/
+	/*var ret = '';
+	var $resp = $(resp);
+	console.log(resp);
+	var $html = $(dom);
+	var totalweight = $resp.find('input.totalweight');
+	var totalreps = $resp.find('input.totalreps');
+	var $totaltime = $resp.find('.totaltime');
+	console.log('looking for time');
+	console.log($totaltime);
+	
+	if (totalweight.length > 0) {
+		new LiveUpdate($html.find('.ex-line[data-type="Weight"] input.amount-val'), totalweight);
+	}
+	
+	if (totalreps.length > 0) {
+		new LiveUpdate($html.find('input.num-reps'), totalreps);
+	}
+	if ($totaltime.length > 0) {
+		console.log('have it?');
+		$totaltime = $totaltime.timepicker({
+			showSecond: true,
+			timeFormat: 'hh:mm:ss'
+		});
+		console.log($totaltime);
+		console.log($resp);
+	}
+
+	console.log('returning ajax');
+		
+	console.log(resp);
+	*/
+	var $result = $('#result_form');
+	var $sets = $result.find('.set'),
+		$totaltime = $result.find('.totaltime'),
+		id = 0;
+	
+	$('#id_date').datetimepicker({
+		ampm: true
+		//,
+		//hourGrid: 4,
+		//minuteGrid: 10
+	});
+	
+	if ($totaltime.length > 0) {
+		console.log('have it?');
+		$totaltime = $totaltime.timepicker({
+			showSecond: true,
+			timeFormat: 'hh:mm:ss'
+		});
+	}
+	
+	$sets.each(function() {
+		var $this = $(this);
+		console.log($this);
+		var $totalweight = $this.find('input.totalweight'),
+			$totalreps = $this.find('input.totalreps');
+		
+		if ($totalweight.length > 0) {
+			$totalweight.attr('id', 'weight' + id++);
+			new LiveUpdate($this.find('.ex-line[data-type="Weight"] input.amount-val'), $totalweight);
+			$totalweight.attr('readonly', true);
+		}
+		
+		if ($totalreps.length > 0) {
+			$totalreps.attr('id', 'reps' + id++);
+			new LiveUpdate($this.find('input.num-reps'), $totalreps);
+			$totalreps.attr('readonly', true);
+		}
+	});
+});

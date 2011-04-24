@@ -177,6 +177,7 @@ def wod_single(request, wodslug):
     user = request.user
     wod = MongoWorkout.objects.get(slug = wodslug)
     print wod
+    print wod.mongo_id
     
     mwod = wod.get()
     print mwod['_id']
@@ -199,16 +200,16 @@ def wod_single(request, wodslug):
     
     print results
     #<pymongo.cursor.Cursor object at 0x102a2fe50>
-    rr = []
-    for r in results:
-        print r['user_id']
-        rr.append(r)
+    rr = results
+    #for r in results:
+    #    print r['user_id']
+    #    rr.append(r)
     #rr = [(r['user_id'],) for r in results.collection]
     print rr
     #prints expected user id
     
     
-    return r2r('singlewod.html', {'results': rr, 'mwod': mwod})
+    return r2r('singlewod.html', {'results': rr, 'mwod': mwod, 'wod': wod, 'request': request})
 
 #@cache_page(60 * 60 * 2)
 def result_single(request, wodslug, username):

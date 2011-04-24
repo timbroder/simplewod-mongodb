@@ -1,13 +1,15 @@
+{% load jsonify %}
+
 <article class="result">
 	<div class="result_date">
 		<b>{{ wod.date }}</b>
 	</div>
 	<div class="result_body">
-		{% for key, value in wod.scores %}
+		{% for key, value in wod.scores.iteritems %}
 			{{ key }}: {{ value }}
 		{% endfor %}
 	</div>
 	<div class="result_who">
-		Logged by: <a href="/{{ wod.user.get_absolute_url }}/">{{ wod.user.username }}</a>
+		Logged by: <a href="/{{ wod.user.get_profile.get_absolute_url }}/">{{ wod.user.username }}</a>
 	</div>
 </article>
