@@ -555,10 +555,9 @@ Mongo.prototype = {
 			amount = hook.find('.amount-holder');
 			amount.append('<input type="text" class="amount-val validate[required]"' + self.getInputId() + '/>');
 			var id = hook.find('.type-data input').metadata().type_id,
-				name = hook.find('.type-data input').metadata().type_name;
-			console.log('here');
-			console.log(name);
-			var has_reps = hook.find('.type-data input').metadata().type_has_reps;
+				name = hook.find('.type-data input').metadata().type_name,
+				has_reps = hook.find('.type-data input').metadata().type_has_reps;
+			
 			hook.find('.measure-options:not(.opsbase)').remove();
 			if(name != 'Time') {
 				hook.find('.measure-all-options select[data-type_id=' + id + ']').clone().removeClass('opsbase').appendTo(hook);

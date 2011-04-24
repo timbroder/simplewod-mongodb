@@ -49,6 +49,7 @@ AddSubmit.prototype = {
 			
 			return true;
 		},	
+		
 		submit2: function(){
 			console.log("SUBMIT");
 			var self = this;
@@ -94,7 +95,10 @@ AddSubmit.prototype = {
 //			console.log(self.form);
 //			self.form.submit();
 			console.log('in post');
-			$.ajax({
+			
+			
+			
+			/*$.ajax({
 				type: 'POST',
 				url: '/ajax/add2/',
 				success: function(data) {
@@ -105,11 +109,11 @@ AddSubmit.prototype = {
 					var h = '<p>Added: ' + data.title + ' <br>Click <a href="' + data.url + '">here</a> to add a result to it</p>';
 					console.log(h);
 					$('#canvas').html(h);
-					setTimeout("window.location='" + data.url + "'",5000);
+					setTimeout("window.location='" + data.url + "'",3000);
 				},
 				data: { 'data': json },
 				dataType: 'json'
-			});
+			});*/
 		},
 		
 		getScores: function(set) {
@@ -153,7 +157,8 @@ AddSubmit.prototype = {
 			console.log(rounds);
 			var roundsObj = {
 				'name': rounds.find('span.setname').html(),
-				'scores': self.getScores(rounds.parent().find('.set_score')),
+				//'scores': self.getScores(rounds.parent().find('.set_score')),
+				'scores': self.getScores(rounds.next('.set_score')),
 				'rds': roundsArray	
 			};
 			

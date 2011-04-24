@@ -233,7 +233,7 @@ AddMongoResult.prototype = {
 			
 			try {
 				jQuery.parseJSON(json);
-				/*var req = $.ajax('/ajax/result_add/', {
+				var req = $.ajax('/ajax/result_add/', {
 		            data : { json : json , id: $('article').attr('id') },
 		            dataType : 'json',
 		            type : 'POST'
@@ -242,7 +242,7 @@ AddMongoResult.prototype = {
 				req.success(function(resp) {
 					history.go(0);	
 				});
-*/
+
 			
 			} catch(e) {
 				console.log(e);
